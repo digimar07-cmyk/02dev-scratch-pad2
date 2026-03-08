@@ -1,6 +1,5 @@
 """
 Cliente HTTP para Ollama API
-v4.0.1: Atualizado para suportar qwen3.5:4b multimodal
 """
 import time
 import base64
@@ -21,9 +20,7 @@ from utils.logging_setup import LOGGER
 class OllamaClient:
     """
     Cliente HTTP para comunicação com Ollama.
-    Suporta geração de texto e análise de imagens (multimodal).
-    
-    v4.0.1: Migrado para qwen3.5:4b (multimodal) via /api/chat
+    Suporta geração de texto e análise de imagens.
     """
 
     def __init__(self, active_models=None):
@@ -167,14 +164,7 @@ class OllamaClient:
 
     def describe_image(self, image_path):
         """
-        Analisa imagem usando qwen3.5:4b multimodal via /api/chat.
-        
-        MIGRAÇÃO v4.0.1:
-          - ANTES: moondream via /api/generate
-          - DEPOIS: qwen3.5:4b via /api/chat (multimodal)
-        
-        O qwen3.5:4b suporta images[] diretamente no /api/chat,
-        permitindo análise visual contextualizada.
+        Analisa imagem usando moondream via /api/generate.
         """
         if self.stop_flag:
             return ""
@@ -182,59 +172,41 @@ class OllamaClient:
         if not self.is_available():
             return ""
 
-        model = self._get_model("vision")  # agora retorna "qwen3.5:4b"
-        timeout = self._get_timeout("vision")  # (5, 90)
+        model = self._get_model("vision")
+        timeout = self._get_timeout("vision")
 
         try:
-            # Prepara imagem (thumbnail 512x512, JPEG 85% para reduzir payload)
             with Image.open(image_path) as img:
                 img.thumbnail((512, 512), Image.Resampling.LANCZOS)
                 buf = io.BytesIO()
                 img.save(buf, format="JPEG", quality=85)
                 img_b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
 
-            # Payload multimodal (API /api/chat com images[])
             payload = {
                 "model": model,
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": (
-                            "Você é um assistente especialista em produtos de corte laser. "
-                            "Responda SEMPRE em português brasileiro. "
-                            "Seja factual e conciso."
-                        ),
-                    },
-                    {
-                        "role": "user",
-                        "content": (
-                            "Olhe apenas para o objeto de madeira cortado a laser no centro desta imagem. "
-                            "Ignore o fundo, paredes, brinquedos de pelúcia e textos sobrepostos. "
-                            "Descreva APENAS o objeto central: seu formato, tema e estilo. "
-                            "Uma frase curta, específica e factual."
-                        ),
-                        "images": [img_b64],  # qwen3.5:4b suporta images[] em /api/chat!
-                    },
-                ],
+                "prompt": (
+                    "Look only at the main laser-cut wooden object in the center of this image. "
+                    "Ignore the background, walls, stuffed animals, toys, watermarks and any text overlays. "
+                    "Describe ONLY the central object: its shape, theme and style. "
+                    "One short sentence. Be specific and factual."
+                ),
+                "images": [img_b64],
                 "stream": False,
                 "options": {"temperature": 0.2, "num_predict": 60},
             }
 
-            # Chamada à API /api/chat (multimodal)
             resp = self.session.post(
-                f"{self.base_url}/api/chat",  # <-- /api/chat (não /api/generate)
+                f"{self.base_url}/api/generate",
                 json=payload,
                 timeout=timeout,
             )
 
             if resp.status_code == 200:
-                # Parse resposta (formato /api/chat)
-                data = resp.json()
-                vision_text = (data.get("message", {}).get("content") or "").strip()
-                self.logger.info("👁️ [%s vision] %s", model, vision_text[:80])
+                vision_text = (resp.json().get("response") or "").strip()
+                self.logger.info("👁️ [moondream] %s", vision_text[:80])
                 return vision_text
 
         except Exception as e:
-            self.logger.warning("Falha ao descrever imagem com %s: %s", model, e)
+            self.logger.warning("Falha ao descrever imagem com moondream: %s", e)
 
         return ""

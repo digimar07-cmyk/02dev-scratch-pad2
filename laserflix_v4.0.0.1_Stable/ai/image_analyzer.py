@@ -1,6 +1,5 @@
 """
 Análise de qualidade de imagem e integração com visão
-v4.0.1: Atualizado para qwen3.5:4b multimodal
 """
 import os
 from PIL import Image, ImageStat
@@ -10,10 +9,7 @@ from utils.logging_setup import LOGGER
 
 class ImageAnalyzer:
     """
-    Analisa qualidade de imagens e decide se são adequadas para análise visual.
-    
-    v4.0.1: Usa qwen3.5:4b multimodal via ollama_client.describe_image()
-    (anteriormente: moondream)
+    Analisa qualidade de imagens e decide se são adequadas para análise com moondream.
     
     Critérios de rejeição (imagens ambíguas):
       - Brilho médio > 210 (foto muito clara/fundo branco dominante)
@@ -107,9 +103,7 @@ class ImageAnalyzer:
     
     def analyze_cover(self, image_path):
         """
-        Analisa imagem de capa com visão (se passar no filtro de qualidade).
-        
-        v4.0.1: Usa qwen3.5:4b multimodal (anteriormente: moondream)
+        Analisa imagem de capa com moondream (se passar no filtro de qualidade).
         
         Returns:
             String com descrição visual ou "" se:
@@ -133,5 +127,5 @@ class ImageAnalyzer:
             )
             return ""
         
-        # Usa qwen3.5:4b multimodal (via ollama_client.describe_image)
+        # Usa moondream
         return self.ollama_client.describe_image(image_path)

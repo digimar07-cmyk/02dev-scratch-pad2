@@ -5,7 +5,7 @@ FASE 7D.2: Extrai construção de selection bar do main_window.py
 Redução estimada: -45 linhas no main_window.py
 """
 import tkinter as tk
-from ui.theme import FG_PRIMARY, FG_SECONDARY
+from config.ui_constants import FG_PRIMARY, FG_SECONDARY
 
 
 class SelectionBar:

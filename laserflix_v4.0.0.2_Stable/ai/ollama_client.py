@@ -1,5 +1,6 @@
 """
 Cliente HTTP para Ollama API
+v4.0.1: Atualizado para suportar qwen3.5:4b multimodal
 """
 import time
 import base64
@@ -20,7 +21,7 @@ from utils.logging_setup import LOGGER
 class OllamaClient:
     """
     Cliente HTTP para comunicação com Ollama.
-    Suporta geração de texto e análise de imagens.
+    Suporta geração de texto e análise de imagens (multimodal).
     """
 
     def __init__(self, active_models=None):
@@ -164,7 +165,8 @@ class OllamaClient:
 
     def describe_image(self, image_path):
         """
-        Analisa imagem usando moondream via /api/generate.
+        Analisa imagem usando modelo de visão via /api/chat (multimodal).
+        v4.0.1: Migrado de /api/generate para /api/chat (suporta qwen3.5:4b).
         """
         if self.stop_flag:
             return ""
@@ -184,29 +186,35 @@ class OllamaClient:
 
             payload = {
                 "model": model,
-                "prompt": (
-                    "Look only at the main laser-cut wooden object in the center of this image. "
-                    "Ignore the background, walls, stuffed animals, toys, watermarks and any text overlays. "
-                    "Describe ONLY the central object: its shape, theme and style. "
-                    "One short sentence. Be specific and factual."
-                ),
-                "images": [img_b64],
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": (
+                            "Olhe apenas para o objeto de madeira cortado a laser no centro desta imagem. "
+                            "Ignore o fundo, paredes, brinquedos de pelúcia e textos sobrepostos. "
+                            "Descreva APENAS o objeto central: seu formato, tema e estilo. "
+                            "Uma frase curta, específica e factual em português brasileiro."
+                        ),
+                        "images": [img_b64],
+                    }
+                ],
                 "stream": False,
                 "options": {"temperature": 0.2, "num_predict": 60},
             }
 
             resp = self.session.post(
-                f"{self.base_url}/api/generate",
+                f"{self.base_url}/api/chat",
                 json=payload,
                 timeout=timeout,
             )
 
             if resp.status_code == 200:
-                vision_text = (resp.json().get("response") or "").strip()
-                self.logger.info("👁️ [moondream] %s", vision_text[:80])
+                data = resp.json()
+                vision_text = (data.get("message", {}).get("content") or "").strip()
+                self.logger.info("👁️ [%s vision] %s", model, vision_text[:80])
                 return vision_text
 
         except Exception as e:
-            self.logger.warning("Falha ao descrever imagem com moondream: %s", e)
+            self.logger.warning("Falha ao descrever imagem com %s: %s", model, e)
 
         return ""

@@ -6,6 +6,59 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [4.0.1.0] - 2026-03-08
+
+### 🤖 MIGRAÇÃO DE MODELOS IA - QWEN3.5:4B
+
+**Redução dramática de recursos:**
+- ✅ REFACTOR: Migrado de 7 modelos (24.3 GB) para 2 modelos (3.7 GB)
+- ✅ FEAT: qwen3.5:4b multimodal (texto + visão em um único modelo)
+- ✅ FIX: describe_image() agora usa /api/chat (multimodal)
+- ✅ DOCS: Novo AI_MODELS.md com especificações completas
+- ✅ DOCS: REFACTORING_AI_MIGRATION.md com plano detalhado
+- ✅ PERF: 71% menos modelos, 84.7% menos espaço em disco
+- ✅ PERF: RAM máxima reduzida de ~14 GB para ~8 GB (-43%)
+- ✅ CONFIG: settings.py atualizado com novos modelos
+- ✅ CONFIG: Timeouts ajustados para qwen3.5:4b
+
+**Modelos removidos:**
+```
+❌ qwen2.5:3b-instruct-q4_K_M   (1.9 GB)
+❌ qwen2.5:7b-instruct-q4_K_M   (4.7 GB)
+❌ qwen2.5-coder:latest         (4.7 GB)
+❌ llama3.1:latest              (4.9 GB)
+❌ llama3.2-vision:latest       (7.8 GB)
+❌ moondream:latest             (1.7 GB)
+❌ nomic-embed-text:v1.5        (274 MB - duplicata)
+```
+
+**Setup final:**
+```
+✅ qwen3.5:4b                   (3.4 GB) - tudo-em-um
+✅ nomic-embed-text:latest      (274 MB) - embeddings
+```
+
+**Commits principais:**
+- `45c4e55` - docs: Plano de refatoração para migração qwen3.5:4b
+- `b64c006` - config: Migra modelos para qwen3.5:4b
+- `74a5aa7` - refactor(ai): Migra describe_image() para qwen3.5:4b multimodal
+- `0b3bde8` - docs(ai): Atualiza referências de moondream para qwen3.5:4b
+- `4b53b72` - docs: Adiciona documentação de modelos IA instalados
+
+**Guia de Migração**: Ver `REFACTORING_AI_MIGRATION.md`  
+**Especificações**: Ver `docs/AI_MODELS.md`
+
+**Breaking Changes**: ⚠️ Modelos antigos não são mais suportados. Execute:
+```bash
+git pull origin main
+ollama pull qwen3.5:4b
+# Remover modelos antigos (opcional - economia de espaço)
+```
+
+**Modelo usado**: Claude Sonnet 4.5
+
+---
+
 ## [3.4.3.4] - 2026-03-07 22:23:56
 
 ### 🎉 REFATORAÇÃO FASE-1A CONCLUÍDA

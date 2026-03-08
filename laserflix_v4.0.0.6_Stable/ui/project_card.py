@@ -10,6 +10,7 @@ HOT-06c: Callback assíncrono thread-safe:
 F-05: Badge de status de análise (🤖 IA / ⚡ Fallback / ⏳ Pendente)
 F-08: Menu contextual de coleções (botão direito) + Badges de coleções visíveis (SEM 📁)
 PERF-FIX-4: Bind único de menu contextual + redução de lambdas (~25% mais rápido)
+FIX-CONTEXT-MENU: Propagation recursiva para todos os widgets filhos
 """
 import tkinter as tk
 from tkinter import Menu
@@ -36,6 +37,26 @@ def _darken(hex_color: str) -> str:
     h = hex_color.lstrip("#")
     r, g, b = (int(h[i:i+2], 16) for i in (0, 2, 4))
     return f"#{max(0,int(r*.8)):02x}{max(0,int(g*.8)):02x}{max(0,int(b*.8)):02x}"
+
+
+def _bind_context_menu_recursive(widget, handler):
+    """
+    FIX-CONTEXT-MENU: Vincula menu de contexto recursivamente.
+    
+    Problema original:
+    - Menu só funcionava clicando no fundo do card
+    - Click em imagem, labels, botões NÃO mostrava menu
+    
+    Solução:
+    - Bind recursivo em TODOS os widgets filhos
+    - Menu funciona em qualquer parte do card
+    """
+    try:
+        widget.bind("<Button-3>", handler)
+        for child in widget.winfo_children():
+            _bind_context_menu_recursive(child, handler)
+    except tk.TclError:
+        pass  # Widget já destruído, ignorar
 
 
 def _create_analysis_badge(parent: tk.Frame, data: dict) -> None:
@@ -145,6 +166,7 @@ def build_card(
     Constrói um card de projeto.
     
     PERF-FIX-4: Otimizado para reduzir lambdas e binds duplicados.
+    FIX-CONTEXT-MENU: Menu de contexto funciona em toda área do card.
     
     Callbacks esperados (F-08):
         on_add_to_collection(path, collection_name)
@@ -172,9 +194,9 @@ def build_card(
     inner = tk.Frame(card, bg=BG_CARD)
     inner.pack(fill="both", expand=True, padx=2 if is_selected else 0, pady=2 if is_selected else 0)
 
-    # PERF-FIX-4: Menu contextual ÚNICO no card (propaga para todos filhos)
+    # FIX-CONTEXT-MENU: Menu contextual RECURSIVO (funciona em todos os elementos)
     context_menu_handler = _create_context_menu_handler(project_path, cb)
-    card.bind("<Button-3>", context_menu_handler)
+    _bind_context_menu_recursive(card, context_menu_handler)
 
     # Checkbox de seleção
     if selection_mode:

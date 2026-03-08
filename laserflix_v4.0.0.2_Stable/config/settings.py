@@ -1,12 +1,12 @@
 """
-Configurações centralizadas do Laserflix v3.4.2.5
+Configurações centralizadas do Laserflix v4.0.0.2
 """
 import os
 
 # ============================================================================
 # VERSÃO
 # ============================================================================
-VERSION = "3.4.3.5"
+VERSION = "4.0.0.2"
 
 # ============================================================================
 # ARQUIVOS E DIRETÓRIOS
@@ -24,7 +24,20 @@ OLLAMA_RETRIES = 3
 OLLAMA_HEALTH_TIMEOUT = 4
 OLLAMA_HEALTH_CACHE_TTL = 5.0  # segundos
 
-# Modelos padrão por função
+# ============================================================================
+# MODELOS - MIGRAÇÃO PARA QWEN3.5:4B (v4.0.0.2)
+# ============================================================================
+# ANTES (v3.x): 7 modelos, 24.3 GB
+# DEPOIS (v4.0.0.2): 2 modelos, 3.7 GB (economia de 84.7%)
+#
+# qwen3.5:4b é multimodal (texto + visão), substituindo:
+#   - qwen2.5:7b (texto qualidade)
+#   - qwen2.5:3b (texto rápido)
+#   - qwen2.5-coder (análise de código)
+#   - llama3.1 (chat)
+#   - llama3.2-vision (visão)
+#   - moondream (visão antiga)
+# ============================================================================
 OLLAMA_MODELS = {
     "text_quality": "qwen3.5:4b",                    # análise individual, descrições
     "text_fast":    "qwen3.5:4b",                    # lotes grandes (>50 projetos)
@@ -33,14 +46,19 @@ OLLAMA_MODELS = {
 }
 
 # Limiar: acima deste número de projetos, usa modelo rápido no lote
+# NOTA: Com qwen3.5:4b, text_fast e text_quality são o mesmo modelo,
+#       mas mantemos a lógica para futura granularidade
 FAST_MODEL_THRESHOLD = 50
 
+# ============================================================================
+# TIMEOUTS - AJUSTADOS PARA QWEN3.5:4B
+# ============================================================================
 # Timeouts por tipo de modelo (connect_timeout, read_timeout)
 TIMEOUTS = {
-    "text_quality": (5, 120),
-    "text_fast":    (5, 75),
-    "vision":       (5, 60),
-    "embed":        (5, 15),
+    "text_quality": (5, 120),  # análise individual (mesmo timeout)
+    "text_fast":    (5, 75),   # lotes (mesmo modelo, mais rápido)
+    "vision":       (5, 60),   # visão multimodal (ajustado de 60s)
+    "embed":        (5, 15),   # embeddings (sem mudança)
 }
 
 # ============================================================================

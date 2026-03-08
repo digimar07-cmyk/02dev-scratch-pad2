@@ -22,10 +22,12 @@ REFACTOR-FASE-1.2.2: ModalGenerator extraído ✅
 REFACTOR-FASE-1.3: OrphanManager extraído ✅
 REFACTOR-FASE-2A: ToggleManager consolidado ✅
 REFACTOR-FASE-2B: Métodos de filtro consolidados ✅
+REFACTOR-FASE-2C: Callbacks lambda consolidados ✅
 """
 import os
 import tkinter as tk
 from tkinter import ttk, simpledialog
+from functools import partial
 
 from config.settings import VERSION
 from config.card_layout import COLS
@@ -104,11 +106,7 @@ class LaserflixMainWindow:
         )
         # Progress UI configurado após _build_ui()
         self.analysis_ctrl.on_analysis_complete = lambda msg: self.status_bar.config(text=msg)
-        self.analysis_ctrl.on_refresh_ui = lambda: (
-            self._invalidate_cache(),
-            self.display_projects(),
-            self.sidebar.refresh(self.database, self.collections_manager)
-        )
+        self.analysis_ctrl.on_refresh_ui = self._refresh_all
         self.analysis_ctrl.setup_callbacks()
         
         # SelectionController gerencia seleção múltipla
@@ -133,11 +131,7 @@ class LaserflixMainWindow:
             collections_manager=self.collections_manager,
             database=self.database
         )
-        self.collection_ctrl.on_collection_changed = lambda: (
-            self.sidebar.refresh(self.database, self.collections_manager),
-            self._invalidate_cache(),
-            self.display_projects()
-        )
+        self.collection_ctrl.on_collection_changed = self._refresh_all
         
         self._last_display_state = None
         self._force_rebuild = False
@@ -180,11 +174,7 @@ class LaserflixMainWindow:
             database=self.database,
             db_manager=self.db_manager,
             collections_manager=self.collections_manager,
-            on_refresh=lambda: (
-                self.sidebar.refresh(self.database, self.collections_manager),
-                self._invalidate_cache(),
-                self.display_projects()
-            ),
+            on_refresh=self._refresh_all,
             on_status_update=lambda msg: self.status_bar.config(text=msg)
         )
         
@@ -196,7 +186,7 @@ class LaserflixMainWindow:
         # === FIM MANAGERS ===
         
         self.display_projects()
-        self.logger.info("✨ Laserflix v%s iniciado (FASE-2B)", VERSION)
+        self.logger.info("✨ Laserflix v%s iniciado (FASE-2C)", VERSION)
 
     def __del__(self):
         if hasattr(self, 'thumbnail_preloader'):
@@ -245,6 +235,22 @@ class LaserflixMainWindow:
 
     def _invalidate_cache(self) -> None:
         self._force_rebuild = True
+
+    def _refresh_all(self) -> None:
+        """
+        Refresh completo: cache + display + sidebar (FASE-2C).
+        Consolida 3 lambdas duplicadas em um único método.
+        """
+        self._invalidate_cache()
+        self.display_projects()
+        self.sidebar.refresh(self.database, self.collections_manager)
+
+    def _add_filter_chip(self, filter_type: str, value) -> None:
+        """
+        Adiciona chip de filtro (FASE-2C).
+        Consolida 4 lambdas duplicadas em um único método.
+        """
+        self.display_ctrl.add_filter_chip(filter_type, value)
 
     # FILTROS
     def set_filter(self, filter_type: str) -> None:
@@ -383,10 +389,10 @@ class LaserflixMainWindow:
             "on_toggle_bad": self.toggle_bad,
             "on_analyze_single": self.analyze_single_project,
             "on_open_folder": open_folder,
-            "on_set_category": lambda c: self.display_ctrl.add_filter_chip("category", c),
-            "on_set_tag": lambda t: self.display_ctrl.add_filter_chip("tag", t),
-            "on_set_origin": lambda o: self.display_ctrl.add_filter_chip("origin", o),
-            "on_set_collection": lambda c: self.display_ctrl.add_filter_chip("collection", c),
+            "on_set_category": partial(self._add_filter_chip, "category"),
+            "on_set_tag": partial(self._add_filter_chip, "tag"),
+            "on_set_origin": partial(self._add_filter_chip, "origin"),
+            "on_set_collection": partial(self._add_filter_chip, "collection"),
             "get_cover_image_async": self._get_thumbnail_async,
             "selection_mode": self.selection_ctrl.selection_mode,
             "selected_paths": self.selection_ctrl.selected_paths,
@@ -427,7 +433,7 @@ class LaserflixMainWindow:
                 "on_generate_desc": self._modal_generate_desc,
                 "on_open_edit": self.open_edit_mode,
                 "on_reanalize": self.analyze_single_project,
-                "on_set_tag": lambda t: self.display_ctrl.add_filter_chip("tag", t),
+                "on_set_tag": partial(self._add_filter_chip, "tag"),
                 "on_remove": self.remove_project,
                 "get_project_collections": lambda p: self.collections_manager.get_project_collections(p),
             },

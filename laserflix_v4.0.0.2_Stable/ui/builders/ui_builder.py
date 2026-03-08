@@ -6,6 +6,10 @@ FASE-D: UIBuilder (reorganização segura)
 - Move 121 linhas de _build_ui() para cá
 - main_window._build_ui() vira 1 linha: UIBuilder.build(self)
 - ZERO mudança de lógica, apenas reorganização
+
+FASE-1C: SelectionBar extraído para componente
+- Removido método _build_selection_bar() (-41 linhas)
+- Agora usa ui/components/selection_bar.py
 """
 import tkinter as tk
 from tkinter import ttk
@@ -34,7 +38,7 @@ class UIBuilder:
         UIBuilder._build_header(window)
         UIBuilder._build_main_container(window)
         UIBuilder._build_status_bar(window)
-        UIBuilder._build_selection_bar(window)
+        # SelectionBar agora é instanciado no main_window.__init__ (FASE-1C)
         UIBuilder._bind_keyboard_shortcuts(window)
     
     @staticmethod
@@ -142,47 +146,6 @@ class UIBuilder:
             bg=ACCENT_RED, fg=FG_PRIMARY,
             font=("Arial", 10, "bold"), relief="flat", cursor="hand2"
         )
-    
-    @staticmethod
-    def _build_selection_bar(window) -> None:
-        """Constrói barra de seleção múltipla (escondida por padrão)."""
-        window._sel_bar = tk.Frame(window.root, bg="#1A1A00", height=48)
-        window._sel_bar.pack_propagate(False)
-        
-        window._sel_count_lbl = tk.Label(
-            window._sel_bar, text="0 selecionado(s)",
-            bg="#1A1A00", fg="#FFFF88", font=("Arial", 11, "bold")
-        )
-        window._sel_count_lbl.pack(side="left", padx=16)
-        
-        tk.Button(
-            window._sel_bar, text="☑️ Tudo",
-            command=lambda: window.selection_ctrl.select_all(
-                window.display_ctrl.get_filtered_projects()),
-            bg="#333300", fg="#FFFF88", font=("Arial", 10),
-            relief="flat", cursor="hand2", padx=10, pady=6
-        ).pack(side="left", padx=4)
-        
-        tk.Button(
-            window._sel_bar, text="🔲 Nenhum",
-            command=window.selection_ctrl.deselect_all,
-            bg="#333300", fg="#FFFF88", font=("Arial", 10),
-            relief="flat", cursor="hand2", padx=10, pady=6
-        ).pack(side="left", padx=4)
-        
-        tk.Button(
-            window._sel_bar, text="🗑️ Remover selecionados",
-            command=lambda: window.selection_ctrl.remove_selected(window.root),
-            bg="#5A0000", fg="#FF8888", font=("Arial", 10, "bold"),
-            relief="flat", cursor="hand2", padx=14, pady=6
-        ).pack(side="left", padx=12)
-        
-        tk.Button(
-            window._sel_bar, text="✕ Cancelar",
-            command=window.selection_ctrl.toggle_mode,
-            bg="#1A1A00", fg="#888888", font=("Arial", 10),
-            relief="flat", cursor="hand2", padx=10, pady=6
-        ).pack(side="right", padx=16)
     
     @staticmethod
     def _bind_keyboard_shortcuts(window) -> None:

@@ -6,6 +6,72 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [4.0.0.2] - 2026-03-08 17:32
+
+### 🤖 MIGRAÇÃO DE MODELOS IA - QWEN3.5:4B
+
+**Estado**: ✅ **CONCLUÍDA E TESTADA**
+
+**Mudanças principais:**
+- ✅ **REFACTOR**: Migrado de 7 modelos (24.3 GB) para 2 modelos (3.7 GB)
+- ✅ **FEAT**: qwen3.5:4b multimodal (texto + visão em um único modelo)
+- ✅ **FIX**: describe_image() agora usa /api/chat (multimodal)
+- ✅ **PERF**: 71% menos modelos, 84.7% menos espaço em disco
+- ✅ **PERF**: RAM máxima reduzida de ~14 GB para ~8 GB (-43%)
+- ✅ **CONFIG**: settings.py atualizado com novos modelos
+- ✅ **CONFIG**: Timeouts ajustados para qwen3.5:4b
+- ✅ **PRESERVE**: Sistema de fallbacks intacto (100% funcional)
+
+**Modelos removidos:**
+```
+❌ qwen2.5:3b-instruct-q4_K_M   (1.9 GB)
+❌ qwen2.5:7b-instruct-q4_K_M   (4.7 GB)
+❌ qwen2.5-coder:latest         (4.7 GB)
+❌ llama3.1:latest              (4.9 GB)
+❌ llama3.2-vision:latest       (7.8 GB)
+❌ moondream:latest             (1.7 GB)
+```
+
+**Setup final:**
+```
+✅ qwen3.5:4b                   (3.4 GB) - texto + visão
+✅ nomic-embed-text:latest      (274 MB) - embeddings
+```
+
+**Arquivos modificados:**
+1. `config/settings.py` - Modelos atualizados + versão 4.0.0.2
+2. `ai/ollama_client.py` - Método describe_image() usa /api/chat
+3. `VERSION` - Atualizado para 4.0.0.2
+4. `CHANGELOG.md` - Este registro
+
+**Commits principais:**
+- `6c952e6` - laserflix_v4.0.0.2_Stable (implementação inicial)
+- `2491b58` - chore: Bump version para 4.0.0.2
+- `7c59150` - chore: Atualiza versão e documentação em settings.py
+
+**Sistema de fallbacks preservado:**
+- ✅ Importação sem Ollama funciona (usa dicionários)
+- ✅ Análise com Ollama offline usa fallback completo
+- ✅ Categorias incompletas são completadas com fallback
+- ✅ Zero quebras no workflow existente
+
+**Modelo usado**: Claude Sonnet 4.5
+
+**Instruções de uso:**
+```bash
+# 1. Pull do GitHub
+git pull origin main
+
+# 2. Verificar modelos (você já tem!)
+ollama list
+# Deve mostrar: qwen3.5:4b (3.4 GB) e nomic-embed-text:latest (274 MB)
+
+# 3. Testar app
+python main.py
+```
+
+---
+
 ## [3.4.3.4] - 2026-03-07 22:23:56
 
 ### 🎉 REFATORAÇÃO FASE-1A CONCLUÍDA

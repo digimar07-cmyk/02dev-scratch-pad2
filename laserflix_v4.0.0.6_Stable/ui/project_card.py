@@ -10,7 +10,7 @@ HOT-06c: Callback assíncrono thread-safe:
 F-05: Badge de status de análise (🤖 IA / ⚡ Fallback / ⏳ Pendente)
 F-08: Menu contextual de coleções (botão direito) + Badges de coleções visíveis (SEM 📁)
 PERF-FIX-4: Bind único de menu contextual + redução de lambdas (~25% mais rápido)
-FIX-CONTEXT-MENU: Propagation recursiva para todos os widgets filhos
+FIX-CONTEXT-MENU: Propagation recursiva DEPOIS de criar todos os widgets
 """
 import tkinter as tk
 from tkinter import Menu
@@ -43,12 +43,16 @@ def _bind_context_menu_recursive(widget, handler):
     """
     FIX-CONTEXT-MENU: Vincula menu de contexto recursivamente.
     
+    IMPORTANTE: Deve ser chamado DEPOIS de criar todos os widgets filhos.
+    
     Problema original:
-    - Menu só funcionava clicando no fundo do card
-    - Click em imagem, labels, botões NÃO mostrava menu
+    - Chamado CEDO DEMAIS (após criar card/inner, antes dos filhos)
+    - Widgets criados depois NÃO recebiam o bind
+    - Menu só funcionava no fundo do card
     
     Solução:
-    - Bind recursivo em TODOS os widgets filhos
+    - Chamado no FINAL de build_card(), após todos os widgets
+    - Bind recursivo em TODOS os elementos (cover, labels, buttons, etc.)
     - Menu funciona em qualquer parte do card
     """
     try:
@@ -193,10 +197,6 @@ def build_card(
     # Inner — conteúdo do card
     inner = tk.Frame(card, bg=BG_CARD)
     inner.pack(fill="both", expand=True, padx=2 if is_selected else 0, pady=2 if is_selected else 0)
-
-    # FIX-CONTEXT-MENU: Menu contextual RECURSIVO (funciona em todos os elementos)
-    context_menu_handler = _create_context_menu_handler(project_path, cb)
-    _bind_context_menu_recursive(card, context_menu_handler)
 
     # Checkbox de seleção
     if selection_mode:
@@ -389,5 +389,9 @@ def build_card(
                       command=lambda: cb["on_analyze_single"](project_path),
                       bg=BG_CARD, fg=ACCENT_GREEN, relief="flat", cursor="hand2"
                       ).pack(side="left", padx=1)
+    
+    # FIX-CONTEXT-MENU: Bind recursivo NO FINAL, após criar TODOS os widgets
+    context_menu_handler = _create_context_menu_handler(project_path, cb)
+    _bind_context_menu_recursive(card, context_menu_handler)
     
     return card

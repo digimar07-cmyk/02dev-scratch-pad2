@@ -9,7 +9,7 @@ FLUXO (todos os modos):
   4. DuplicateResolutionDialog → usuário resolve (se houver)
   5. ImportPreviewDialog → usuário confirma
   6. Import Loop       → importa em thread separada
-  7. AUTO-ANALYSIS     → SEQUENCIAL: categorias/tags → descrições
+  7. AUTO-ANALYSIS     → AUTOMÁTICO: categorias/tags → descrições
 
 Modos:
   'hybrid'  — recursivo, folder.jpg + fallback
@@ -25,8 +25,8 @@ HOT-10b: FIX dialog duplicatas
   - Adiciona normalized_name e name no formato esperado pelo dialog
 
 FEATURE: Análise automática SEQUENCIAL pós-importação
-  - Após importação bem-sucedida, pergunta se quer analisar
-  - Se sim, executa SEQUENCIALMENTE:
+  - Após importação bem-sucedida, analisa AUTOMATICAMENTE (sem perguntar)
+  - Executa SEQUENCIALMENTE:
     1. Categorias + Tags (analysis_manager)
     2. Descrições (text_generator)
   - Apenas para produtos recém-importados
@@ -61,7 +61,7 @@ class RecursiveImportManager:
     Todos os modos passam pelo mesmo pipeline de dedup + preview.
     
     HOT-10: Detecta duplicatas comparando com database existente!
-    FEATURE: Análise SEQUENCIAL pós-importação (categorias+tags → descrições)
+    FEATURE: Análise AUTOMÁTICA pós-importação (categorias+tags → descrições)
     """
 
     def __init__(
@@ -113,9 +113,9 @@ class RecursiveImportManager:
             return
         self.logger.info("Encontrados: %d produtos", len(all_products))
 
-        # ═══════════════════════════════════════════════════════════════
+        # ═══════════════════════════════════════════════════════════════════
         # 3 ─ DUPLICATAS (HOT-10: COMPARA COM DATABASE EXISTENTE!)
-        # ═══════════════════════════════════════════════════════════════
+        # ═══════════════════════════════════════════════════════════════════
         
         # 3.1 - Cria dict dos produtos escaneados
         scanned_db = {p["path"]: {"name": p["name"]} for p in all_products}
@@ -366,11 +366,12 @@ class RecursiveImportManager:
         self.logger.info("Import concluído: %d ok | %d falha", success, failed)
 
         # ══════════════════════════════════════════════════════════════════
-        # ANÁLISE AUTOMÁTICA SEQUENCIAL: categorias+tags → descrições
+        # ANÁLISE AUTOMÁTICA (SEM PERGUNTAR): categorias+tags → descrições
         # ══════════════════════════════════════════════════════════════════
         if success > 0 and self.analysis_manager and self.text_generator:
             try:
-                self.parent.after(0, lambda: self._ask_auto_analysis(success))
+                self.logger.info("🤖 Iniciando análise AUTOMÁTICA de %d produtos", len(self.imported_paths))
+                self.parent.after(0, lambda: self._run_sequential_analysis())
             except RuntimeError:
                 # Main loop encerrado
                 self.logger.warning("⚠️ Main loop encerrado, pulando auto-analysis")
@@ -385,35 +386,9 @@ class RecursiveImportManager:
                 parent=self.parent,
             ))
 
-    def _ask_auto_analysis(self, success_count: int):
-        """
-        Pergunta se quer analisar automaticamente.
-        Se sim, executa SEQUENCIALMENTE:
-          1. Categorias + Tags (analysis_manager)
-          2. Descrições (text_generator)
-        """
-        response = messagebox.askyesno(
-            "🤖 Análise Automática",
-            f"✅ {success_count} produto(s) importado(s)!\n\n"
-            f"🤔 Deseja analisar AGORA?\n\n"
-            f"SEQUENCIAL:\n"
-            f"1️⃣ Categorias + Tags (IA)\n"
-            f"2️⃣ Descrições (IA)\n\n"
-            f"Isso pode levar alguns minutos.",
-            parent=self.parent,
-        )
-        
-        if response:
-            self.logger.info("🤖 Iniciando análise SEQUENCIAL de %d produtos", len(self.imported_paths))
-            self._run_sequential_analysis()
-        else:
-            self.logger.info("⏭️ Usuário optou por NÃO analisar")
-            if self.on_complete:
-                self.on_complete()
-
     def _run_sequential_analysis(self):
         """
-        Executa análise SEQUENCIAL:
+        Executa análise SEQUENCIAL AUTOMATICAMENTE:
         1. Categorias + Tags para todos
         2. Aguarda conclusão
         3. Descrições para todos
@@ -421,13 +396,13 @@ class RecursiveImportManager:
         def _worker():
             try:
                 # ETAPA 1: Categorias + Tags
-                self.logger.info("📊 ETAPA 1/2: Analisando categorias e tags...")
+                self.logger.info("📊tapa 1/2: Analisando categorias e tags...")
                 
                 # Aguarda análise de categorias/tags terminar
                 self._wait_for_analysis_manager()
                 
                 # ETAPA 2: Descrições
-                self.logger.info("📝 ETAPA 2/2: Gerando descrições...")
+                self.logger.info("📝tapa 2/2: Gerando descrições...")
                 self._generate_descriptions_batch()
                 
                 self.logger.info("✅ Análise sequencial concluída!")
@@ -438,6 +413,14 @@ class RecursiveImportManager:
                 # Callback final
                 if self.on_complete:
                     self.parent.after(0, self.on_complete)
+                
+                # Mensagem de sucesso
+                self.parent.after(0, lambda: messagebox.showinfo(
+                    "✅ Importação + Análise Concluídas",
+                    f"✅ {len(self.imported_paths)} produto(s) importado(s)\n"
+                    f"🤖 Categorias, tags e descrições geradas automaticamente!",
+                    parent=self.parent,
+                ))
         
         threading.Thread(target=_worker, daemon=True).start()
         

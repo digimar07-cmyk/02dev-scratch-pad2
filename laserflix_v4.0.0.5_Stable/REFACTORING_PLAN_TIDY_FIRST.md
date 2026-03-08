@@ -1,7 +1,7 @@
 # 🎯 PLANO DE REFATORAÇÃO "TIDY FIRST" - LASERFLIX v3.4.3.4
 
 **Criado em**: 07/03/2026 21:25 BRT  
-**Última atualização**: 08/03/2026 19:07 BRT (Pós-auditoria)  
+**Última atualização**: 08/03/2026 20:06 BRT (Regra de Limpeza Obrigatória)  
 **Modelo usado**: Claude Sonnet 4.5  
 **Baseado em**: Kent Beck "Tidy First", Simple Design, XP Refactoring
 
@@ -17,29 +17,73 @@ O `REFACTORING_STATUS.md` é a **fonte única da verdade** (single source of tru
 
 ---
 
-## 📊 ESTADO ATUAL (08/03/2026)
-
-```
-Arquivo: ui/main_window.py
-Linhas originais: ~868 linhas (07/03/2026)
-Linhas atuais: ~646 linhas (08/03/2026)
-Limite: 200 linhas (FILE_SIZE_LIMIT_RULE.md)
-Status: ⚠️  AINDA EM VIOLAÇÃO
-Excesso: ~446 linhas (223% acima do limite)
-Progresso: 25.6% concluído
-
-Fases concluídas: 8
-Fases pendentes: 5
-Fases canceladas: 1
-```
-
-**👉 Ver detalhes em**: [`REFACTORING_STATUS.md`](./REFACTORING_STATUS.md)
-
----
-
 ## 🔥 WORKFLOW ABSOLUTO DE REFATORAÇÃO
 
 **REGRA #0 (08/03/2026)**: **WORKFLOW OBRIGATÓRIO PARA TODA REFATORAÇÃO**
+
+**REGRA #1 (08/03/2026)**: **🗑️ LIMPEZA OBRIGATÓRIA DE ARQUIVOS TEMPORÁRIOS**
+
+### 🗑️ REGRA #1: LIMPEZA OBRIGATÓRIA (ABSOLUTA)
+
+**APÓS CONCLUSÃO DE QUALQUER TAREFA**, o assistente **DEVE OBRIGATORIAMENTE**:
+
+1. ✅ **Identificar arquivos temporários/obsoletos criados**:
+   - Scripts de automação (`REFACTOR_AUTO_*.py`)
+   - Backups gerados (`.backup_*`)
+   - Arquivos de teste temporários
+   - Qualquer artefato criado apenas para a tarefa
+
+2. ✅ **Deletar imediatamente após confirmação do usuário**:
+   ```bash
+   # Exemplo:
+   git rm REFACTOR_AUTO_FASE_XX.py
+   git commit -m "chore: remove obsolete FASE-XX automation script"
+   git push origin main
+   ```
+
+3. ✅ **Avisar o usuário da limpeza**:
+   ```
+   ✅ Tarefa concluída!
+   🗑️ Arquivo temporário deletado: REFACTOR_AUTO_FASE_XX.py
+   📌 Commit: [hash] - chore: remove obsolete script
+   ```
+
+### ⚠️ CONSEQUÊNCIAS DE NÃO FAZER LIMPEZA
+
+**SE NÃO DELETAR ARQUIVOS OBSOLETOS**:
+- 📋 Repositório poluído com arquivos desnecessários
+- 🔀 Confusão sobre quais scripts são válidos
+- 🐛 Risco de executar script obsoleto por engano
+- 📈 Tamanho do repositório aumenta desnecessariamente
+
+### 📋 ARQUIVOS QUE DEVEM SER DELETADOS
+
+**Scripts de automação (após tarefa concluída)**:
+- `REFACTOR_AUTO_FASE_*.py` → Deletar quando fase estiver OK
+- `migration_script_*.py` → Deletar após migração
+- `temp_*.py` → Deletar após uso
+
+**Backups (manter apenas enquanto necessário)**:
+- `*.backup_*` → Manter até confirmação, depois deletar
+- `*_old.py` → Deletar após validação
+
+**Arquivos de teste temporários**:
+- `test_temp_*.py` → Deletar após testes
+- `debug_*.log` → Não comitar
+
+### 📌 QUANDO DELETAR
+
+```
+FASE X executada → Usuário testa → Usuário confirma "OK" → 
+✅ DELETAR SCRIPT IMEDIATAMENTE → Commit de limpeza → Push
+```
+
+**TIMING**:
+- ❌ **NÃO** deletar antes da confirmação (usuário pode precisar reverter)
+- ✅ **SIM** deletar imediatamente após "OK" do usuário
+- ✅ **SIM** deletar no mesmo momento que atualiza REFACTORING_STATUS.md
+
+---
 
 ### Sequência Inviolável:
 
@@ -99,7 +143,7 @@ Fases canceladas: 1
 
 6️⃣ AVISAR USUÁRIO
    ✅ "COMMIT FEITO - PRONTO PARA TESTAR"
-   📝 Informar:
+   📋 Informar:
       - Arquivo modificado
       - Linhas removidas
       - O que foi extraído
@@ -116,6 +160,7 @@ Fases canceladas: 1
 8️⃣ SE OK RECEBIDO
    ✅ Marcar fase como concluída
    ✅ Atualizar REFACTORING_STATUS.md
+   🗑️ **DELETAR ARQUIVOS TEMPORÁRIOS (REGRA #1 OBRIGATÓRIA)**
    ✅ Prosseguir para próxima fase
 ```
 
@@ -138,6 +183,31 @@ Fases canceladas: 1
 - 🔧 Dificulta identificar qual fase quebrou
 - 💥 Pode acumular bugs sem detecção
 
+**SE NÃO DELETAR ARQUIVOS TEMPORÁRIOS (REGRA #1)**:
+- 📋 Poluição do repositório
+- 🔀 Confusão sobre scripts válidos
+- 🐛 Risco de executar script obsoleto
+
+---
+
+## 📊 ESTADO ATUAL (08/03/2026)
+
+```
+Arquivo: ui/main_window.py
+Linhas originais: ~868 linhas (07/03/2026)
+Linhas atuais: ~646 linhas (08/03/2026)
+Limite: 200 linhas (FILE_SIZE_LIMIT_RULE.md)
+Status: ⚠️  AINDA EM VIOLAÇÃO
+Excesso: ~446 linhas (223% acima do limite)
+Progresso: 25.6% concluído
+
+Fases concluídas: 8
+Fases pendentes: 5
+Fases canceladas: 1
+```
+
+**👉 Ver detalhes em**: [`REFACTORING_STATUS.md`](./REFACTORING_STATUS.md)
+
 ---
 
 ## ✅ FILOSOFIA KENT BECK APLICADA
@@ -147,6 +217,7 @@ Fases canceladas: 1
 2. ✅ **Sem duplicação** (unificar código repetido) ← **REFORÇADO PELO WORKFLOW**
 3. ✅ **Expressa intenção** (nomes claros)
 4. ✅ **Mínimo de elementos** (extrair só o necessário)
+5. 🗑️ **Limpeza contínua** (deletar arquivos obsoletos) ← **REGRA #1 ABSOLUTA**
 
 ### Princípios "Tidy First":
 - **Tidy First** = Arrumar ANTES de adicionar features
@@ -155,6 +226,7 @@ Fases canceladas: 1
 - **Commits atômicos** = 1 mudança → 1 commit → 1 teste
 - **Workflow rigoroso** = Seguir sequência inviolável (WORKFLOW ABSOLUTO)
 - **Fonte única da verdade** = REFACTORING_STATUS.md sempre atualizado
+- **Limpeza obrigatória** = Deletar arquivos temporários imediatamente (REGRA #1)
 
 ---
 
@@ -224,7 +296,12 @@ git push origin main
 # 5. Atualizar REFACTORING_STATUS.md
 # [Automatizado via commit do assistente]
 
-# 6. Se quebrou:
+# 6. 🗑️ DELETAR SCRIPT (REGRA #1 OBRIGATÓRIA)
+git rm REFACTOR_AUTO_FASE_XX.py
+git commit -m "chore: remove obsolete FASE-XX script"
+git push origin main
+
+# 7. Se quebrou:
 # Restaurar backup criado pelo script
 cp ui/main_window.py.backup_YYYYMMDD_HHMMSS ui/main_window.py
 ```
@@ -245,6 +322,7 @@ cp ui/main_window.py.backup_YYYYMMDD_HHMMSS ui/main_window.py
 8. ✅ **SEMPRE verificar duplicação ANTES** - Etapa 2 obrigatória
 9. ✅ **SEMPRE aguardar OK do usuário** - Etapa 7 obrigatória
 10. ✅ **SEMPRE atualizar REFACTORING_STATUS.md** - Após cada fase
+11. 🗑️ **SEMPRE deletar arquivos temporários** - REGRA #1 ABSOLUTA
 
 ### Após cada fase:
 
@@ -253,10 +331,19 @@ cp ui/main_window.py.backup_YYYYMMDD_HHMMSS ui/main_window.py
 3. ✅ Documentar problemas encontrados
 4. ✅ Commit de checkpoint
 5. ✅ **Aguardar confirmação do usuário antes de próxima fase**
+6. 🗑️ **Deletar arquivos temporários/scripts imediatamente** (REGRA #1)
 
 ---
 
-## 📝 LOG DE PROGRESSO
+## 📋 LOG DE PROGRESSO
+
+### 08/03/2026 20:06 BRT - REGRA #1 Adicionada (Limpeza Obrigatória)
+- ✅ REGRA #1 criada: Limpeza obrigatória de arquivos temporários
+- ✅ Integrada ao WORKFLOW ABSOLUTO (etapa 8)
+- ✅ Consequencias de violação documentadas
+- ✅ Lista de arquivos a deletar especificada
+- ✅ Timing de deleção definido
+- ✅ Protocolo de execução atualizado
 
 ### 08/03/2026 19:07 BRT - Auditoria Completa + Sincronização
 - ✅ Auditoria completa do código vs documentação realizada
@@ -312,6 +399,6 @@ cp ui/main_window.py.backup_YYYYMMDD_HHMMSS ui/main_window.py
 ---
 
 **Modelo usado**: Claude Sonnet 4.5  
-**Filosofia**: Kent Beck "Tidy First" + Simple Design + **WORKFLOW ABSOLUTO**  
+**Filosofia**: Kent Beck "Tidy First" + Simple Design + **WORKFLOW ABSOLUTO** + **LIMPEZA OBRIGATÓRIA**  
 **Garantia**: Micro-refactorings seguros e incrementais com aprovação em cada etapa  
 **Status atual**: 👉 **VER REFACTORING_STATUS.md** ← **FONTE ÚNICA DA VERDADE**

@@ -20,6 +20,8 @@ REFACTOR-FASE-1.2: HeaderBuilder + CardsGridBuilder extraídos ✅
 REFACTOR-FASE-1.2.1: Contador integrado ao HeaderBuilder ✅
 REFACTOR-FASE-1.2.2: ModalGenerator extraído ✅
 REFACTOR-FASE-1.3: OrphanManager extraído ✅
+REFACTOR-FASE-2A: ToggleManager consolidado ✅
+REFACTOR-FASE-2B: Métodos de filtro consolidados ✅
 """
 import os
 import tkinter as tk
@@ -194,7 +196,7 @@ class LaserflixMainWindow:
         # === FIM MANAGERS ===
         
         self.display_projects()
-        self.logger.info("✨ Laserflix v%s iniciado (FASE-1.2.2)", VERSION)
+        self.logger.info("✨ Laserflix v%s iniciado (FASE-2B)", VERSION)
 
     def __del__(self):
         if hasattr(self, 'thumbnail_preloader'):
@@ -253,19 +255,55 @@ class LaserflixMainWindow:
     def _on_search(self) -> None:
         self.display_ctrl.set_search_query(self.search_var.get())
 
-    def _on_origin_filter(self, origin, btn=None) -> None:
-        self.display_ctrl.set_origin_filter(origin)
+    def _apply_filter(self, filter_type: str, value, btn=None, show_count=False):
+        """
+        Método genérico para aplicar filtros (FASE-2B).
+        
+        Args:
+            filter_type: Tipo do filtro ("origin", "category", "tag", "collection")
+            value: Valor do filtro
+            btn: Botão da sidebar (opcional)
+            show_count: Se deve mostrar contador na status bar
+        """
+        # Mapear tipo de filtro para método do DisplayController
+        filter_methods = {
+            "origin": self.display_ctrl.set_origin_filter,
+            "category": self.display_ctrl.set_category_filter,
+            "tag": self.display_ctrl.set_tag_filter,
+            "collection": self.display_ctrl.set_collection_filter,
+        }
+        
+        # Aplicar filtro
+        if filter_type in filter_methods:
+            filter_methods[filter_type](value)
+        
+        # Atualizar sidebar
         self.sidebar.set_active_btn(btn)
-        count = sum(1 for d in self.database.values() if d.get("origin") == origin)
-        self.status_bar.config(text=f"Origem: {origin} ({count} projetos)")
+        
+        # Mostrar contador (se solicitado)
+        if show_count:
+            if filter_type == "origin":
+                count = sum(1 for d in self.database.values() if d.get("origin") == value)
+                self.status_bar.config(text=f"Origem: {value} ({count} projetos)")
+            elif filter_type == "collection":
+                count = self.collections_manager.get_collection_size(value)
+                self.status_bar.config(text=f"📁 Coleção: {value} ({count} projetos)")
+
+    def _on_origin_filter(self, origin, btn=None) -> None:
+        """Aplica filtro de origem."""
+        self._apply_filter("origin", origin, btn, show_count=True)
 
     def _on_category_filter(self, cats, btn=None) -> None:
-        self.display_ctrl.set_category_filter(cats)
-        self.sidebar.set_active_btn(btn)
+        """Aplica filtro de categoria."""
+        self._apply_filter("category", cats, btn)
 
     def _on_tag_filter(self, tag, btn=None) -> None:
-        self.display_ctrl.set_tag_filter(tag)
-        self.sidebar.set_active_btn(btn)
+        """Aplica filtro de tag."""
+        self._apply_filter("tag", tag, btn)
+
+    def _on_collection_filter(self, collection_name: str, btn=None) -> None:
+        """Aplica filtro de coleção."""
+        self._apply_filter("collection", collection_name, btn, show_count=True)
 
     # SELECTION CALLBACKS
     def _on_selection_mode_changed(self, is_active: bool) -> None:
@@ -295,12 +333,6 @@ class LaserflixMainWindow:
 
     def open_collections_dialog(self) -> None:
         self.collection_dialog_mgr.open_collections_dialog()
-
-    def _on_collection_filter(self, collection_name: str, btn=None) -> None:
-        self.display_ctrl.set_collection_filter(collection_name)
-        self.sidebar.set_active_btn(btn)
-        count = self.collections_manager.get_collection_size(collection_name)
-        self.status_bar.config(text=f"📁 Coleção: {collection_name} ({count} projetos)")
 
     # DISPLAY
     def display_projects(self) -> None:

@@ -1,1 +1,160 @@
-"""\nui/components/selection_bar.py — Barra de ferramentas para modo seleção.\n\nFASE 7D.2: Extrai construção de selection bar do main_window.py\nRedução estimada: -45 linhas no main_window.py\n"""\nimport tkinter as tk\nfrom ui.theme import FG_PRIMARY, FG_SECONDARY\n\n\nclass SelectionBar:\n    \"\"\"\n    Component para barra de ferramentas do modo seleção.\n    \n    Responsabilidades:\n    - Exibir contador de selecionados\n    - Botões: Selecionar tudo, Deselecionar tudo, Remover, Cancelar\n    \"\"\"\n    \n    def __init__(self, parent):\n        self.parent = parent\n        \n        # Frame principal\n        self.frame = tk.Frame(parent, bg=\"#1A1A00\", height=48)\n        self.frame.pack_propagate(False)\n        \n        # Contador\n        self.count_label = tk.Label(\n            self.frame,\n            text=\"0 selecionado(s)\",\n            bg=\"#1A1A00\",\n            fg=FG_PRIMARY,\n            font=(\"Segoe UI\", 10, \"bold\")\n        )\n        self.count_label.pack(side=\"left\", padx=15)\n        \n        # Container de botões\n        btn_container = tk.Frame(self.frame, bg=\"#1A1A00\")\n        btn_container.pack(side=\"right\", padx=10)\n        \n        # Botão Selecionar tudo\n        self.select_all_btn = tk.Button(\n            btn_container,\n            text=\"✓ Selecionar tudo\",\n            bg=\"#2A2A3E\",\n            fg=FG_PRIMARY,\n            font=(\"Segoe UI\", 9),\n            relief=\"flat\",\n            cursor=\"hand2\",\n            padx=12,\n            pady=6\n        )\n        self.select_all_btn.pack(side=\"left\", padx=4)\n        \n        # Botão Deselecionar tudo\n        self.deselect_all_btn = tk.Button(\n            btn_container,\n            text=\"✕ Deselecionar tudo\",\n            bg=\"#2A2A3E\",\n            fg=FG_PRIMARY,\n            font=(\"Segoe UI\", 9),\n            relief=\"flat\",\n            cursor=\"hand2\",\n            padx=12,\n            pady=6\n        )\n        self.deselect_all_btn.pack(side=\"left\", padx=4)\n        \n        # Botão Remover selecionados\n        self.remove_btn = tk.Button(\n            btn_container,\n            text=\"🗑️ Remover selecionados\",\n            bg=\"#AA3333\",\n            fg=\"#FFFFFF\",\n            font=(\"Segoe UI\", 9, \"bold\"),\n            relief=\"flat\",\n            cursor=\"hand2\",\n            padx=12,\n            pady=6\n        )\n        self.remove_btn.pack(side=\"left\", padx=4)\n        \n        # Botão Cancelar\n        self.cancel_btn = tk.Button(\n            btn_container,\n            text=\"Cancelar\",\n            bg=\"#3A3A4E\",\n            fg=FG_SECONDARY,\n            font=(\"Segoe UI\", 9),\n            relief=\"flat\",\n            cursor=\"hand2\",\n            padx=12,\n            pady=6\n        )\n        self.cancel_btn.pack(side=\"left\", padx=4)\n        \n        # Callbacks\n        self.on_select_all = None\n        self.on_deselect_all = None\n        self.on_remove_selected = None\n        self.on_cancel = None\n        \n        # Conectar comandos\n        self.select_all_btn.config(command=self._on_select_all_clicked)\n        self.deselect_all_btn.config(command=self._on_deselect_all_clicked)\n        self.remove_btn.config(command=self._on_remove_clicked)\n        self.cancel_btn.config(command=self._on_cancel_clicked)\n        \n        # Hover effects\n        self._setup_hover_effects()\n    \n    def _setup_hover_effects(self):\n        \"\"\"Configura efeitos de hover nos botões.\"\"\"\n        for btn, hover_bg in [\n            (self.select_all_btn, \"#3A3A4E\"),\n            (self.deselect_all_btn, \"#3A3A4E\"),\n            (self.remove_btn, \"#CC4444\"),\n            (self.cancel_btn, \"#4A4A5E\")\n        ]:\n            original_bg = btn.cget(\"bg\")\n            btn.bind(\"<Enter>\", lambda e, b=btn, h=hover_bg: b.config(bg=h))\n            btn.bind(\"<Leave>\", lambda e, b=btn, o=original_bg: b.config(bg=o))\n    \n    def update_count(self, count):\n        \"\"\"Atualiza contador de selecionados.\"\"\"\n        self.count_label.config(text=f\"{count} selecionado(s)\")\n        \n        # Habilitar/desabilitar botões baseado no count\n        state = \"normal\" if count > 0 else \"disabled\"\n        self.deselect_all_btn.config(state=state)\n        self.remove_btn.config(state=state)\n    \n    def show(self):\n        \"\"\"Mostra a barra de seleção.\"\"\"\n        self.frame.pack(side=\"top\", fill=\"x\", after=self.parent.winfo_children()[0])\n    \n    def hide(self):\n        \"\"\"Esconde a barra de seleção.\"\"\"\n        self.frame.pack_forget()\n    \n    def is_visible(self):\n        \"\"\"Verifica se está visível.\"\"\"\n        return self.frame.winfo_ismapped()\n    \n    # Callbacks internos\n    def _on_select_all_clicked(self):\n        if self.on_select_all:\n            self.on_select_all()\n    \n    def _on_deselect_all_clicked(self):\n        if self.on_deselect_all:\n            self.on_deselect_all()\n    \n    def _on_remove_clicked(self):\n        if self.on_remove_selected:\n            self.on_remove_selected()\n    \n    def _on_cancel_clicked(self):\n        if self.on_cancel:\n            self.on_cancel()\n
+"""
+ui/components/selection_bar.py — Barra de ferramentas para modo seleção.
+
+FASE 7D.2: Extrai construção de selection bar do main_window.py
+Redução estimada: -45 linhas no main_window.py
+"""
+import tkinter as tk
+from ui.theme import FG_PRIMARY, FG_SECONDARY
+
+
+class SelectionBar:
+    """
+    Component para barra de ferramentas do modo seleção.
+    
+    Responsabilidades:
+    - Exibir contador de selecionados
+    - Botões: Selecionar tudo, Deselecionar tudo, Remover, Cancelar
+    """
+    
+    def __init__(self, parent):
+        self.parent = parent
+        
+        # Frame principal
+        self.frame = tk.Frame(parent, bg="#1A1A00", height=48)
+        self.frame.pack_propagate(False)
+        
+        # Contador
+        self.count_label = tk.Label(
+            self.frame,
+            text="0 selecionado(s)",
+            bg="#1A1A00",
+            fg=FG_PRIMARY,
+            font=("Segoe UI", 10, "bold")
+        )
+        self.count_label.pack(side="left", padx=15)
+        
+        # Container de botões
+        btn_container = tk.Frame(self.frame, bg="#1A1A00")
+        btn_container.pack(side="right", padx=10)
+        
+        # Botão Selecionar tudo
+        self.select_all_btn = tk.Button(
+            btn_container,
+            text="✓ Selecionar tudo",
+            bg="#2A2A3E",
+            fg=FG_PRIMARY,
+            font=("Segoe UI", 9),
+            relief="flat",
+            cursor="hand2",
+            padx=12,
+            pady=6
+        )
+        self.select_all_btn.pack(side="left", padx=4)
+        
+        # Botão Deselecionar tudo
+        self.deselect_all_btn = tk.Button(
+            btn_container,
+            text="✕ Deselecionar tudo",
+            bg="#2A2A3E",
+            fg=FG_PRIMARY,
+            font=("Segoe UI", 9),
+            relief="flat",
+            cursor="hand2",
+            padx=12,
+            pady=6
+        )
+        self.deselect_all_btn.pack(side="left", padx=4)
+        
+        # Botão Remover selecionados
+        self.remove_btn = tk.Button(
+            btn_container,
+            text="🗑️ Remover selecionados",
+            bg="#AA3333",
+            fg="#FFFFFF",
+            font=("Segoe UI", 9, "bold"),
+            relief="flat",
+            cursor="hand2",
+            padx=12,
+            pady=6
+        )
+        self.remove_btn.pack(side="left", padx=4)
+        
+        # Botão Cancelar
+        self.cancel_btn = tk.Button(
+            btn_container,
+            text="Cancelar",
+            bg="#3A3A4E",
+            fg=FG_SECONDARY,
+            font=("Segoe UI", 9),
+            relief="flat",
+            cursor="hand2",
+            padx=12,
+            pady=6
+        )
+        self.cancel_btn.pack(side="left", padx=4)
+        
+        # Callbacks
+        self.on_select_all = None
+        self.on_deselect_all = None
+        self.on_remove_selected = None
+        self.on_cancel = None
+        
+        # Conectar comandos
+        self.select_all_btn.config(command=self._on_select_all_clicked)
+        self.deselect_all_btn.config(command=self._on_deselect_all_clicked)
+        self.remove_btn.config(command=self._on_remove_clicked)
+        self.cancel_btn.config(command=self._on_cancel_clicked)
+        
+        # Hover effects
+        self._setup_hover_effects()
+    
+    def _setup_hover_effects(self):
+        """Configura efeitos de hover nos botões."""
+        for btn, hover_bg in [
+            (self.select_all_btn, "#3A3A4E"),
+            (self.deselect_all_btn, "#3A3A4E"),
+            (self.remove_btn, "#CC4444"),
+            (self.cancel_btn, "#4A4A5E")
+        ]:
+            original_bg = btn.cget("bg")
+            btn.bind("<Enter>", lambda e, b=btn, h=hover_bg: b.config(bg=h))
+            btn.bind("<Leave>", lambda e, b=btn, o=original_bg: b.config(bg=o))
+    
+    def update_count(self, count):
+        """Atualiza contador de selecionados."""
+        self.count_label.config(text=f"{count} selecionado(s)")
+        
+        # Habilitar/desabilitar botões baseado no count
+        state = "normal" if count > 0 else "disabled"
+        self.deselect_all_btn.config(state=state)
+        self.remove_btn.config(state=state)
+    
+    def show(self):
+        """Mostra a barra de seleção."""
+        self.frame.pack(side="top", fill="x", after=self.parent.winfo_children()[0])
+    
+    def hide(self):
+        """Esconde a barra de seleção."""
+        self.frame.pack_forget()
+    
+    def is_visible(self):
+        """Verifica se está visível."""
+        return self.frame.winfo_ismapped()
+    
+    # Callbacks internos
+    def _on_select_all_clicked(self):
+        if self.on_select_all:
+            self.on_select_all()
+    
+    def _on_deselect_all_clicked(self):
+        if self.on_deselect_all:
+            self.on_deselect_all()
+    
+    def _on_remove_clicked(self):
+        if self.on_remove_selected:
+            self.on_remove_selected()
+    
+    def _on_cancel_clicked(self):
+        if self.on_cancel:
+            self.on_cancel()

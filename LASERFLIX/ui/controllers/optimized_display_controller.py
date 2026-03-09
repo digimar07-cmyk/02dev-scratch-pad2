@@ -42,6 +42,8 @@ class BaseDisplayController:
 
         self.on_display_update: Optional[Callable] = None
 
+    # ── Filtros ──────────────────────────────────────────────────────────
+
     def set_filter(self, filter_type: str) -> None:
         self.current_filter = filter_type
         self.current_categories = []
@@ -129,30 +131,22 @@ class BaseDisplayController:
             for filt in self.active_filters:
                 ftype, fval = filt["type"], filt["value"]
                 if ftype == "category" and fval not in data.get("categories", []):
-                    passes_all_filters = False
-                    break
+                    passes_all_filters = False; break
                 if ftype == "tag" and fval not in data.get("tags", []):
-                    passes_all_filters = False
-                    break
+                    passes_all_filters = False; break
                 if ftype == "origin" and data.get("origin") != fval:
-                    passes_all_filters = False
-                    break
+                    passes_all_filters = False; break
                 if ftype == "collection":
                     if not self.collections_manager:
-                        passes_all_filters = False
-                        break
+                        passes_all_filters = False; break
                     if path not in self.collections_manager.get_collection_projects(fval):
-                        passes_all_filters = False
-                        break
+                        passes_all_filters = False; break
                 if ftype == "analysis_ai" and not (data.get("analyzed") and data.get("analysis_type") == "ai"):
-                    passes_all_filters = False
-                    break
+                    passes_all_filters = False; break
                 if ftype == "analysis_fallback" and not (data.get("analyzed") and data.get("analysis_type") == "fallback"):
-                    passes_all_filters = False
-                    break
+                    passes_all_filters = False; break
                 if ftype == "analysis_pending" and data.get("analyzed"):
-                    passes_all_filters = False
-                    break
+                    passes_all_filters = False; break
             if not passes_all_filters:
                 continue
 
@@ -163,12 +157,13 @@ class BaseDisplayController:
             if self.current_tag and self.current_tag not in data.get("tags", []):
                 continue
             if self.search_query:
-                name_en = data.get("name", "")
-                if not search_bilingual(self.search_query, name_en):
+                if not search_bilingual(self.search_query, data.get("name", "")):
                     continue
 
             result.append(path)
         return result
+
+    # ── Ordenação ────────────────────────────────────────────────────────
 
     def set_sorting(self, sort_type: str) -> None:
         self.current_sort = sort_type
@@ -198,6 +193,26 @@ class BaseDisplayController:
             self.logger.error("Erro ao ordenar projetos: %s", e)
             return projects
 
+    # ── Paginação ────────────────────────────────────────────────────────
+
+    def next_page(self) -> None:
+        if self.current_page < self.total_pages:
+            self.current_page += 1
+            self._trigger_update()
+
+    def prev_page(self) -> None:
+        if self.current_page > 1:
+            self.current_page -= 1
+            self._trigger_update()
+
+    def first_page(self) -> None:
+        self.current_page = 1
+        self._trigger_update()
+
+    def last_page(self) -> None:
+        self.current_page = self.total_pages
+        self._trigger_update()
+
     def get_page_info(self, total_count: int) -> dict:
         self.total_pages = max(1, (total_count + self.items_per_page - 1) // self.items_per_page)
         self.current_page = max(1, min(self.current_page, self.total_pages))
@@ -210,6 +225,8 @@ class BaseDisplayController:
             "end_idx": end_idx,
             "items_per_page": self.items_per_page,
         }
+
+    # ── Internos ─────────────────────────────────────────────────────────
 
     def _trigger_update(self) -> None:
         if self.on_display_update:
@@ -249,7 +266,6 @@ class OptimizedDisplayController(BaseDisplayController):
         self.canvas = canvas
         self.scrollable_frame = scrollable_frame
         self.thumb_preloader = thumbnail_preloader
-
         self.card_builder_fn: Optional[Callable] = None
 
         self.filter_cache = FilterCache(max_size=50, ttl_seconds=300) if enable_cache else None
@@ -265,7 +281,6 @@ class OptimizedDisplayController(BaseDisplayController):
     def get_filtered_projects(self) -> list:
         if not self.filter_cache:
             return super().get_filtered_projects()
-
         cache_key = (
             self.current_filter,
             self.current_origin,

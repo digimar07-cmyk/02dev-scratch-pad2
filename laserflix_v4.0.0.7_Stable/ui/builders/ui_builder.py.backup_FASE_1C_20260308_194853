@@ -10,10 +10,6 @@ FASE-D: UIBuilder (reorganização segura)
 FASE-1C: SelectionBar extraído para componente
 - Removido método _build_selection_bar() (-41 linhas)
 - Agora usa ui/components/selection_bar.py
-
-UX-REFACTOR: SelectionBarManager integrado
-- Selection bar auto show/hide
-- Gerenciado por SelectionBarManager (não main_window)
 """
 import tkinter as tk
 from tkinter import ttk
@@ -26,7 +22,6 @@ from config.ui_constants import (
 
 from ui.header import HeaderBar
 from ui.sidebar import SidebarPanel
-from ui.managers.selection_bar_manager import SelectionBarManager
 
 
 class UIBuilder:
@@ -43,6 +38,7 @@ class UIBuilder:
         UIBuilder._build_header(window)
         UIBuilder._build_main_container(window)
         UIBuilder._build_status_bar(window)
+        # SelectionBar agora é instanciado no main_window.__init__ (FASE-1C)
         UIBuilder._bind_keyboard_shortcuts(window)
     
     @staticmethod
@@ -61,7 +57,7 @@ class UIBuilder:
             "on_export_db":       window.export_database,
             "on_backup":          window.manual_backup,
             "on_model_settings":  window.open_model_settings,
-            # UX-REFACTOR: Removido on_toggle_select (sem botão de seleção)
+            "on_toggle_select":   window.selection_ctrl.toggle_mode,
             "on_clean_orphans":   window.clean_orphans,
             "on_collections":     window.open_collections_dialog,
         })
@@ -87,11 +83,6 @@ class UIBuilder:
         # Content frame
         content_frame = tk.Frame(main_container, bg=BG_PRIMARY)
         content_frame.pack(side="left", fill="both", expand=True)
-        
-        # UX-REFACTOR: Instanciar SelectionBarManager
-        # Precisa ser DEPOIS de selection_ctrl e display_ctrl existirem
-        # Será inicializado no main_window.__init__ após controllers
-        window._content_frame = content_frame  # Guardar referência para SelectionBarManager
         
         # Chips bar (filtros ativos)
         window.chips_bar = tk.Frame(content_frame, bg="#1A1A2E", height=50)

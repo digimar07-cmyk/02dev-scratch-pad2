@@ -6,14 +6,6 @@ Versão final testada e validada.
 
 Usage:
     python apply_patch_selection_ux.py
-
-O que faz:
-1. Backup automático de main_window.py
-2. Adiciona import SelectionBarManager
-3. Instancia SelectionBarManager
-4. Remove callbacks e métodos obsoletos
-5. Remove todas as referências a selection_mode
-6. Valida sintaxe Python do resultado
 """
 
 import os
@@ -96,61 +88,57 @@ def apply_patch(content):
             original = content
     
     # 3. REMOVER on_mode_changed callback (linha completa)
-    pattern = r"^\s*self\.selection_ctrl\.on_mode_changed = self\._on_selection_mode_changed\s*$"
+    pattern = r"^\s*self\.selection_ctrl\.on_mode_changed = self\._on_selection_mode_changed\s*\n"
     if re.search(pattern, content, re.MULTILINE):
         content = re.sub(pattern, "", content, flags=re.MULTILINE)
         changes.append("✅ Callback on_mode_changed removido")
         original = content
     
-    # 4. COMENTAR on_selection_changed (opcional, já gerenciado pelo manager)
-    pattern = r"^(\s*)(self\.selection_ctrl\.on_selection_changed = self\._on_selection_count_changed)\s*$"
-    match = re.search(pattern, content, re.MULTILINE)
-    if match and "# UX-REFACTOR" not in content:
-        indent = match.group(1)
-        old_line = match.group(2)
-        replacement = f"{indent}# UX-REFACTOR: Gerenciado por SelectionBarManager\n{indent}# {old_line}"
-        content = re.sub(pattern, replacement, content, flags=re.MULTILINE, count=1)
-        changes.append("✅ Callback on_selection_changed comentado")
+    # 4. REMOVER on_selection_changed (REMOVER COMPLETAMENTE, NÃO COMENTAR!)
+    pattern = r"^\s*self\.selection_ctrl\.on_selection_changed = self\._on_selection_count_changed\s*\n"
+    if re.search(pattern, content, re.MULTILINE):
+        content = re.sub(pattern, "", content, flags=re.MULTILINE)
+        changes.append("✅ Callback on_selection_changed REMOVIDO")
         original = content
     
-    # 5. REMOVER método _on_selection_mode_changed (bloco completo)
+    # 5. REMOVER callback on_projects_removed (se existir com lambda)
+    pattern = r"^\s*self\.selection_ctrl\.on_projects_removed = lambda count:.*?\n"
+    if re.search(pattern, content, re.MULTILINE):
+        # NÃO remover, ele é usado
+        pass
+    
+    # 6. REMOVER método _on_selection_mode_changed (bloco completo)
     pattern = r"\n    # SELECTION CALLBACKS\n    def _on_selection_mode_changed\(self, is_active: bool\) -> None:.*?(?=\n    def |\n    # [A-Z]|\Z)"
     if re.search(pattern, content, re.DOTALL):
         content = re.sub(pattern, "", content, flags=re.DOTALL, count=1)
         changes.append("✅ Método _on_selection_mode_changed removido")
         original = content
     
-    # 6. REMOVER método _on_selection_count_changed
+    # 7. REMOVER método _on_selection_count_changed
     pattern = r"\n    def _on_selection_count_changed\(self, count: int\) -> None:.*?(?=\n    def |\n    # [A-Z]|\Z)"
     if re.search(pattern, content, re.DOTALL):
         content = re.sub(pattern, "", content, flags=re.DOTALL, count=1)
         changes.append("✅ Método _on_selection_count_changed removido")
         original = content
     
-    # 7. REMOVER selection_mode de _should_rebuild()
-    pattern = r'^(\s*)current_state\["selection_mode"\] = self\.selection_ctrl\.selection_mode\s*$'
-    match = re.search(pattern, content, re.MULTILINE)
-    if match:
-        indent = match.group(1)
-        replacement = f"{indent}# UX-REFACTOR: selection_mode removido (não existe mais)"
-        content = re.sub(pattern, replacement, content, flags=re.MULTILINE, count=1)
+    # 8. REMOVER selection_mode de _should_rebuild()
+    pattern = r'^(\s*)current_state\["selection_mode"\] = self\.selection_ctrl\.selection_mode\s*\n'
+    if re.search(pattern, content, re.MULTILINE):
+        content = re.sub(pattern, "", content, flags=re.MULTILINE, count=1)
         changes.append("✅ selection_mode removido de _should_rebuild()")
         original = content
     
-    # 8. REMOVER selection_mode de _get_card_callbacks()
-    pattern = r'^(\s*)"selection_mode": self\.selection_ctrl\.selection_mode,\s*$'
-    match = re.search(pattern, content, re.MULTILINE)
-    if match:
-        indent = match.group(1)
-        replacement = f"{indent}# UX-REFACTOR: selection_mode removido (checkboxes sempre visíveis)"
-        content = re.sub(pattern, replacement, content, flags=re.MULTILINE, count=1)
+    # 9. REMOVER selection_mode de _get_card_callbacks()
+    pattern = r'^(\s*)"selection_mode": self\.selection_ctrl\.selection_mode,\s*\n'
+    if re.search(pattern, content, re.MULTILINE):
+        content = re.sub(pattern, "", content, flags=re.MULTILINE, count=1)
         changes.append("✅ selection_mode removido de _get_card_callbacks()")
         original = content
     
-    # 9. REMOVER verificação selection_mode em open_project_modal()
+    # 10. REMOVER verificação selection_mode em open_project_modal()
     pattern = r"(def open_project_modal\(self, project_path: str\) -> None:\n)(\s+)if self\.selection_ctrl\.selection_mode:\n\s+self\.selection_ctrl\.toggle_project\(project_path\); return\n"
     if re.search(pattern, content):
-        replacement = r"\1\2# UX-REFACTOR: Sempre abre modal, checkbox é independente\n"
+        replacement = r"\1"
         content = re.sub(pattern, replacement, content, count=1)
         changes.append("✅ Verificação selection_mode removida de open_project_modal()")
         original = content
@@ -161,7 +149,6 @@ def apply_patch(content):
 def validate_patch(content):
     """Valida se patch foi aplicado corretamente."""
     errors = []
-    warnings = []
     
     # Verificações obrigatórias
     if "from ui.managers.selection_bar_manager import SelectionBarManager" not in content:
@@ -174,18 +161,24 @@ def validate_patch(content):
     if "def _on_selection_mode_changed" in content:
         errors.append("❌ Método _on_selection_mode_changed ainda presente")
     
+    if "def _on_selection_count_changed" in content:
+        errors.append("❌ Método _on_selection_count_changed ainda presente")
+    
     if '"selection_mode": self.selection_ctrl.selection_mode' in content:
         errors.append("❌ selection_mode ainda em _get_card_callbacks()")
     
-    if "self.selection_ctrl.on_mode_changed" in content and "#" not in content:
-        errors.append("❌ Callback on_mode_changed ainda ativo")
+    if "self.selection_ctrl.on_mode_changed" in content:
+        errors.append("❌ Callback on_mode_changed ainda presente")
+    
+    if "self.selection_ctrl.on_selection_changed = self._on_selection_count_changed" in content:
+        errors.append("❌ Callback on_selection_changed ainda presente (ERRO FATAL!)")
     
     # Validar sintaxe Python
     is_valid, syntax_error = validate_python_syntax(content)
     if not is_valid:
         errors.append(f"❌ ERRO DE SINTAXE: {syntax_error}")
     
-    return errors, warnings
+    return errors
 
 
 def main():
@@ -220,7 +213,7 @@ def main():
     
     # Validar
     print("\n✅ Validando patch...")
-    errors, warnings = validate_patch(modified_content)
+    errors = validate_patch(modified_content)
     
     if errors:
         print("\n❌ VALIDAÇÃO FALHOU:\n")
@@ -228,11 +221,6 @@ def main():
             print(f"  {error}")
         print(f"\n🔄 Nada foi modificado. Backup: {backup_path}")
         return 1
-    
-    if warnings:
-        print("\n⚠️  Avisos:\n")
-        for warning in warnings:
-            print(f"  {warning}")
     
     # Escrever arquivo modificado
     write_file(MAIN_WINDOW_PATH, modified_content)

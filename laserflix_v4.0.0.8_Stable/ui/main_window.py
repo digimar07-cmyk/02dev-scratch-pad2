@@ -24,6 +24,7 @@ REFACTOR-FASE-2A: ToggleManager consolidado ✅
 REFACTOR-FASE-2B: Métodos de filtro consolidados ✅
 REFACTOR-FASE-2C: Callbacks lambda consolidados ✅
 REFACTOR-FASE-1C: SelectionBar integrado como componente ✅
+FIX-SELECTION-FLICKER: Seleção visual sem rebuild de tela ✅
 PERFORMANCE: 3 otimizações integradas (4.5× faster) ✅
 """
 import os
@@ -119,6 +120,7 @@ class LaserflixMainWindow:
         self._force_rebuild = False
         self._visible_range = (0, 36)
         self._scroll_update_pending = False
+        self._card_registry = {}  # FIX-SELECTION-FLICKER: {path: card_widget}
         
         # ═══════════════════════════════════════════════════════════════════
         # 3. BUILD UI (cria canvas, scrollable_frame, etc)
@@ -168,8 +170,9 @@ class LaserflixMainWindow:
         # ═══════════════════════════════════════════════════════════════════
         
         # SelectionController callbacks
-        self.selection_ctrl.on_mode_changed = self._on_selection_mode_changed
+        self.selection_ctrl.on_mode_changed     = self._on_selection_mode_changed
         self.selection_ctrl.on_selection_changed = self._on_selection_count_changed
+        self.selection_ctrl.on_card_toggled     = self._update_card_selection_visual
         self.selection_ctrl.on_projects_removed = lambda count: (
             self.status_bar.config(text=f"🗑️ {count} projeto(s) removido(s)"),
             self.sidebar.refresh(self.database, self.collections_manager)
@@ -321,22 +324,15 @@ class LaserflixMainWindow:
             btn: Botão da sidebar (opcional)
             show_count: Se deve mostrar contador na status bar
         """
-        # Mapear tipo de filtro para método do DisplayController
         filter_methods = {
             "origin": self.display_ctrl.set_origin_filter,
             "category": self.display_ctrl.set_category_filter,
             "tag": self.display_ctrl.set_tag_filter,
             "collection": self.display_ctrl.set_collection_filter,
         }
-        
-        # Aplicar filtro
         if filter_type in filter_methods:
             filter_methods[filter_type](value)
-        
-        # Atualizar sidebar
         self.sidebar.set_active_btn(btn)
-        
-        # Mostrar contador (se solicitado)
         if show_count:
             if filter_type == "origin":
                 count = sum(1 for d in self.database.values() if d.get("origin") == value)
@@ -346,24 +342,20 @@ class LaserflixMainWindow:
                 self.status_bar.config(text=f"📁 Coleção: {value} ({count} projetos)")
 
     def _on_origin_filter(self, origin, btn=None) -> None:
-        """Aplica filtro de origem."""
         self._apply_filter("origin", origin, btn, show_count=True)
 
     def _on_category_filter(self, cats, btn=None) -> None:
-        """Aplica filtro de categoria."""
         self._apply_filter("category", cats, btn)
 
     def _on_tag_filter(self, tag, btn=None) -> None:
-        """Aplica filtro de tag."""
         self._apply_filter("tag", tag, btn)
 
     def _on_collection_filter(self, collection_name: str, btn=None) -> None:
-        """Aplica filtro de coleção."""
         self._apply_filter("collection", collection_name, btn, show_count=True)
 
-    # SELECTION CALLBACKS — FASE-1C: usa SelectionBar component
+    # SELECTION CALLBACKS — FIX-SELECTION-FLICKER
     def _on_selection_mode_changed(self, is_active: bool) -> None:
-        """Mostra/esconde SelectionBar via componente (FASE-1C)."""
+        """Mostra/esconde SelectionBar. Rebuild necessário para mostrar/ocultar checkboxes."""
         if is_active:
             self.selection_bar.show()
             self.header.set_select_btn_active(True)
@@ -372,12 +364,37 @@ class LaserflixMainWindow:
             self.header.set_select_btn_active(False)
         self._invalidate_cache()
         self.display_projects()
-    
+
     def _on_selection_count_changed(self, count: int) -> None:
-        """Atualiza contador via SelectionBar component (FASE-1C)."""
+        """Atualiza APENAS o contador da barra — SEM rebuild de cards."""
         self.selection_bar.update_count(count)
-        self._invalidate_cache()
-        self.display_projects()
+
+    def _update_card_selection_visual(self, path: str, is_selected: bool) -> None:
+        """
+        FIX-SELECTION-FLICKER: Atualiza visual de UM card específico.
+        Mesmo padrão do btn_updater dos toggles (favorite, done, etc).
+        Nenhum outro card é tocado. Scroll position mantida.
+        """
+        card = self._card_registry.get(path)
+        if not card:
+            return
+        try:
+            if not card.winfo_exists():
+                return
+            border_color = "#FFFF00" if is_selected else "#1E1E2E"  # BG_CARD
+            thickness = 2 if is_selected else 0
+            card.config(
+                bg=border_color,
+                highlightbackground=border_color,
+                highlightthickness=thickness,
+            )
+            # Ajusta padding do inner frame
+            inner = card.winfo_children()
+            if inner:
+                pad = 2 if is_selected else 0
+                inner[0].pack_configure(padx=pad, pady=pad)
+        except tk.TclError:
+            pass
 
     # COLLECTION WRAPPERS
     def _on_add_to_collection(self, project_path: str, collection_name: str) -> None:
@@ -411,7 +428,6 @@ class LaserflixMainWindow:
         end_idx = page_info["end_idx"]
         page_items = all_filtered[start_idx:end_idx]
         
-        # Usar HeaderBuilder com contador integrado (FASE-1.2.1)
         from ui.builders.header_builder import HeaderBuilder
         HeaderBuilder.build(
             self.scrollable_frame, 
@@ -424,10 +440,10 @@ class LaserflixMainWindow:
             self._build_empty_state()
             return
         
-        # Usar CardsGridBuilder (FASE-1.2B)
         from ui.builders.cards_grid_builder import CardsGridBuilder
         card_cb = self._get_card_callbacks()
-        CardsGridBuilder.build(self.scrollable_frame, page_items, card_cb)
+        # FIX-SELECTION-FLICKER: Guarda registro {path: card_widget}
+        self._card_registry = CardsGridBuilder.build(self.scrollable_frame, page_items, card_cb)
         
         self.content_canvas.yview_moveto(0)
 
@@ -500,7 +516,6 @@ class LaserflixMainWindow:
             self.display_projects()
 
     def _modal_generate_desc(self, path, desc_lbl, gen_btn, modal) -> None:
-        """Delega geração de descrição para ModalGenerator (FASE-1.2.2)."""
         self.modal_gen.generate_description(
             path, desc_lbl, gen_btn, modal, self.open_project_modal
         )
@@ -514,7 +529,7 @@ class LaserflixMainWindow:
             self.database[path]["tags"] = new_tags
             self.database[path]["analyzed"] = True
             self.db_manager.save_database()
-            self._invalidate_cache()  # PERFORMANCE: Invalida FilterCache
+            self._invalidate_cache()
             self.sidebar.refresh(self.database, self.collections_manager)
             self.display_projects()
             self.status_bar.config(text="✓ Atualizado!")
@@ -522,33 +537,32 @@ class LaserflixMainWindow:
     # TOGGLES
     def toggle_favorite(self, path, btn=None) -> None:
         self.toggle_mgr.toggle_favorite(path, btn)
-        self._invalidate_cache()  # PERFORMANCE: Invalida FilterCache
+        self._invalidate_cache()
 
     def toggle_done(self, path, btn=None) -> None:
         self.toggle_mgr.toggle_done(path, btn)
-        self._invalidate_cache()  # PERFORMANCE: Invalida FilterCache
+        self._invalidate_cache()
 
     def toggle_good(self, path, btn=None) -> None:
         self.toggle_mgr.toggle_good(path, btn)
-        self._invalidate_cache()  # PERFORMANCE: Invalida FilterCache
+        self._invalidate_cache()
 
     def toggle_bad(self, path, btn=None) -> None:
         self.toggle_mgr.toggle_bad(path, btn)
-        self._invalidate_cache()  # PERFORMANCE: Invalida FilterCache
+        self._invalidate_cache()
 
     def remove_project(self, path: str) -> None:
         if path in self.database:
             name = self.database[path].get("name", path)
             self.database.pop(path)
             self.db_manager.save_database()
-            self._invalidate_cache()  # PERFORMANCE: Invalida FilterCache
+            self._invalidate_cache()
             self.collections_manager.clean_orphan_projects(set(self.database.keys()))
             self.sidebar.refresh(self.database, self.collections_manager)
             self.display_projects()
             self.status_bar.config(text=f"🗑️ '{name}' removido do banco.")
 
     def clean_orphans(self) -> None:
-        """Delega limpeza de órfãos para OrphanManager (FASE-1.3)."""
         self.orphan_mgr.clean_orphans()
 
     # ANALYSIS
@@ -567,7 +581,7 @@ class LaserflixMainWindow:
     def generate_descriptions_for_all(self) -> None:
         self.analysis_ctrl.generate_descriptions_for_all(self.database)
 
-    # DIALOGS (delegados para DialogManager)
+    # DIALOGS
     def open_import_dialog(self) -> None:
         self.import_manager.database = self.database
         self.import_manager.start_import()
@@ -594,7 +608,7 @@ class LaserflixMainWindow:
         self.database = self.db_manager.database
         self.import_manager.database = self.database
         self.db_manager.save_database()
-        self._invalidate_cache()  # PERFORMANCE: Invalida FilterCache
+        self._invalidate_cache()
         self.sidebar.refresh(self.database, self.collections_manager)
         self.display_ctrl.current_page = 1
         self.display_projects()

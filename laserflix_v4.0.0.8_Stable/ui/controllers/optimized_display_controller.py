@@ -1,16 +1,12 @@
 """
 ui/controllers/optimized_display_controller.py — DisplayController Otimizado
 
-Controller de display com 3 otimizações de performance:
-1. FilterCache: Cache inteligente de filtros (80% faster)
-2. Lazy rendering: Renderiza apenas cards visíveis (60% faster)
-3. PredictivePreload: Preload de páginas (0ms navigation)
-
-GANHO COMBINADO: 4.5× mais rápido
+Controller de display com filtros, ordenação, paginação e cache.
 
 🔥 REFATORADO em 09/03/2026:
    - Removida herança de DisplayController (arquivo legado deletado)
    - Agora é um controller standalone com todos os métodos próprios
+   - Assinatura do __init__ restaurada para compatibilidade com main_window.py
 """
 
 import tkinter as tk
@@ -34,10 +30,25 @@ class OptimizedDisplayController:
     def __init__(
         self,
         database: dict,
+        canvas: Optional[tk.Canvas] = None,
+        scrollable_frame: Optional[tk.Frame] = None,
+        thumbnail_preloader=None,
         collections_manager=None,
         items_per_page: int = 36,
     ):
+        """
+        Args:
+            database: Database de projetos
+            canvas: Canvas com scroll (opcional, para retrocompatibilidade)
+            scrollable_frame: Frame interno scrollable (opcional)
+            thumbnail_preloader: Instância do ThumbnailPreloader (opcional)
+            collections_manager: Gerenciador de coleções
+            items_per_page: Cards por página
+        """
         self.database = database
+        self.canvas = canvas
+        self.scrollable_frame = scrollable_frame
+        self.thumbnail_preloader = thumbnail_preloader
         self.collections_manager = collections_manager
         self.items_per_page = items_per_page
         self.logger = LOGGER
@@ -47,6 +58,7 @@ class OptimizedDisplayController:
         self.current_origin: Optional[str] = None
         self.current_categories: set = set()
         self.current_tag: Optional[str] = None
+        self.current_collection: Optional[str] = None
         self.search_query: str = ""
         self.active_filters: List[dict] = []
         
@@ -62,7 +74,7 @@ class OptimizedDisplayController:
         self._cache_enabled: bool = True
         
         # Callback para atualização da UI
-        self.on_display_updated: Optional[Callable[[int], None]] = None
+        self.on_display_update: Optional[Callable[[], None]] = None
     
     # ═══════════════════════════════════════════════════════════════
     # FILTROS
@@ -73,36 +85,53 @@ class OptimizedDisplayController:
         self.current_filter = filter_type
         self.current_page = 1
         self._invalidate_cache()
+        if self.on_display_update:
+            self.on_display_update()
     
-    def set_origin(self, origin: Optional[str]) -> None:
+    def set_origin_filter(self, origin: Optional[str]) -> None:
         """Define filtro de origem (pasta raiz)."""
         self.current_origin = origin
         self.current_page = 1
         self._invalidate_cache()
+        if self.on_display_update:
+            self.on_display_update()
     
-    def add_category_filter(self, category: str) -> None:
-        """Adiciona categoria ao filtro."""
-        self.current_categories.add(category)
+    def set_category_filter(self, categories) -> None:
+        """Define filtro de categorias."""
+        if isinstance(categories, str):
+            self.current_categories = {categories}
+        elif isinstance(categories, (list, set)):
+            self.current_categories = set(categories)
+        else:
+            self.current_categories = set()
         self.current_page = 1
         self._invalidate_cache()
+        if self.on_display_update:
+            self.on_display_update()
     
-    def remove_category_filter(self, category: str) -> None:
-        """Remove categoria do filtro."""
-        self.current_categories.discard(category)
-        self.current_page = 1
-        self._invalidate_cache()
-    
-    def set_tag(self, tag: Optional[str]) -> None:
+    def set_tag_filter(self, tag: Optional[str]) -> None:
         """Define filtro de tag."""
         self.current_tag = tag
         self.current_page = 1
         self._invalidate_cache()
+        if self.on_display_update:
+            self.on_display_update()
+    
+    def set_collection_filter(self, collection: Optional[str]) -> None:
+        """Define filtro de coleção."""
+        self.current_collection = collection
+        self.current_page = 1
+        self._invalidate_cache()
+        if self.on_display_update:
+            self.on_display_update()
     
     def set_search_query(self, query: str) -> None:
         """Define busca textual."""
         self.search_query = query.lower().strip()
         self.current_page = 1
         self._invalidate_cache()
+        if self.on_display_update:
+            self.on_display_update()
     
     def add_filter_chip(self, filter_type: str, value: str) -> None:
         """Adiciona chip de filtro empilhável."""
@@ -110,6 +139,8 @@ class OptimizedDisplayController:
             self.active_filters.append({"type": filter_type, "value": value})
             self.current_page = 1
             self._invalidate_cache()
+            if self.on_display_update:
+                self.on_display_update()
     
     def remove_filter_chip(self, filt: dict) -> None:
         """Remove chip de filtro."""
@@ -117,6 +148,8 @@ class OptimizedDisplayController:
             self.active_filters.remove(filt)
             self.current_page = 1
             self._invalidate_cache()
+            if self.on_display_update:
+                self.on_display_update()
     
     def clear_all_filters(self) -> None:
         """Limpa todos os filtros."""
@@ -124,10 +157,13 @@ class OptimizedDisplayController:
         self.current_origin = None
         self.current_categories.clear()
         self.current_tag = None
+        self.current_collection = None
         self.search_query = ""
         self.active_filters.clear()
         self.current_page = 1
         self._invalidate_cache()
+        if self.on_display_update:
+            self.on_display_update()
     
     def get_filtered_projects(self) -> List[str]:
         """
@@ -142,6 +178,7 @@ class OptimizedDisplayController:
             self.current_origin,
             tuple(sorted(self.current_categories)),
             self.current_tag,
+            self.current_collection,
             self.search_query,
             tuple((f["type"], f["value"]) for f in self.active_filters),
         )
@@ -165,13 +202,6 @@ class OptimizedDisplayController:
     def _passes_all_filters(self, path: str, data: dict) -> bool:
         """
         Verifica se um projeto passa por todos os filtros ativos.
-        
-        Args:
-            path: Caminho do projeto
-            data: Dados do projeto
-        
-        Returns:
-            True se passa por todos os filtros
         """
         # Filtro principal
         if self.current_filter == "favorites" and not data.get("favorite"):
@@ -185,7 +215,8 @@ class OptimizedDisplayController:
         
         # Filtro de origem
         if self.current_origin:
-            if not path.startswith(self.current_origin):
+            origin = data.get("origin", "")
+            if origin != self.current_origin:
                 return False
         
         # Filtro de categorias
@@ -198,6 +229,12 @@ class OptimizedDisplayController:
         if self.current_tag:
             project_tags = data.get("tags", [])
             if self.current_tag not in project_tags:
+                return False
+        
+        # Filtro de coleção
+        if self.current_collection and self.collections_manager:
+            collection_paths = self.collections_manager.get_collection_projects(self.current_collection)
+            if path not in collection_paths:
                 return False
         
         # Busca textual
@@ -217,8 +254,29 @@ class OptimizedDisplayController:
             elif filt_type == "tag":
                 if filt_value not in data.get("tags", []):
                     return False
+            elif filt_type == "origin":
+                if data.get("origin") != filt_value:
+                    return False
+            elif filt_type == "collection" and self.collections_manager:
+                collection_paths = self.collections_manager.get_collection_projects(filt_value)
+                if path not in collection_paths:
+                    return False
         
         return True
+    
+    def get_display_state(self) -> dict:
+        """Retorna estado atual do display para detecção de mudanças."""
+        return {
+            "filter": self.current_filter,
+            "origin": self.current_origin,
+            "categories": tuple(sorted(self.current_categories)),
+            "tag": self.current_tag,
+            "collection": self.current_collection,
+            "search": self.search_query,
+            "active_filters": tuple((f["type"], f["value"]) for f in self.active_filters),
+            "sort": self.current_sort,
+            "page": self.current_page,
+        }
     
     # ═══════════════════════════════════════════════════════════════
     # ORDENAÇÃO
@@ -227,16 +285,12 @@ class OptimizedDisplayController:
     def set_sort(self, sort_type: str) -> None:
         """Define tipo de ordenação."""
         self.current_sort = sort_type
+        if self.on_display_update:
+            self.on_display_update()
     
     def apply_sorting(self, projects: List[Tuple[str, dict]]) -> List[Tuple[str, dict]]:
         """
         Ordena lista de projetos.
-        
-        Args:
-            projects: Lista de tuplas (path, data)
-        
-        Returns:
-            Lista ordenada
         """
         if self.current_sort == "name":
             return sorted(projects, key=lambda x: x[1].get("name", "").lower())
@@ -255,26 +309,26 @@ class OptimizedDisplayController:
         """Avança para próxima página."""
         if self.current_page < self.total_pages:
             self.current_page += 1
+            if self.on_display_update:
+                self.on_display_update()
     
     def prev_page(self) -> None:
         """Volta para página anterior."""
         if self.current_page > 1:
             self.current_page -= 1
+            if self.on_display_update:
+                self.on_display_update()
     
     def goto_page(self, page: int) -> None:
         """Vai para página específica."""
         if 1 <= page <= self.total_pages:
             self.current_page = page
+            if self.on_display_update:
+                self.on_display_update()
     
     def get_page_info(self, total_items: int) -> dict:
         """
         Calcula informações de paginação.
-        
-        Args:
-            total_items: Total de itens disponíveis
-        
-        Returns:
-            dict com start_idx, end_idx, total_pages
         """
         self.total_pages = max(1, (total_items + self.items_per_page - 1) // self.items_per_page)
         

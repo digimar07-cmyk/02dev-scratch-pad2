@@ -14,10 +14,19 @@ class DatabaseManager:
     Gerencia persistência de dados em JSON com backups automáticos.
     """
     
-    def __init__(self):
+    def __init__(self, db_file=None, config_file=None):
+        """
+        Args:
+            db_file: Caminho customizado para database.json (usado em testes)
+            config_file: Caminho customizado para config.json (usado em testes)
+        """
         self.database = {}
         self.config = {"folders": [], "models": {}}
         self.logger = LOGGER
+        
+        # Permite override de paths para testes
+        self.db_file = db_file or DB_FILE
+        self.config_file = config_file or CONFIG_FILE
         
         # Garante existência da pasta de backups
         os.makedirs(BACKUP_FOLDER, exist_ok=True)
@@ -27,12 +36,12 @@ class DatabaseManager:
         Carrega configurações de pastas e modelos.
         Cria arquivo padrão se não existir.
         """
-        if not os.path.exists(CONFIG_FILE):
+        if not os.path.exists(self.config_file):
             self.logger.info("⚠️ Config não encontrado, usando padrão vazio")
             return
         
         try:
-            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            with open(self.config_file, "r", encoding="utf-8") as f:
                 self.config = json.load(f)
             self.logger.info("✅ Config carregado: %d pastas", len(self.config.get("folders", [])))
             
@@ -41,7 +50,7 @@ class DatabaseManager:
                 "Arquivo config corrompido (JSON inválido): %s. Usando backup se disponível.",
                 e, exc_info=True
             )
-            self._try_restore_from_backup(CONFIG_FILE)
+            self._try_restore_from_backup(self.config_file)
             
         except (FileNotFoundError, PermissionError) as e:
             self.logger.error(
@@ -55,7 +64,7 @@ class DatabaseManager:
                 e, exc_info=True
             )
             try:
-                with open(CONFIG_FILE, "r", encoding="latin-1") as f:
+                with open(self.config_file, "r", encoding="latin-1") as f:
                     self.config = json.load(f)
                 self.logger.info("✅ Config carregado com encoding alternativo")
             except Exception as fallback_err:
@@ -65,18 +74,21 @@ class DatabaseManager:
         """
         Salva configurações de forma atômica.
         """
-        self._save_json_atomic(CONFIG_FILE, self.config, make_backup=True)
+        self._save_json_atomic(self.config_file, self.config, make_backup=True)
     
     def load_database(self):
         """
         Carrega banco de dados. Migra campo 'category' → 'categories' se necessário.
+        
+        IMPORTANTE: Schema padrão usa 'categories' (lista), mas aceita 'category' (string)
+        por compatibilidade com versões antigas. Ao carregar, converte automaticamente.
         """
-        if not os.path.exists(DB_FILE):
+        if not os.path.exists(self.db_file):
             self.logger.info("⚠️ Database não encontrado, iniciando vazio")
             return
         
         try:
-            with open(DB_FILE, "r", encoding="utf-8") as f:
+            with open(self.db_file, "r", encoding="utf-8") as f:
                 self.database = json.load(f)
             
             # Migração de compatibilidade: category → categories
@@ -93,7 +105,7 @@ class DatabaseManager:
                 "Database corrompido (JSON inválido): %s. Tentando restaurar backup.",
                 e, exc_info=True
             )
-            self._try_restore_from_backup(DB_FILE)
+            self._try_restore_from_backup(self.db_file)
             
         except (FileNotFoundError, PermissionError) as e:
             self.logger.error(
@@ -107,7 +119,7 @@ class DatabaseManager:
                 e, exc_info=True
             )
             try:
-                with open(DB_FILE, "r", encoding="latin-1") as f:
+                with open(self.db_file, "r", encoding="latin-1") as f:
                     self.database = json.load(f)
                 self.logger.info("✅ Database carregado com encoding alternativo")
             except Exception as fallback_err:
@@ -116,8 +128,12 @@ class DatabaseManager:
     def save_database(self):
         """
         Salva banco de dados de forma atômica.
+        
+        IMPORTANTE: Salva usando o schema interno atual (self.database).
+        Se o schema tiver 'categories' (lista), salva como lista.
+        Se tiver 'category' (string), salva como string.
         """
-        self._save_json_atomic(DB_FILE, self.database, make_backup=True)
+        self._save_json_atomic(self.db_file, self.database, make_backup=True)
     
     def _save_json_atomic(self, filepath, data, make_backup=True):
         """
@@ -183,9 +199,9 @@ class DatabaseManager:
             self.logger.info("✅ Arquivo restaurado de %s", backup_file)
             
             # Tenta carregar novamente
-            if filepath == DB_FILE:
+            if filepath == self.db_file:
                 self.load_database()
-            elif filepath == CONFIG_FILE:
+            elif filepath == self.config_file:
                 self.load_config()
             
             return True
@@ -202,7 +218,7 @@ class DatabaseManager:
         Cria backup automático com timestamp.
         Limita a MAX_AUTO_BACKUPS arquivos mais recentes.
         """
-        if not os.path.exists(DB_FILE):
+        if not os.path.exists(self.db_file):
             self.logger.debug("Database não existe, pulando auto-backup")
             return
         
@@ -210,7 +226,7 @@ class DatabaseManager:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             backup_file = os.path.join(BACKUP_FOLDER, f"auto_backup_{timestamp}.json")
             
-            shutil.copy2(DB_FILE, backup_file)
+            shutil.copy2(self.db_file, backup_file)
             
             # Remove backups antigos (mantém apenas os mais recentes)
             try:
@@ -242,7 +258,7 @@ class DatabaseManager:
         Cria backup manual com confirmação.
         Retorna caminho do backup criado ou None.
         """
-        if not os.path.exists(DB_FILE):
+        if not os.path.exists(self.db_file):
             self.logger.warning("Database não existe, nada para fazer backup")
             return None
         
@@ -250,7 +266,7 @@ class DatabaseManager:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             backup_file = os.path.join(BACKUP_FOLDER, f"manual_backup_{timestamp}.json")
             
-            shutil.copy2(DB_FILE, backup_file)
+            shutil.copy2(self.db_file, backup_file)
             self.logger.info("💾 Backup manual: %s", backup_file)
             return backup_file
             

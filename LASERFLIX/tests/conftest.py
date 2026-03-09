@@ -5,8 +5,6 @@ Fixtures disponíveis para todos os testes:
     tmp_db              DatabaseManager vazio em pasta temporária
     tmp_db_with_data    DatabaseManager com 3 projetos pré-carregados
     tmp_collections     CollectionsManager em pasta temporária
-                        (usa monkeypatch no COLLECTIONS_FILE global
-                         pois CollectionsManager não aceita path no __init__)
 """
 from __future__ import annotations
 
@@ -43,15 +41,7 @@ def tmp_db_with_data(tmp_path):
 
 
 @pytest.fixture
-def tmp_collections(tmp_path, monkeypatch):
-    """
-    CollectionsManager apontando para arquivo temporário.
-
-    CollectionsManager usa COLLECTIONS_FILE como global — não aceita path
-    no __init__. Usamos monkeypatch para redirecionar antes de instanciar.
-    """
-    import core.collections_manager as cm_module
-    col_file = str(tmp_path / "collections.json")
-    monkeypatch.setattr(cm_module, "COLLECTIONS_FILE", col_file)
+def tmp_collections(tmp_path):
+    """CollectionsManager com arquivo temporário isolado."""
     from core.collections_manager import CollectionsManager
-    return CollectionsManager()
+    return CollectionsManager(file_path=str(tmp_path / "collections.json"))

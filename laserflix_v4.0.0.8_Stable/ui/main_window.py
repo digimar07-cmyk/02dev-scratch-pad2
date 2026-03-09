@@ -23,6 +23,7 @@ REFACTOR-FASE-1.3: OrphanManager extraído ✅
 REFACTOR-FASE-2A: ToggleManager consolidado ✅
 REFACTOR-FASE-2B: Métodos de filtro consolidados ✅
 REFACTOR-FASE-2C: Callbacks lambda consolidados ✅
+REFACTOR-FASE-1C: SelectionBar integrado como componente ✅
 PERFORMANCE: 3 otimizações integradas (4.5× faster) ✅
 """
 import os
@@ -66,6 +67,7 @@ from ui.managers.collection_dialog_manager import CollectionDialogManager
 from ui.managers.progress_ui_manager import ProgressUIManager
 from ui.managers.orphan_manager import OrphanManager
 from ui.managers.modal_generator import ModalGenerator
+from ui.components.selection_bar import SelectionBar
 
 class LaserflixMainWindow:
     def __init__(self, root: tk.Tk):
@@ -125,6 +127,15 @@ class LaserflixMainWindow:
         self.root.state("zoomed")
         self.root.configure(bg=BG_PRIMARY)
         self._build_ui()
+
+        # ───────────────────────────────────────────────────────────────────
+        # 3B. SELECTION BAR (FASE-1C) — instanciada após _build_ui
+        # ───────────────────────────────────────────────────────────────────
+        self.selection_bar = SelectionBar(self.root)
+        self.selection_bar.on_select_all     = lambda: self.selection_ctrl.select_all(list(self.database.keys()))
+        self.selection_bar.on_deselect_all   = self.selection_ctrl.deselect_all
+        self.selection_bar.on_remove_selected = self.selection_ctrl.remove_selected
+        self.selection_bar.on_cancel         = self.selection_ctrl.toggle_mode
         
         # ═══════════════════════════════════════════════════════════════════
         # 4. CONTROLLERS (DEPOIS DO _build_ui - precisam de canvas/frame)
@@ -350,19 +361,21 @@ class LaserflixMainWindow:
         """Aplica filtro de coleção."""
         self._apply_filter("collection", collection_name, btn, show_count=True)
 
-    # SELECTION CALLBACKS
+    # SELECTION CALLBACKS — FASE-1C: usa SelectionBar component
     def _on_selection_mode_changed(self, is_active: bool) -> None:
+        """Mostra/esconde SelectionBar via componente (FASE-1C)."""
         if is_active:
-            self._sel_bar.pack(fill="x", before=self.content_canvas.master)
+            self.selection_bar.show()
             self.header.set_select_btn_active(True)
         else:
-            self._sel_bar.pack_forget()
+            self.selection_bar.hide()
             self.header.set_select_btn_active(False)
         self._invalidate_cache()
         self.display_projects()
     
     def _on_selection_count_changed(self, count: int) -> None:
-        self._sel_count_lbl.config(text=f"{count} selecionado(s)")
+        """Atualiza contador via SelectionBar component (FASE-1C)."""
+        self.selection_bar.update_count(count)
         self._invalidate_cache()
         self.display_projects()
 

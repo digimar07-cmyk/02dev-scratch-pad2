@@ -6,6 +6,8 @@ Reducao estimada: -80 linhas no main_window.py
 
 FIX-SELECTION-FLICKER: on_card_toggled(path, is_selected) para atualização
 visual cirúrgica sem rebuild da tela inteira.
+
+FIX-REMOVE: db_manager.save() → save_database() (método correto).
 """
 
 import os
@@ -125,7 +127,8 @@ class SelectionController:
                 if path in self.collections_manager.collections[collection_name]:
                     self.collections_manager.collections[collection_name].remove(path)
         
-        self.db_manager.save()
+        # FIX-REMOVE: método correto é save_database(), não save()
+        self.db_manager.save_database()
         self.collections_manager.save()
         
         removed_count = len(self.selected_paths)

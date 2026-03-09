@@ -56,7 +56,9 @@ class TestImports:
     def test_import_utils_name_translator(self):
         """SMOKE: Importar utils.name_translator sem erro."""
         from utils import name_translator
-        assert hasattr(name_translator, 'NameTranslator')
+        # name_translator tem funções, não classe
+        assert hasattr(name_translator, 'translate_to_pt')
+        assert hasattr(name_translator, 'translate_to_en')
     
     def test_import_ai_analysis_manager(self):
         """SMOKE: Importar ai.analysis_manager sem erro."""

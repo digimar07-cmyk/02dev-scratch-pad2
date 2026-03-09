@@ -1,44 +1,257 @@
 """
-ui/controllers/optimized_display_controller.py — DisplayController + Performance
+ui/controllers/optimized_display_controller.py — Controller de Exibição Otimizado
 
-Wrapper que adiciona 3 otimizações de performance ao DisplayController:
+Unifica DisplayController (base) + 3 otimizações de performance:
 1. FilterCache: Cache inteligente de filtros (80% faster)
 2. ViewportManager: Lazy rendering (60% faster)
 3. PredictivePreloader: Preload de páginas (0ms navigation)
 
 GANHO COMBINADO: 4.5× mais rápido
 
-DROP-IN REPLACEMENT:
-  # Antes:
-  display_ctrl = DisplayController(db)
-  
-  # Depois:
-  display_ctrl = OptimizedDisplayController(
-      database=db,
-      canvas=canvas,
-      scrollable_frame=frame,
-      thumbnail_preloader=thumb_preloader
-  )
+BRANDT-01: display_controller.py legado removido — lógica base internalizada aqui.
 """
 
 import tkinter as tk
-from typing import Callable, Optional, List, Tuple
-from ui.controllers.display_controller import DisplayController
+from typing import Any, Callable, Optional, List, Tuple
+from ui.controllers.base_display_controller import BaseDisplayController
 from core.performance import ViewportManager, FilterCache, PredictivePreloader
 from core.thumbnail_preloader import ThumbnailPreloader
 from utils.logging_setup import LOGGER
+from utils.name_translator import search_bilingual
 
 
-class OptimizedDisplayController(DisplayController):
+class BaseDisplayController:
+    """
+    Controller de exibição base — gerencia filtros, ordenação e paginação.
+    Internalizado aqui após remoção do display_controller.py legado (BRANDT-01).
+    """
+
+    def __init__(self, database: dict, collections_manager=None, items_per_page: int = 36):
+        self.database = database
+        self.collections_manager = collections_manager
+        self.logger = LOGGER
+
+        self.current_filter = "all"
+        self.current_categories: list = []
+        self.current_tag: Optional[str] = None
+        self.current_origin = "all"
+        self.search_query = ""
+        self.active_filters: list = []
+
+        self.current_sort = "date_desc"
+        self.items_per_page = items_per_page
+        self.current_page = 1
+        self.total_pages = 1
+
+        self.on_display_update: Optional[Callable] = None
+
+    def set_filter(self, filter_type: str) -> None:
+        self.current_filter = filter_type
+        self.current_categories = []
+        self.current_tag = None
+        self.current_origin = "all"
+        self.search_query = ""
+        self.active_filters.clear()
+        self.current_page = 1
+        self._trigger_update()
+
+    def add_filter_chip(self, filter_type: str, value: str) -> None:
+        new_chip = {"type": filter_type, "value": value}
+        if new_chip not in self.active_filters:
+            self.active_filters.append(new_chip)
+            self.current_page = 1
+            self._trigger_update()
+
+    def remove_filter_chip(self, filt: dict) -> None:
+        if filt in self.active_filters:
+            self.active_filters.remove(filt)
+            self.current_page = 1
+            self._trigger_update()
+
+    def clear_all_filters(self) -> None:
+        self.active_filters.clear()
+        self.current_page = 1
+        self._trigger_update()
+
+    def set_search_query(self, query: str) -> None:
+        self.search_query = query.strip().lower()
+        self.current_page = 1
+        self._trigger_update()
+
+    def set_origin_filter(self, origin: str) -> None:
+        self.current_filter = "all"
+        self.current_origin = origin
+        self.current_categories = []
+        self.current_tag = None
+        self.current_page = 1
+        self.active_filters.clear()
+        self.add_filter_chip("origin", origin)
+
+    def set_category_filter(self, cats: list) -> None:
+        self.current_filter = "all"
+        self.current_categories = cats
+        self.current_tag = None
+        self.current_origin = "all"
+        self.current_page = 1
+        self.active_filters.clear()
+        for cat in cats:
+            self.add_filter_chip("category", cat)
+
+    def set_tag_filter(self, tag: str) -> None:
+        self.current_filter = "all"
+        self.current_tag = tag
+        self.current_categories = []
+        self.current_origin = "all"
+        self.current_page = 1
+        self.active_filters.clear()
+        self.add_filter_chip("tag", tag)
+
+    def set_collection_filter(self, collection_name: str) -> None:
+        self.current_filter = "all"
+        self.current_categories = []
+        self.current_tag = None
+        self.current_origin = "all"
+        self.current_page = 1
+        self.active_filters.clear()
+        self.add_filter_chip("collection", collection_name)
+
+    def get_filtered_projects(self) -> list:
+        result = []
+        for path, data in self.database.items():
+            ok = (
+                self.current_filter == "all"
+                or (self.current_filter == "favorite" and data.get("favorite"))
+                or (self.current_filter == "done" and data.get("done"))
+                or (self.current_filter == "good" and data.get("good"))
+                or (self.current_filter == "bad" and data.get("bad"))
+            )
+            if not ok:
+                continue
+
+            passes_all_filters = True
+            for filt in self.active_filters:
+                ftype, fval = filt["type"], filt["value"]
+                if ftype == "category" and fval not in data.get("categories", []):
+                    passes_all_filters = False; break
+                elif ftype == "tag" and fval not in data.get("tags", []):
+                    passes_all_filters = False; break
+                elif ftype == "origin" and data.get("origin") != fval:
+                    passes_all_filters = False; break
+                elif ftype == "collection":
+                    if not self.collections_manager:
+                        passes_all_filters = False; break
+                    if path not in self.collections_manager.get_collection_projects(fval):
+                        passes_all_filters = False; break
+                elif ftype == "analysis_ai" and not (data.get("analyzed") and data.get("analysis_type") == "ai"):
+                    passes_all_filters = False; break
+                elif ftype == "analysis_fallback" and not (data.get("analyzed") and data.get("analysis_type") == "fallback"):
+                    passes_all_filters = False; break
+                elif ftype == "analysis_pending" and data.get("analyzed"):
+                    passes_all_filters = False; break
+            if not passes_all_filters:
+                continue
+
+            if self.current_origin != "all" and data.get("origin") != self.current_origin:
+                continue
+            if self.current_categories and not any(c in data.get("categories", []) for c in self.current_categories):
+                continue
+            if self.current_tag and self.current_tag not in data.get("tags", []):
+                continue
+            if self.search_query:
+                name_en = data.get("name", "")
+                if not search_bilingual(self.search_query, name_en):
+                    continue
+
+            result.append(path)
+        return result
+
+    def set_sorting(self, sort_type: str) -> None:
+        self.current_sort = sort_type
+        self.current_page = 1
+        self._trigger_update()
+
+    def apply_sorting(self, projects: list) -> list:
+        if not projects:
+            return projects
+        try:
+            if self.current_sort == "date_desc":
+                return sorted(projects, key=lambda p: p[1].get("added_date", ""), reverse=True)
+            elif self.current_sort == "date_asc":
+                return sorted(projects, key=lambda p: p[1].get("added_date", ""))
+            elif self.current_sort == "name_asc":
+                return sorted(projects, key=lambda p: p[1].get("name", "").lower())
+            elif self.current_sort == "name_desc":
+                return sorted(projects, key=lambda p: p[1].get("name", "").lower(), reverse=True)
+            elif self.current_sort == "origin":
+                return sorted(projects, key=lambda p: (p[1].get("origin", "zzz"), p[1].get("name", "").lower()))
+            elif self.current_sort == "analyzed":
+                return sorted(projects, key=lambda p: (not p[1].get("analyzed", False), p[1].get("name", "").lower()))
+            elif self.current_sort == "not_analyzed":
+                return sorted(projects, key=lambda p: (p[1].get("analyzed", False), p[1].get("name", "").lower()))
+            else:
+                return projects
+        except Exception as e:
+            self.logger.error("Erro ao ordenar projetos: %s", e)
+            return projects
+
+    def next_page(self) -> None:
+        if self.current_page < self.total_pages:
+            self.current_page += 1
+            self._trigger_update()
+
+    def prev_page(self) -> None:
+        if self.current_page > 1:
+            self.current_page -= 1
+            self._trigger_update()
+
+    def first_page(self) -> None:
+        self.current_page = 1
+        self._trigger_update()
+
+    def last_page(self) -> None:
+        self.current_page = self.total_pages
+        self._trigger_update()
+
+    def get_page_info(self, total_count: int) -> dict:
+        self.total_pages = max(1, (total_count + self.items_per_page - 1) // self.items_per_page)
+        self.current_page = max(1, min(self.current_page, self.total_pages))
+        start_idx = (self.current_page - 1) * self.items_per_page
+        end_idx = min(start_idx + self.items_per_page, total_count)
+        return {
+            "current_page": self.current_page,
+            "total_pages": self.total_pages,
+            "start_idx": start_idx,
+            "end_idx": end_idx,
+            "items_per_page": self.items_per_page,
+        }
+
+    def _trigger_update(self) -> None:
+        if self.on_display_update:
+            self.on_display_update()
+
+    def get_display_state(self) -> dict:
+        return {
+            "filter": self.current_filter,
+            "origin": self.current_origin,
+            "categories": tuple(sorted(self.current_categories)),
+            "tag": self.current_tag,
+            "search": self.search_query,
+            "sort": self.current_sort,
+            "page": self.current_page,
+            "active_filters": tuple((f["type"], f["value"]) for f in self.active_filters),
+        }
+
+
+class OptimizedDisplayController(BaseDisplayController):
     """
     DisplayController otimizado com 3 performance enhancements.
-    
-    Extends DisplayController com:
+
+    Extends BaseDisplayController com:
     - FilterCache: Cache de resultados filtrados
     - ViewportManager: Renderiza apenas cards visíveis
     - PredictivePreloader: Preload de próximas páginas
     """
-    
+
     def __init__(
         self,
         database: dict,
@@ -51,81 +264,40 @@ class OptimizedDisplayController(DisplayController):
         enable_lazy_render: bool = True,
         enable_preload: bool = True,
     ):
-        """
-        Args:
-            database: Database de projetos
-            canvas: Canvas com scroll
-            scrollable_frame: Frame interno scrollable
-            thumbnail_preloader: Instância do ThumbnailPreloader
-            collections_manager: Gerenciador de coleções
-            items_per_page: Cards por página
-            enable_cache: Habilitar FilterCache
-            enable_lazy_render: Habilitar ViewportManager
-            enable_preload: Habilitar PredictivePreloader
-        """
-        # Init base DisplayController
         super().__init__(database, collections_manager, items_per_page)
-        
+
         self.logger = LOGGER
         self.canvas = canvas
         self.scrollable_frame = scrollable_frame
         self.thumb_preloader = thumbnail_preloader
-        
-        # Card builder function (set by UI)
         self.card_builder_fn: Optional[Callable] = None
-        
-        # ═══════════════════════════════════════════════════════════════
-        # OPTIMIZATION 1: FilterCache
-        # ═══════════════════════════════════════════════════════════════
+
         self.filter_cache = None
         if enable_cache:
-            self.filter_cache = FilterCache(
-                max_size=50,      # 50 resultados em cache
-                ttl_seconds=300   # 5 min TTL
-            )
-            self.logger.info("✅ FilterCache ENABLED")
-        
-        # ═══════════════════════════════════════════════════════════════
-        # OPTIMIZATION 2: ViewportManager
-        # ═══════════════════════════════════════════════════════════════
+            self.filter_cache = FilterCache(max_size=50, ttl_seconds=300)
+            self.logger.info("\u2705 FilterCache ENABLED")
+
         self.viewport_mgr = None
         if enable_lazy_render:
             self.viewport_mgr = ViewportManager(
                 canvas=canvas,
                 scrollable_frame=scrollable_frame,
-                buffer_rows=2,  # 12 cards buffer (6 cols × 2 rows)
+                buffer_rows=2,
                 cols=6
             )
-            self.logger.info("✅ ViewportManager ENABLED")
-        
-        # ═══════════════════════════════════════════════════════════════
-        # OPTIMIZATION 3: PredictivePreloader
-        # ═══════════════════════════════════════════════════════════════
+            self.logger.info("\u2705 ViewportManager ENABLED")
+
         self.predictive_preloader = None
         if enable_preload:
             self.predictive_preloader = PredictivePreloader(
                 thumbnail_preloader=thumbnail_preloader,
-                prefetch_pages=1  # Preload 1 página à frente
+                prefetch_pages=1
             )
-            self.logger.info("✅ PredictivePreloader ENABLED")
-    
-    # ═══════════════════════════════════════════════════════════════════
-    # OVERRIDE: get_filtered_projects() com cache
-    # ═══════════════════════════════════════════════════════════════════
-    
+            self.logger.info("\u2705 PredictivePreloader ENABLED")
+
     def get_filtered_projects(self) -> list:
-        """
-        Override com FilterCache.
-        
-        Se cache habilitado:
-        - Cache HIT: 0ms (instant!)
-        - Cache MISS: chama super().get_filtered_projects()
-        """
         if not self.filter_cache:
-            # Cache desabilitado - usa versão original
             return super().get_filtered_projects()
-        
-        # Cache key: (filter, origin, cats, tag, search, active_filters)
         cache_key = (
             self.current_filter,
             self.current_origin,
@@ -134,188 +306,81 @@ class OptimizedDisplayController(DisplayController):
             self.search_query,
             tuple((f["type"], f["value"]) for f in self.active_filters),
         )
-        
         return self.filter_cache.get_or_compute(
             key=cache_key,
-            compute_fn=lambda: super(
-                OptimizedDisplayController, self
-            ).get_filtered_projects()
+            compute_fn=lambda: super(OptimizedDisplayController, self).get_filtered_projects()
         )
-    
-    # ═══════════════════════════════════════════════════════════════════
-    # NEW: render_projects() - Renderiza com ViewportManager
-    # ═══════════════════════════════════════════════════════════════════
-    
-    def render_projects(
-        self,
-        card_builder_fn: Callable[[tk.Frame, str, dict, int, int], tk.Widget]
-    ) -> None:
-        """
-        Renderiza projetos com otimizações.
-        
-        Args:
-            card_builder_fn: Função(parent, path, data, row, col) -> widget
-        
-        Fluxo:
-        1. Filtra projetos (com cache)
-        2. Ordena projetos
-        3. Pagina resultados
-        4. Renderiza com ViewportManager (lazy)
-        5. Inicia preload da próxima página
-        """
+
+    def render_projects(self, card_builder_fn: Callable) -> None:
         self.card_builder_fn = card_builder_fn
-        
-        # 1. FILTRAR (com cache se habilitado)
         filtered_paths = self.get_filtered_projects()
-        
-        # 2. CONVERTER PARA TUPLAS (path, data)
-        projects_with_data = [
-            (path, self.database[path])
-            for path in filtered_paths
-            if path in self.database
-        ]
-        
-        # 3. ORDENAR
+        projects_with_data = [(p, self.database[p]) for p in filtered_paths if p in self.database]
         sorted_projects = self.apply_sorting(projects_with_data)
-        
-        # 4. PAGINAR
         page_info = self.get_page_info(len(sorted_projects))
-        page_projects = sorted_projects[
-            page_info["start_idx"]:page_info["end_idx"]
-        ]
-        
-        # 5. RENDERIZAR
+        page_projects = sorted_projects[page_info["start_idx"]:page_info["end_idx"]]
+
         if self.viewport_mgr:
-            # COM LAZY RENDERING
-            self.viewport_mgr.set_items(
-                items=page_projects,
-                card_builder_fn=card_builder_fn
-            )
+            self.viewport_mgr.set_items(items=page_projects, card_builder_fn=card_builder_fn)
             self.viewport_mgr.render_visible_range()
         else:
-            # SEM LAZY RENDERING (fallback)
             for i, (path, data) in enumerate(page_projects):
                 row, col = divmod(i, 6)
                 card_builder_fn(self.scrollable_frame, path, data, row, col)
-        
-        # 6. PRELOAD PRÓXIMA PÁGINA
+
         if self.predictive_preloader:
             self.predictive_preloader.prefetch_next_page(
                 current_page=self.current_page,
                 total_pages=self.total_pages,
                 get_page_items_fn=lambda page: self._get_page_items(page)
             )
-        
-        self.logger.debug(
-            f"🎬 Rendered page {self.current_page}/{self.total_pages} "
-            f"({len(page_projects)} cards)"
-        )
-    
+
     def _get_page_items(self, page_num: int) -> List[Tuple[str, dict]]:
-        """
-        Obtém items de uma página específica (usado por PredictivePreloader).
-        
-        Args:
-            page_num: Número da página (1-indexed)
-        
-        Returns:
-            Lista de tuplas (path, data)
-        """
-        # Filtra e ordena (usa cache se disponível)
         filtered_paths = self.get_filtered_projects()
-        projects_with_data = [
-            (path, self.database[path])
-            for path in filtered_paths
-            if path in self.database
-        ]
+        projects_with_data = [(p, self.database[p]) for p in filtered_paths if p in self.database]
         sorted_projects = self.apply_sorting(projects_with_data)
-        
-        # Extrai página específica
         start_idx = (page_num - 1) * self.items_per_page
-        end_idx = start_idx + self.items_per_page
-        
-        return sorted_projects[start_idx:end_idx]
-    
-    # ═══════════════════════════════════════════════════════════════════
-    # OVERRIDE: Métodos que invalidam cache
-    # ═══════════════════════════════════════════════════════════════════
-    
+        return sorted_projects[start_idx:start_idx + self.items_per_page]
+
     def set_filter(self, filter_type: str) -> None:
-        """Override para invalidar cache ao mudar filtro."""
         super().set_filter(filter_type)
         if self.predictive_preloader:
             self.predictive_preloader.on_filter_changed()
-    
+
     def add_filter_chip(self, filter_type: str, value: str) -> None:
-        """Override para invalidar preload ao adicionar chip."""
         super().add_filter_chip(filter_type, value)
         if self.predictive_preloader:
             self.predictive_preloader.on_filter_changed()
-    
+
     def remove_filter_chip(self, filt: dict) -> None:
-        """Override para invalidar preload ao remover chip."""
         super().remove_filter_chip(filt)
         if self.predictive_preloader:
             self.predictive_preloader.on_filter_changed()
-    
+
     def set_search_query(self, query: str) -> None:
-        """Override para invalidar preload ao buscar."""
         super().set_search_query(query)
         if self.predictive_preloader:
             self.predictive_preloader.on_filter_changed()
-    
+
     def invalidate_cache(self) -> None:
-        """
-        Invalida cache (chamar quando dados mudarem).
-        
-        IMPORTANTE: Chamar este método ao:
-        - Adicionar/remover projeto
-        - Toggle favorite/done/good/bad
-        - Modificar categorias/tags
-        - Importar novos projetos
-        """
         if self.filter_cache:
             self.filter_cache.invalidate_all()
-            self.logger.debug("🗑️ Cache invalidado")
-    
-    # ═══════════════════════════════════════════════════════════════════
-    # STATS & DEBUG
-    # ═══════════════════════════════════════════════════════════════════
-    
+            self.logger.debug("\U0001f5d1\ufe0f Cache invalidado")
+
     def get_performance_stats(self) -> dict:
-        """
-        Estatísticas de performance das 3 otimizações.
-        
-        Returns:
-            dict: {
-                "filter_cache": {...},
-                "viewport_manager": {...},
-                "predictive_preloader": {...}
-            }
-        """
         stats = {}
-        
         if self.filter_cache:
             stats["filter_cache"] = self.filter_cache.get_stats()
-        
         if self.viewport_mgr:
             stats["viewport_manager"] = self.viewport_mgr.get_stats()
-        
         if self.predictive_preloader:
             stats["predictive_preloader"] = self.predictive_preloader.get_stats()
-        
         return stats
-    
+
     def print_stats(self) -> None:
-        """
-        Imprime estatísticas de performance (debug).
-        """
         stats = self.get_performance_stats()
-        
         self.logger.info("\n" + "="*60)
-        self.logger.info("📊 PERFORMANCE STATS")
+        self.logger.info("\U0001f4ca PERFORMANCE STATS")
         self.logger.info("="*60)
-        
         if "filter_cache" in stats:
             fc = stats["filter_cache"]
             self.logger.info(
@@ -323,20 +388,13 @@ class OptimizedDisplayController(DisplayController):
                 f"({fc['hits']} hits, {fc['misses']} misses, "
                 f"{fc['cache_size']}/{fc['max_size']} cached)"
             )
-        
         if "viewport_manager" in stats:
             vm = stats["viewport_manager"]
-            self.logger.info(
-                f"ViewportManager: {vm['render_ratio']} rendered "
-                f"({vm['savings_pct']}% saved)"
-            )
-        
+            self.logger.info(f"ViewportManager: {vm['render_ratio']} rendered ({vm['savings_pct']}% saved)")
         if "predictive_preloader" in stats:
             pp = stats["predictive_preloader"]
             self.logger.info(
                 f"PredictivePreloader: page {pp['current_page']}, "
-                f"preloaded={pp['preloaded_pages']}, "
-                f"active={pp['is_preloading']}"
+                f"preloaded={pp['preloaded_pages']}, active={pp['is_preloading']}"
             )
-        
         self.logger.info("="*60 + "\n")

@@ -72,6 +72,9 @@ class LaserflixMainWindow:
         self.root = root
         self.logger = LOGGER
 
+        # ═══════════════════════════════════════════════════════════════════
+        # 1. CORE SETUP
+        # ═══════════════════════════════════════════════════════════════════
         self.db_manager = DatabaseManager()
         self.db_manager.load_config()
         self.db_manager.load_database()
@@ -90,11 +93,42 @@ class LaserflixMainWindow:
 
         self.database = self.db_manager.database
         
-        # Build UI first (creates canvas and scrollable_frame)
+        # ═══════════════════════════════════════════════════════════════════
+        # 2. CONTROLLERS (ANTES DO _build_ui - UIBuilder precisa deles!)
+        # ═══════════════════════════════════════════════════════════════════
+        
+        # SelectionController gerencia seleção múltipla
+        self.selection_ctrl = SelectionController(
+            database=self.database,
+            db_manager=self.db_manager,
+            collections_manager=self.collections_manager
+        )
+        # Callbacks configurados depois (precisam de widgets)
+        
+        # CollectionController gerencia coleções
+        self.collection_ctrl = CollectionController(
+            collections_manager=self.collections_manager,
+            database=self.database
+        )
+        # Callbacks configurados depois
+        
+        # Estado interno
+        self._last_display_state = None
+        self._force_rebuild = False
+        self._visible_range = (0, 36)
+        self._scroll_update_pending = False
+        
+        # ═══════════════════════════════════════════════════════════════════
+        # 3. BUILD UI (cria canvas, scrollable_frame, etc)
+        # ═══════════════════════════════════════════════════════════════════
         self.root.title(f"LASERFLIX {VERSION}")
         self.root.state("zoomed")
         self.root.configure(bg=BG_PRIMARY)
         self._build_ui()
+        
+        # ═══════════════════════════════════════════════════════════════════
+        # 4. CONTROLLERS (DEPOIS DO _build_ui - precisam de canvas/frame)
+        # ═══════════════════════════════════════════════════════════════════
         
         # OptimizedDisplayController gerencia filtros/ordenação/paginação + PERFORMANCE
         self.display_ctrl = OptimizedDisplayController(
@@ -114,17 +148,15 @@ class LaserflixMainWindow:
             db_manager=self.db_manager,
             ollama_client=self.ollama
         )
-        # Progress UI configurado após _build_ui()
         self.analysis_ctrl.on_analysis_complete = lambda msg: self.status_bar.config(text=msg)
         self.analysis_ctrl.on_refresh_ui = self._refresh_all
         self.analysis_ctrl.setup_callbacks()
         
-        # SelectionController gerencia seleção múltipla
-        self.selection_ctrl = SelectionController(
-            database=self.database,
-            db_manager=self.db_manager,
-            collections_manager=self.collections_manager
-        )
+        # ═══════════════════════════════════════════════════════════════════
+        # 5. CONFIGURAR CALLBACKS DOS CONTROLLERS
+        # ═══════════════════════════════════════════════════════════════════
+        
+        # SelectionController callbacks
         self.selection_ctrl.on_mode_changed = self._on_selection_mode_changed
         self.selection_ctrl.on_selection_changed = self._on_selection_count_changed
         self.selection_ctrl.on_projects_removed = lambda count: (
@@ -136,18 +168,13 @@ class LaserflixMainWindow:
             self.display_projects()
         )
         
-        # CollectionController gerencia coleções
-        self.collection_ctrl = CollectionController(
-            collections_manager=self.collections_manager,
-            database=self.database
-        )
+        # CollectionController callbacks
         self.collection_ctrl.on_collection_changed = self._refresh_all
         
-        self._last_display_state = None
-        self._force_rebuild = False
-        self._visible_range = (0, 36)
-        self._scroll_update_pending = False
-
+        # ═══════════════════════════════════════════════════════════════════
+        # 6. MANAGERS
+        # ═══════════════════════════════════════════════════════════════════
+        
         self.import_manager = RecursiveImportManager(
             parent=self.root, database=self.database,
             project_scanner=self.scanner, text_generator=self.text_generator,
@@ -155,7 +182,6 @@ class LaserflixMainWindow:
             on_complete=self._on_import_complete,
         )
         
-        # === MANAGERS (criados DEPOIS de UI existir) ===
         self.toggle_mgr = ToggleManager(self.database, self.db_manager)
         self.toggle_mgr.on_invalidate_cache = self._invalidate_cache
         
@@ -188,8 +214,10 @@ class LaserflixMainWindow:
             database=self.database,
             db_manager=self.db_manager
         )
-        # === FIM MANAGERS ===
         
+        # ═══════════════════════════════════════════════════════════════════
+        # 7. STARTUP
+        # ═══════════════════════════════════════════════════════════════════
         self.display_projects()
         self.logger.info("✨ Laserflix v%s iniciado (PERFORMANCE ENABLED)", VERSION)
 

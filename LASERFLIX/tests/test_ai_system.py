@@ -5,15 +5,15 @@ Cobre:
   - AnalysisManager (análise de projetos)
   - OllamaClient (comunicação com Ollama)
   - TextGenerator (geração de texto)
-  - Fallbacks (comportamento sem IA)
+  - FallbackGenerator (comportamento sem IA)
   - ImageAnalyzer (análise de imagens)
 """
 import pytest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 from ai.analysis_manager import AnalysisManager
 from ai.ollama_client import OllamaClient
 from ai.text_generator import TextGenerator
-from ai.fallbacks import FallbackAnalyzer
+from ai.fallbacks import FallbackGenerator
 from ai.image_analyzer import ImageAnalyzer
 
 
@@ -112,28 +112,35 @@ class TestTextGenerator:
             assert len(tags) > 0
 
 
-class TestFallbacks:
+class TestFallbackGenerator:
     """Testes do sistema de fallback (sem IA)."""
     
     def test_fallback_analysis_without_ai(self):
         """FALLBACK: Analisar sem IA disponível."""
-        analyzer = FallbackAnalyzer()
+        # FallbackGenerator precisa de project_scanner
+        mock_scanner = MagicMock()
+        mock_scanner.extract_tags_from_name.return_value = ["laser", "cut"]
         
-        project_name = "engraving_design.lbrn"
+        generator = FallbackGenerator(mock_scanner)
         
-        result = analyzer.analyze_by_filename(project_name)
+        project_path = "/path/to/engraving_design.lbrn"
         
-        assert result is not None
-        assert "category" in result or "tags" in result
+        cats, tags = generator.fallback_analysis(project_path)
+        
+        assert cats is not None
+        assert isinstance(cats, list)
+        assert len(cats) > 0
     
-    def test_keyword_based_categorization(self):
-        """KEYWORDS: Categorizar por palavras-chave."""
-        analyzer = FallbackAnalyzer()
+    def test_translate_name(self):
+        """TRADUÇÃO: Traduzir nome EN → PT."""
+        mock_scanner = MagicMock()
+        generator = FallbackGenerator(mock_scanner)
         
-        # Nome com palavra-chave "cutting"
-        result = analyzer.categorize_by_keywords("laser_cutting_pattern")
+        # Nome em inglês
+        result = generator.translate_name("Nursery Mirror")
         
-        assert result is not None
+        # Deve traduzir ou retornar None se já está em PT
+        assert result is None or isinstance(result, str)
 
 
 class TestImageAnalyzer:

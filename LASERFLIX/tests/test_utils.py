@@ -3,7 +3,7 @@ test_utils.py — Testes dos Utilitários
 
 Cobre:
   - DuplicateDetector (hash, comparação)
-  - NameTranslator (normalização, limpeza)
+  - name_translator (funções de tradução)
   - TextUtils (truncate, sanitize)
   - PlatformUtils (OS detection)
 """

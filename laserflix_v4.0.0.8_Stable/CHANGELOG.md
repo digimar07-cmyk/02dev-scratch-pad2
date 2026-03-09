@@ -6,6 +6,60 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [4.0.0.9] - 2026-03-09
+
+### 🔧 FIX-REMOVE: Remoção via tela de seleção completamente corrigida
+
+**Estado**: ✅ **CONCLUÍDA E TESTADA**
+
+**Problemas corrigidos:**
+- ✅ **FIX**: Cards removidos não desapareciam da tela após remoção (exigia navegar ao home)
+- ✅ **FIX**: Contadores de categorias na sidebar não atualizavam após remoção via seleção
+- ✅ **FIX**: Projetos removidos voltavam após reiniciar o app (persistência quebrada)
+
+**Causa raiz identificada:**
+
+| Arquivo | Bug | Correção |
+|---|---|---|
+| `selection_controller.py` | `db_manager.save()` não existe no `DatabaseManager` | `db_manager.save_database()` |
+| `main_window.py` | `on_refresh_needed` não chamava `sidebar.refresh()` | Substituido por `_refresh_all()` |
+
+**Detalhes técnicos:**
+- `SelectionController.remove_selected()`: `self.db_manager.save()` → `self.db_manager.save_database()`
+- `on_refresh_needed` em `main_window.py`: era `_invalidate_cache() + display_projects()` sem sidebar. Agora aponta diretamente para `_refresh_all()` que já faz cache + display + sidebar.
+- `on_projects_removed`: extraido para método `_on_projects_removed()` dedicado (apenas atualiza status bar). O `_refresh_all()` chamado logo depois pelo controller cuida do resto.
+
+**Arquivos modificados:**
+1. `ui/controllers/selection_controller.py` - `save()` → `save_database()`
+2. `ui/main_window.py` - `on_refresh_needed = _refresh_all`, novo `_on_projects_removed()`
+3. `VERSION` - Atualizado para 4.0.0.9
+4. `config/settings.py` - VERSION atualizado para 4.0.0.9
+5. `CHANGELOG.md` - Este registro
+
+**Commits:**
+- `3647ba2` - FIX-REMOVE: db_manager.save() → save_database() em remove_selected
+- `cb318fa` - FIX-REMOVE-REFRESH: on_refresh_needed inclui sidebar.refresh() + _refresh_all
+- `07ae31f` - chore: bump version 4.0.0.2 → 4.0.0.9
+- `b739870` - chore: bump VERSION em settings.py para 4.0.0.9
+
+**Fluxo correto após fix:**
+```
+remove_selected()
+  └─ del database[path]  (todos os selecionados)
+  └─ db_manager.save_database()   ✔ persiste no JSON
+  └─ collections_manager.save()   ✔ remove das coleções
+  └─ on_mode_changed(False)        ✔ esconde SelectionBar
+  └─ on_projects_removed(count)    ✔ atualiza status bar
+  └─ on_refresh_needed()           ✔ _refresh_all()
+       └─ _invalidate_cache()       ✔ força rebuild
+       └─ display_projects()        ✔ tela sem os cards removidos
+       └─ sidebar.refresh()         ✔ contadores atualizados
+```
+
+**Modelo usado**: Claude Sonnet 4.6
+
+---
+
 ## [4.0.0.2] - 2026-03-08 17:32
 
 ### 🤖 MIGRAÇÃO DE MODELOS IA - QWEN3.5:4B

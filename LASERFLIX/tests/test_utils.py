@@ -11,7 +11,7 @@ import pytest
 import tempfile
 from pathlib import Path
 from utils.duplicate_detector import DuplicateDetector
-from utils.name_translator import NameTranslator
+from utils import name_translator
 from utils.text_utils import truncate_text, sanitize_filename
 from utils.platform_utils import get_platform, is_windows
 
@@ -80,33 +80,30 @@ class TestDuplicateDetector:
 class TestNameTranslator:
     """Testes do tradutor de nomes."""
     
-    def test_normalize_name(self):
-        """SMOKE: Normalizar nome de projeto."""
-        translator = NameTranslator()
+    def test_translate_to_pt(self):
+        """SMOKE: Traduzir termos EN → PT."""
+        result = name_translator.translate_to_pt("dog mirror")
         
-        normalized = translator.normalize("Project_Name-2024")
-        
-        assert normalized is not None
-        assert len(normalized) > 0
+        assert result is not None
+        assert len(result) > 0
+        # Deve conter traduções
+        assert "cachorro" in result or "espelho" in result
     
-    def test_remove_special_characters(self):
-        """LIMPEZA: Remover caracteres especiais."""
-        translator = NameTranslator()
+    def test_translate_to_en(self):
+        """TRADUÇÃO: Traduzir termos PT → EN."""
+        result = name_translator.translate_to_en("cachorro espelho")
         
-        cleaned = translator.clean("Project@#$%Name")
-        
-        # Deve remover caracteres especiais
-        assert "@" not in cleaned
-        assert "#" not in cleaned
+        assert result is not None
+        assert len(result) > 0
+        # Deve conter traduções
+        assert "dog" in result or "mirror" in result
     
-    def test_translate_common_terms(self):
-        """TRADUÇÃO: Traduzir termos comuns."""
-        translator = NameTranslator()
+    def test_bilingual_search(self):
+        """BUSCA: Busca bilíngue deve funcionar."""
+        # Buscar "espelho" em texto inglês "mirror"
+        found = name_translator.search_bilingual("espelho", "Nursery Mirror")
         
-        translated = translator.translate("engraving")
-        
-        # Deve traduzir para português ou manter
-        assert translated is not None
+        assert found is True
 
 
 class TestTextUtils:

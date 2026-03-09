@@ -1,0 +1,17 @@
+# requirements-dev.txt — Dependências de desenvolvimento
+
+# Testes
+pytest>=8.0.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+pytest-timeout>=2.2.0
+
+# Type checking
+mypy>=1.8.0
+types-Pillow>=10.2.0
+
+# Linting
+ruff>=0.1.0
+
+# Formatação
+black>=24.1.0

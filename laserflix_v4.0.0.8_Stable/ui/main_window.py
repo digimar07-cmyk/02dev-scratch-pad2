@@ -132,10 +132,10 @@ class LaserflixMainWindow:
         # 3B. SELECTION BAR (FASE-1C) — instanciada após _build_ui
         # ───────────────────────────────────────────────────────────────────
         self.selection_bar = SelectionBar(self.root)
-        self.selection_bar.on_select_all     = lambda: self.selection_ctrl.select_all(list(self.database.keys()))
-        self.selection_bar.on_deselect_all   = self.selection_ctrl.deselect_all
-        self.selection_bar.on_remove_selected = self.selection_ctrl.remove_selected
-        self.selection_bar.on_cancel         = self.selection_ctrl.toggle_mode
+        self.selection_bar.on_select_all      = lambda: self.selection_ctrl.select_all(list(self.database.keys()))
+        self.selection_bar.on_deselect_all    = self.selection_ctrl.deselect_all
+        self.selection_bar.on_remove_selected = lambda: self.selection_ctrl.remove_selected(self.root)
+        self.selection_bar.on_cancel          = self.selection_ctrl.toggle_mode
         
         # ═══════════════════════════════════════════════════════════════════
         # 4. CONTROLLERS (DEPOIS DO _build_ui - precisam de canvas/frame)

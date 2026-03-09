@@ -25,6 +25,7 @@ REFACTOR-FASE-2B: Métodos de filtro consolidados ✅
 REFACTOR-FASE-2C: Callbacks lambda consolidados ✅
 REFACTOR-FASE-1C: SelectionBar integrado como componente ✅
 FIX-SELECTION-FLICKER: Seleção visual sem rebuild de tela ✅
+FIX-REMOVE-REFRESH: sidebar + cards atualizados após remoção ✅
 PERFORMANCE: 3 otimizações integradas (4.5× faster) ✅
 """
 import os
@@ -100,20 +101,16 @@ class LaserflixMainWindow:
         # 2. CONTROLLERS (ANTES DO _build_ui - UIBuilder precisa deles!)
         # ═══════════════════════════════════════════════════════════════════
         
-        # SelectionController gerencia seleção múltipla
         self.selection_ctrl = SelectionController(
             database=self.database,
             db_manager=self.db_manager,
             collections_manager=self.collections_manager
         )
-        # Callbacks configurados depois (precisam de widgets)
         
-        # CollectionController gerencia coleções
         self.collection_ctrl = CollectionController(
             collections_manager=self.collections_manager,
             database=self.database
         )
-        # Callbacks configurados depois
         
         # Estado interno
         self._last_display_state = None
@@ -123,7 +120,7 @@ class LaserflixMainWindow:
         self._card_registry = {}  # FIX-SELECTION-FLICKER: {path: card_widget}
         
         # ═══════════════════════════════════════════════════════════════════
-        # 3. BUILD UI (cria canvas, scrollable_frame, etc)
+        # 3. BUILD UI
         # ═══════════════════════════════════════════════════════════════════
         self.root.title(f"LASERFLIX {VERSION}")
         self.root.state("zoomed")
@@ -131,7 +128,7 @@ class LaserflixMainWindow:
         self._build_ui()
 
         # ───────────────────────────────────────────────────────────────────
-        # 3B. SELECTION BAR (FASE-1C) — instanciada após _build_ui
+        # 3B. SELECTION BAR
         # ───────────────────────────────────────────────────────────────────
         self.selection_bar = SelectionBar(self.root)
         self.selection_bar.on_select_all      = lambda: self.selection_ctrl.select_all(list(self.database.keys()))
@@ -140,10 +137,8 @@ class LaserflixMainWindow:
         self.selection_bar.on_cancel          = self.selection_ctrl.toggle_mode
         
         # ═══════════════════════════════════════════════════════════════════
-        # 4. CONTROLLERS (DEPOIS DO _build_ui - precisam de canvas/frame)
+        # 4. CONTROLLERS (DEPOIS DO _build_ui)
         # ═══════════════════════════════════════════════════════════════════
-        
-        # OptimizedDisplayController gerencia filtros/ordenação/paginação + PERFORMANCE
         self.display_ctrl = OptimizedDisplayController(
             database=self.database,
             canvas=self.content_canvas,
@@ -154,7 +149,6 @@ class LaserflixMainWindow:
         )
         self.display_ctrl.on_display_update = self.display_projects
         
-        # AnalysisController gerencia análise IA
         self.analysis_ctrl = AnalysisController(
             analysis_manager=self.analysis_manager,
             text_generator=self.text_generator,
@@ -170,17 +164,12 @@ class LaserflixMainWindow:
         # ═══════════════════════════════════════════════════════════════════
         
         # SelectionController callbacks
-        self.selection_ctrl.on_mode_changed     = self._on_selection_mode_changed
+        self.selection_ctrl.on_mode_changed      = self._on_selection_mode_changed
         self.selection_ctrl.on_selection_changed = self._on_selection_count_changed
-        self.selection_ctrl.on_card_toggled     = self._update_card_selection_visual
-        self.selection_ctrl.on_projects_removed = lambda count: (
-            self.status_bar.config(text=f"🗑️ {count} projeto(s) removido(s)"),
-            self.sidebar.refresh(self.database, self.collections_manager)
-        )
-        self.selection_ctrl.on_refresh_needed = lambda: (
-            self._invalidate_cache(),
-            self.display_projects()
-        )
+        self.selection_ctrl.on_card_toggled      = self._update_card_selection_visual
+        self.selection_ctrl.on_projects_removed  = self._on_projects_removed
+        # FIX-REMOVE-REFRESH: on_refresh_needed agora inclui sidebar
+        self.selection_ctrl.on_refresh_needed    = self._refresh_all
         
         # CollectionController callbacks
         self.collection_ctrl.on_collection_changed = self._refresh_all
@@ -188,7 +177,6 @@ class LaserflixMainWindow:
         # ═══════════════════════════════════════════════════════════════════
         # 6. MANAGERS
         # ═══════════════════════════════════════════════════════════════════
-        
         self.import_manager = RecursiveImportManager(
             parent=self.root, database=self.database,
             project_scanner=self.scanner, text_generator=self.text_generator,
@@ -240,7 +228,6 @@ class LaserflixMainWindow:
             self.thumbnail_preloader.shutdown()
 
     def _build_ui(self) -> None:
-        """Constrói UI usando UIBuilder (FASE-D)."""
         UIBuilder.build(self)
 
     def _on_scroll(self, event):
@@ -281,28 +268,22 @@ class LaserflixMainWindow:
         return True
 
     def _invalidate_cache(self) -> None:
-        """
-        Invalida cache local + FilterCache.
-        Chama display_ctrl.invalidate_cache() se disponível (PERFORMANCE).
-        """
         self._force_rebuild = True
         if hasattr(self.display_ctrl, 'invalidate_cache'):
             self.display_ctrl.invalidate_cache()
 
     def _refresh_all(self) -> None:
-        """
-        Refresh completo: cache + display + sidebar (FASE-2C).
-        Consolida 3 lambdas duplicadas em um único método.
-        """
+        """Refresh completo: cache + display + sidebar."""
         self._invalidate_cache()
         self.display_projects()
         self.sidebar.refresh(self.database, self.collections_manager)
 
+    def _on_projects_removed(self, count: int) -> None:
+        """FIX-REMOVE-REFRESH: Atualiza status bar após remoção."""
+        self.status_bar.config(text=f"🗑️ {count} projeto(s) removido(s)")
+        # on_refresh_needed (= _refresh_all) será chamado logo depois pelo SelectionController
+
     def _add_filter_chip(self, filter_type: str, value) -> None:
-        """
-        Adiciona chip de filtro (FASE-2C).
-        Consolida 4 lambdas duplicadas em um único método.
-        """
         self.display_ctrl.add_filter_chip(filter_type, value)
 
     # FILTROS
@@ -315,15 +296,6 @@ class LaserflixMainWindow:
         self.display_ctrl.set_search_query(self.search_var.get())
 
     def _apply_filter(self, filter_type: str, value, btn=None, show_count=False):
-        """
-        Método genérico para aplicar filtros (FASE-2B).
-        
-        Args:
-            filter_type: Tipo do filtro ("origin", "category", "tag", "collection")
-            value: Valor do filtro
-            btn: Botão da sidebar (opcional)
-            show_count: Se deve mostrar contador na status bar
-        """
         filter_methods = {
             "origin": self.display_ctrl.set_origin_filter,
             "category": self.display_ctrl.set_category_filter,
@@ -353,9 +325,8 @@ class LaserflixMainWindow:
     def _on_collection_filter(self, collection_name: str, btn=None) -> None:
         self._apply_filter("collection", collection_name, btn, show_count=True)
 
-    # SELECTION CALLBACKS — FIX-SELECTION-FLICKER
+    # SELECTION CALLBACKS
     def _on_selection_mode_changed(self, is_active: bool) -> None:
-        """Mostra/esconde SelectionBar. Rebuild necessário para mostrar/ocultar checkboxes."""
         if is_active:
             self.selection_bar.show()
             self.header.set_select_btn_active(True)
@@ -372,8 +343,7 @@ class LaserflixMainWindow:
     def _update_card_selection_visual(self, path: str, is_selected: bool) -> None:
         """
         FIX-SELECTION-FLICKER: Atualiza visual de UM card específico.
-        Mesmo padrão do btn_updater dos toggles (favorite, done, etc).
-        Nenhum outro card é tocado. Scroll position mantida.
+        Sem rebuild. Scroll mantido.
         """
         card = self._card_registry.get(path)
         if not card:
@@ -381,14 +351,13 @@ class LaserflixMainWindow:
         try:
             if not card.winfo_exists():
                 return
-            border_color = "#FFFF00" if is_selected else "#1E1E2E"  # BG_CARD
+            border_color = "#FFFF00" if is_selected else "#1E1E2E"
             thickness = 2 if is_selected else 0
             card.config(
                 bg=border_color,
                 highlightbackground=border_color,
                 highlightthickness=thickness,
             )
-            # Ajusta padding do inner frame
             inner = card.winfo_children()
             if inner:
                 pad = 2 if is_selected else 0
@@ -430,7 +399,7 @@ class LaserflixMainWindow:
         
         from ui.builders.header_builder import HeaderBuilder
         HeaderBuilder.build(
-            self.scrollable_frame, 
+            self.scrollable_frame,
             self.display_ctrl,
             total_count=total_count,
             showing_count=len(page_items)
@@ -442,13 +411,11 @@ class LaserflixMainWindow:
         
         from ui.builders.cards_grid_builder import CardsGridBuilder
         card_cb = self._get_card_callbacks()
-        # FIX-SELECTION-FLICKER: Guarda registro {path: card_widget}
         self._card_registry = CardsGridBuilder.build(self.scrollable_frame, page_items, card_cb)
         
         self.content_canvas.yview_moveto(0)
 
     def _get_card_callbacks(self) -> dict:
-        """Retorna dict de callbacks para project_card (FASE-1.2 Bônus)."""
         return {
             "on_open_modal": self.open_project_modal,
             "on_toggle_favorite": self.toggle_favorite,
@@ -473,7 +440,6 @@ class LaserflixMainWindow:
         }
 
     def _build_empty_state(self) -> None:
-        """Exibe mensagem quando não há projetos (FASE-1E)."""
         tk.Label(self.scrollable_frame,
                  text="Nenhum projeto.\nClique em 'Importar Pastas' para adicionar.",
                  font=("Arial", 14), bg=BG_PRIMARY, fg=FG_TERTIARY, justify="center"

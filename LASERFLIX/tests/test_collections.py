@@ -8,11 +8,25 @@ Testa todas as operações de coleções:
   - Listar coleções
   - Verificar membros
   - Limpar órfãos
+
+NOTA: Usa patch para isolar testes do arquivo real collections.json.
 """
 import pytest
 import os
-import json
-from core.collections_manager import CollectionsManager, COLLECTIONS_FILE
+from unittest.mock import patch, MagicMock
+from core.collections_manager import CollectionsManager
+
+
+def make_fresh_cm():
+    """
+    Cria CollectionsManager limpo (sem ler nem salvar arquivo real).
+    Usa patch em load() e save() para isolar testes.
+    """
+    with patch.object(CollectionsManager, 'load', return_value=None), \
+         patch.object(CollectionsManager, 'save', return_value=None):
+        cm = CollectionsManager()
+        cm.collections = {}  # Estado limpo
+    return cm
 
 
 class TestCollectionsCRUD:
@@ -20,9 +34,10 @@ class TestCollectionsCRUD:
     
     def test_create_collection(self):
         """CREATE: Criar nova coleção."""
-        cm = CollectionsManager()
+        cm = make_fresh_cm()
         
-        result = cm.create_collection("Test Collection")
+        with patch.object(cm, 'save'):
+            result = cm.create_collection("Test Collection")
         
         assert result is True
         assert "Test Collection" in cm.collections
@@ -30,59 +45,66 @@ class TestCollectionsCRUD:
     
     def test_create_duplicate_collection(self):
         """CREATE: Criar coleção duplicada deve falhar."""
-        cm = CollectionsManager()
-        cm.create_collection("Duplicate")
+        cm = make_fresh_cm()
+        cm.collections["Duplicate"] = []
         
-        result = cm.create_collection("Duplicate")
+        with patch.object(cm, 'save'):
+            result = cm.create_collection("Duplicate")
         
         assert result is False
     
     def test_create_empty_name(self):
         """CREATE: Nome vazio deve falhar."""
-        cm = CollectionsManager()
+        cm = make_fresh_cm()
         
-        result = cm.create_collection("")
+        with patch.object(cm, 'save'):
+            result = cm.create_collection("")
+            result2 = cm.create_collection("   ")
         
         assert result is False
-        result2 = cm.create_collection("   ")
         assert result2 is False
     
     def test_delete_collection(self):
         """DELETE: Remover coleção existente."""
-        cm = CollectionsManager()
-        cm.create_collection("To Delete")
+        cm = make_fresh_cm()
+        cm.collections["To Delete"] = []
         
-        result = cm.delete_collection("To Delete")
+        with patch.object(cm, 'save'):
+            result = cm.delete_collection("To Delete")
         
         assert result is True
         assert "To Delete" not in cm.collections
     
     def test_delete_nonexistent_collection(self):
         """DELETE: Remover coleção inexistente deve falhar."""
-        cm = CollectionsManager()
+        cm = make_fresh_cm()
         
-        result = cm.delete_collection("Does Not Exist")
+        with patch.object(cm, 'save'):
+            result = cm.delete_collection("Does Not Exist")
         
         assert result is False
     
     def test_rename_collection(self):
         """UPDATE: Renomear coleção."""
-        cm = CollectionsManager()
-        cm.create_collection("Old Name")
+        cm = make_fresh_cm()
+        cm.collections["Old Name"] = ["/path/1"]
         
-        result = cm.rename_collection("Old Name", "New Name")
+        with patch.object(cm, 'save'):
+            result = cm.rename_collection("Old Name", "New Name")
         
         assert result is True
         assert "Old Name" not in cm.collections
         assert "New Name" in cm.collections
+        assert "/path/1" in cm.collections["New Name"]  # Projetos preservados
     
     def test_rename_to_existing_name(self):
         """UPDATE: Renomear para nome já existente deve falhar."""
-        cm = CollectionsManager()
-        cm.create_collection("Name 1")
-        cm.create_collection("Name 2")
+        cm = make_fresh_cm()
+        cm.collections["Name 1"] = []
+        cm.collections["Name 2"] = []
         
-        result = cm.rename_collection("Name 1", "Name 2")
+        with patch.object(cm, 'save'):
+            result = cm.rename_collection("Name 1", "Name 2")
         
         assert result is False
 
@@ -92,51 +114,53 @@ class TestCollectionsProjects:
     
     def test_add_project_to_collection(self):
         """ADD: Adicionar projeto a coleção."""
-        cm = CollectionsManager()
-        cm.create_collection("My Collection")
+        cm = make_fresh_cm()
+        cm.collections["My Collection"] = []
         
-        result = cm.add_project("My Collection", "/path/to/project1")
+        with patch.object(cm, 'save'):
+            result = cm.add_project("My Collection", "/path/to/project1")
         
         assert result is True
         assert "/path/to/project1" in cm.collections["My Collection"]
     
     def test_add_duplicate_project(self):
         """ADD: Adicionar projeto duplicado deve falhar."""
-        cm = CollectionsManager()
-        cm.create_collection("My Collection")
-        cm.add_project("My Collection", "/path/to/project1")
+        cm = make_fresh_cm()
+        cm.collections["My Collection"] = ["/path/to/project1"]
         
-        result = cm.add_project("My Collection", "/path/to/project1")
+        with patch.object(cm, 'save'):
+            result = cm.add_project("My Collection", "/path/to/project1")
         
         assert result is False
-        # Deve ter apenas 1 entrada
         assert cm.collections["My Collection"].count("/path/to/project1") == 1
     
     def test_add_project_to_nonexistent_collection(self):
         """ADD: Adicionar a coleção inexistente deve falhar."""
-        cm = CollectionsManager()
+        cm = make_fresh_cm()
         
-        result = cm.add_project("Does Not Exist", "/path/to/project1")
+        with patch.object(cm, 'save'):
+            result = cm.add_project("Does Not Exist", "/path/to/project1")
         
         assert result is False
     
     def test_remove_project_from_collection(self):
         """REMOVE: Remover projeto de coleção."""
-        cm = CollectionsManager()
-        cm.create_collection("My Collection")
-        cm.add_project("My Collection", "/path/to/project1")
+        cm = make_fresh_cm()
+        cm.collections["My Collection"] = ["/path/to/project1"]
         
-        result = cm.remove_project("My Collection", "/path/to/project1")
+        with patch.object(cm, 'save'):
+            result = cm.remove_project("My Collection", "/path/to/project1")
         
         assert result is True
         assert "/path/to/project1" not in cm.collections["My Collection"]
     
     def test_remove_nonexistent_project(self):
         """REMOVE: Remover projeto inexistente deve falhar."""
-        cm = CollectionsManager()
-        cm.create_collection("My Collection")
+        cm = make_fresh_cm()
+        cm.collections["My Collection"] = []
         
-        result = cm.remove_project("My Collection", "/path/does/not/exist")
+        with patch.object(cm, 'save'):
+            result = cm.remove_project("My Collection", "/path/does/not/exist")
         
         assert result is False
 
@@ -145,24 +169,22 @@ class TestCollectionsQueries:
     """Testes de consultas."""
     
     def test_get_all_collections(self):
-        """QUERY: Listar todas as coleções."""
-        cm = CollectionsManager()
-        cm.create_collection("Collection A")
-        cm.create_collection("Collection B")
-        cm.create_collection("Collection C")
+        """QUERY: Listar todas as coleções (ordenadas)."""
+        cm = make_fresh_cm()
+        cm.collections = {
+            "Collection C": [],
+            "Collection A": [],
+            "Collection B": [],
+        }
         
         all_collections = cm.get_all_collections()
         
-        assert len(all_collections) >= 3
-        assert "Collection A" in all_collections
-        assert isinstance(all_collections, list)
+        assert all_collections == ["Collection A", "Collection B", "Collection C"]
     
     def test_get_projects_in_collection(self):
         """QUERY: Listar projetos de uma coleção."""
-        cm = CollectionsManager()
-        cm.create_collection("Test")
-        cm.add_project("Test", "/path/1")
-        cm.add_project("Test", "/path/2")
+        cm = make_fresh_cm()
+        cm.collections["Test"] = ["/path/1", "/path/2"]
         
         projects = cm.get_projects("Test")
         
@@ -171,35 +193,33 @@ class TestCollectionsQueries:
         assert "/path/2" in projects
     
     def test_get_project_collections(self):
-        """QUERY: Listar coleções de um projeto."""
-        cm = CollectionsManager()
-        cm.create_collection("Collection 1")
-        cm.create_collection("Collection 2")
-        cm.add_project("Collection 1", "/path/project")
-        cm.add_project("Collection 2", "/path/project")
+        """QUERY: Listar coleções que contêm um projeto."""
+        cm = make_fresh_cm()
+        cm.collections = {
+            "Collection 1": ["/path/project"],
+            "Collection 2": ["/path/project"],
+            "Collection 3": ["/path/other"],
+        }
         
         collections = cm.get_project_collections("/path/project")
         
         assert len(collections) == 2
         assert "Collection 1" in collections
         assert "Collection 2" in collections
+        assert "Collection 3" not in collections
     
     def test_is_project_in_collection(self):
         """QUERY: Verificar se projeto está em coleção."""
-        cm = CollectionsManager()
-        cm.create_collection("Test")
-        cm.add_project("Test", "/path/project")
+        cm = make_fresh_cm()
+        cm.collections["Test"] = ["/path/project"]
         
         assert cm.is_project_in_collection("Test", "/path/project") is True
         assert cm.is_project_in_collection("Test", "/path/other") is False
     
     def test_get_collection_size(self):
-        """QUERY: Obter tamanho da coleção."""
-        cm = CollectionsManager()
-        cm.create_collection("Test")
-        cm.add_project("Test", "/path/1")
-        cm.add_project("Test", "/path/2")
-        cm.add_project("Test", "/path/3")
+        """QUERY: Obter tamanho exato da coleção."""
+        cm = make_fresh_cm()
+        cm.collections["Test"] = ["/path/1", "/path/2", "/path/3"]
         
         size = cm.get_collection_size("Test")
         
@@ -210,47 +230,39 @@ class TestCollectionsPersistence:
     """Testes de persistência (save/load)."""
     
     def test_save_and_load(self):
-        """PERSIST: Salvar e carregar coleções."""
-        # Cria e salva
-        cm1 = CollectionsManager()
-        cm1.create_collection("Persistent Collection")
-        cm1.add_project("Persistent Collection", "/path/test")
-        cm1.save()
+        """PERSIST: Salvar e recarregar coleções."""
+        cm = make_fresh_cm()
+        cm.collections["Persist Test"] = ["/path/test"]
         
-        # Carrega em nova instância
-        cm2 = CollectionsManager()
-        
-        assert "Persistent Collection" in cm2.collections
-        assert "/path/test" in cm2.collections["Persistent Collection"]
-    
-    def test_atomic_save(self):
-        """ATOMIC: Save atômico usa .tmp."""
-        cm = CollectionsManager()
-        cm.create_collection("Atomic Test")
+        # Salva real (não mockado)
         cm.save()
         
-        # Verifica que não sobrou .tmp
-        assert not os.path.exists(COLLECTIONS_FILE + ".tmp")
+        # Carrega em nova instância (load real)
+        cm2 = CollectionsManager()
         
-        # Verifica que salvou
-        assert os.path.exists(COLLECTIONS_FILE)
+        assert "Persist Test" in cm2.collections
+        assert "/path/test" in cm2.collections["Persist Test"]
+    
+    def test_atomic_save_no_tmp_leftover(self):
+        """ATOMIC: Save atômico não deixa .tmp para trás."""
+        from core.collections_manager import COLLECTIONS_FILE
+        
+        cm = make_fresh_cm()
+        cm.save()
+        
+        assert not os.path.exists(COLLECTIONS_FILE + ".tmp")
 
 
 class TestCollectionsUtilities:
     """Testes de utilitários."""
     
     def test_clean_orphan_projects(self):
-        """CLEAN: Remover projetos órfãos."""
-        cm = CollectionsManager()
-        cm.create_collection("Test")
-        cm.add_project("Test", "/path/valid")
-        cm.add_project("Test", "/path/orphan1")
-        cm.add_project("Test", "/path/orphan2")
+        """CLEAN: Remover exatamente os projetos órfãos."""
+        cm = make_fresh_cm()
+        cm.collections["Test"] = ["/path/valid", "/path/orphan1", "/path/orphan2"]
         
-        # Apenas /path/valid existe no database
-        valid_paths = {"/path/valid"}
-        
-        removed_count = cm.clean_orphan_projects(valid_paths)
+        with patch.object(cm, 'save'):
+            removed_count = cm.clean_orphan_projects({"/path/valid"})
         
         assert removed_count == 2
         assert "/path/valid" in cm.collections["Test"]
@@ -258,13 +270,12 @@ class TestCollectionsUtilities:
         assert "/path/orphan2" not in cm.collections["Test"]
     
     def test_get_stats(self):
-        """STATS: Obter estatísticas do sistema."""
-        cm = CollectionsManager()
-        cm.create_collection("Collection 1")
-        cm.create_collection("Collection 2")
-        cm.add_project("Collection 1", "/path/1")
-        cm.add_project("Collection 1", "/path/2")
-        cm.add_project("Collection 2", "/path/2")  # Mesmo projeto em 2 coleções
+        """STATS: Estatísticas corretas de coleções isoladas."""
+        cm = make_fresh_cm()
+        cm.collections = {
+            "Collection 1": ["/path/1", "/path/2"],
+            "Collection 2": ["/path/2"],  # /path/2 em 2 coleções
+        }
         
         stats = cm.get_stats()
         
@@ -277,37 +288,34 @@ class TestCollectionsEdgeCases:
     """Testes de casos extremos."""
     
     def test_get_projects_from_nonexistent_collection(self):
-        """ERROR: Buscar projetos de coleção inexistente."""
-        cm = CollectionsManager()
+        """ERROR: Buscar projetos de coleção inexistente retorna lista vazia."""
+        cm = make_fresh_cm()
         
         projects = cm.get_projects("Does Not Exist")
         
         assert projects == []
     
     def test_project_in_multiple_collections(self):
-        """EDGE: Projeto em múltiplas coleções."""
-        cm = CollectionsManager()
-        cm.create_collection("Collection A")
-        cm.create_collection("Collection B")
-        cm.create_collection("Collection C")
-        
-        cm.add_project("Collection A", "/path/popular")
-        cm.add_project("Collection B", "/path/popular")
-        cm.add_project("Collection C", "/path/popular")
+        """EDGE: Projeto pode estar em múltiplas coleções."""
+        cm = make_fresh_cm()
+        cm.collections = {
+            "Collection A": ["/path/popular"],
+            "Collection B": ["/path/popular"],
+            "Collection C": ["/path/popular"],
+        }
         
         collections = cm.get_project_collections("/path/popular")
         
         assert len(collections) == 3
     
     def test_delete_collection_with_projects(self):
-        """EDGE: Deletar coleção com projetos não afeta projetos."""
-        cm = CollectionsManager()
-        cm.create_collection("To Delete")
-        cm.add_project("To Delete", "/path/project")
+        """EDGE: Deletar coleção com projetos remove apenas a coleção."""
+        cm = make_fresh_cm()
+        cm.collections["To Delete"] = ["/path/project"]
         
-        cm.delete_collection("To Delete")
+        with patch.object(cm, 'save'):
+            result = cm.delete_collection("To Delete")
         
-        # Coleção foi deletada
+        assert result is True
         assert "To Delete" not in cm.collections
-        # Projeto ainda existe (só remove referência)
-        assert True  # Teste conceitual - projetos estão no database, não aqui
+        # Projeto não é afetado (está no database, não aqui)

@@ -11,6 +11,7 @@ F-05: Badge de status de análise (🤖 IA / ⚡ Fallback / ⏳ Pendente)
 F-08: Menu contextual de coleções (botão direito) + Badges de coleções visíveis (SEM 📁)
 PERF-FIX-4: Bind único de menu contextual + redução de lambdas (~25% mais rápido)
 FIX-CONTEXT-MENU: Propagation recursiva DEPOIS de criar todos os widgets
+UX-REFACTOR: Checkbox sempre visível no canto inferior direito
 """
 import tkinter as tk
 from tkinter import Menu
@@ -171,6 +172,7 @@ def build_card(
     
     PERF-FIX-4: Otimizado para reduzir lambdas e binds duplicados.
     FIX-CONTEXT-MENU: Menu de contexto funciona em toda área do card.
+    UX-REFACTOR: Checkbox sempre visível no canto inferior direito.
     
     Callbacks esperados (F-08):
         on_add_to_collection(path, collection_name)
@@ -183,30 +185,17 @@ def build_card(
     Returns:
         tk.Frame: Widget do card criado (para virtual scroll)
     """
-    selection_mode  = cb.get("selection_mode", False)
     selected_paths  = cb.get("selected_paths", set())
     is_selected     = project_path in selected_paths
 
-    # Card externo — altura fixa 410px
-    border_color = "#FFFF00" if is_selected else BG_CARD
-    card = tk.Frame(parent, bg=border_color, width=CARD_W, height=CARD_H,
-                    highlightbackground=border_color, highlightthickness=2 if is_selected else 0)
+    # Card externo — altura fixa 410px (sem borda amarela)
+    card = tk.Frame(parent, bg=BG_CARD, width=CARD_W, height=CARD_H)
     card.grid(row=row, column=col, padx=pad, pady=pad, sticky="n")
     card.grid_propagate(False)
 
     # Inner — conteúdo do card
     inner = tk.Frame(card, bg=BG_CARD)
-    inner.pack(fill="both", expand=True, padx=2 if is_selected else 0, pady=2 if is_selected else 0)
-
-    # Checkbox de seleção
-    if selection_mode:
-        chk_var = tk.BooleanVar(value=is_selected)
-        chk = tk.Checkbutton(
-            inner, variable=chk_var, bg=BG_CARD,
-            activebackground=BG_CARD, cursor="hand2",
-            command=lambda: cb["on_toggle_select"](project_path),
-        )
-        chk.place(x=4, y=4)
+    inner.pack(fill="both", expand=True)
 
     # PERF-FIX-4: Click handler compartilhado
     def _open_modal(e=None):
@@ -340,55 +329,66 @@ def build_card(
                     padx=4
                 ).pack(side="left")
 
-    # Ações (ocultas no modo seleção)
-    if not selection_mode:
-        af = tk.Frame(info, bg=BG_CARD)
-        af.pack(fill="x", pady=(6, 0))
-        
-        # PERF-FIX-4: Botões sem lambda quando possível
-        tk.Button(af, text="📂", font=("Arial", 12),
-                  command=lambda: cb["on_open_folder"](project_path),
-                  bg=BG_CARD, fg=ACCENT_GOLD, relief="flat", cursor="hand2"
+    # Ações (sempre visíveis)
+    af = tk.Frame(info, bg=BG_CARD)
+    af.pack(fill="x", pady=(6, 0))
+    
+    # PERF-FIX-4: Botões sem lambda quando possível
+    tk.Button(af, text="📂", font=("Arial", 12),
+              command=lambda: cb["on_open_folder"](project_path),
+              bg=BG_CARD, fg=ACCENT_GOLD, relief="flat", cursor="hand2"
+              ).pack(side="left", padx=1)
+    
+    # Favorito
+    btn_fav = tk.Button(af, font=("Arial", 12), bg=BG_CARD, relief="flat", cursor="hand2")
+    btn_fav.config(
+        text="⭐" if data.get("favorite") else "☆",
+        fg=ACCENT_GOLD if data.get("favorite") else FG_TERTIARY,
+        command=lambda b=btn_fav: cb["on_toggle_favorite"](project_path, b))
+    btn_fav.pack(side="left", padx=1)
+    
+    # Done
+    btn_done = tk.Button(af, font=("Arial", 12), bg=BG_CARD, relief="flat", cursor="hand2")
+    btn_done.config(
+        text="✓" if data.get("done") else "○",
+        fg="#00FF00" if data.get("done") else FG_TERTIARY,
+        command=lambda b=btn_done: cb["on_toggle_done"](project_path, b))
+    btn_done.pack(side="left", padx=1)
+    
+    # Good
+    btn_good = tk.Button(af, font=("Arial", 12), bg=BG_CARD, relief="flat", cursor="hand2")
+    btn_good.config(
+        text="👍",
+        fg="#00FF00" if data.get("good") else FG_TERTIARY,
+        command=lambda b=btn_good: cb["on_toggle_good"](project_path, b))
+    btn_good.pack(side="left", padx=1)
+    
+    # Bad
+    btn_bad = tk.Button(af, font=("Arial", 12), bg=BG_CARD, relief="flat", cursor="hand2")
+    btn_bad.config(
+        text="👎",
+        fg="#FF0000" if data.get("bad") else FG_TERTIARY,
+        command=lambda b=btn_bad: cb["on_toggle_bad"](project_path, b))
+    btn_bad.pack(side="left", padx=1)
+    
+    # Analyze (se não analisado)
+    if not data.get("analyzed"):
+        tk.Button(af, text="🤖", font=("Arial", 12),
+                  command=lambda: cb["on_analyze_single"](project_path),
+                  bg=BG_CARD, fg=ACCENT_GREEN, relief="flat", cursor="hand2"
                   ).pack(side="left", padx=1)
-        
-        # Favorito
-        btn_fav = tk.Button(af, font=("Arial", 12), bg=BG_CARD, relief="flat", cursor="hand2")
-        btn_fav.config(
-            text="⭐" if data.get("favorite") else "☆",
-            fg=ACCENT_GOLD if data.get("favorite") else FG_TERTIARY,
-            command=lambda b=btn_fav: cb["on_toggle_favorite"](project_path, b))
-        btn_fav.pack(side="left", padx=1)
-        
-        # Done
-        btn_done = tk.Button(af, font=("Arial", 12), bg=BG_CARD, relief="flat", cursor="hand2")
-        btn_done.config(
-            text="✓" if data.get("done") else "○",
-            fg="#00FF00" if data.get("done") else FG_TERTIARY,
-            command=lambda b=btn_done: cb["on_toggle_done"](project_path, b))
-        btn_done.pack(side="left", padx=1)
-        
-        # Good
-        btn_good = tk.Button(af, font=("Arial", 12), bg=BG_CARD, relief="flat", cursor="hand2")
-        btn_good.config(
-            text="👍",
-            fg="#00FF00" if data.get("good") else FG_TERTIARY,
-            command=lambda b=btn_good: cb["on_toggle_good"](project_path, b))
-        btn_good.pack(side="left", padx=1)
-        
-        # Bad
-        btn_bad = tk.Button(af, font=("Arial", 12), bg=BG_CARD, relief="flat", cursor="hand2")
-        btn_bad.config(
-            text="👎",
-            fg="#FF0000" if data.get("bad") else FG_TERTIARY,
-            command=lambda b=btn_bad: cb["on_toggle_bad"](project_path, b))
-        btn_bad.pack(side="left", padx=1)
-        
-        # Analyze (se não analisado)
-        if not data.get("analyzed"):
-            tk.Button(af, text="🤖", font=("Arial", 12),
-                      command=lambda: cb["on_analyze_single"](project_path),
-                      bg=BG_CARD, fg=ACCENT_GREEN, relief="flat", cursor="hand2"
-                      ).pack(side="left", padx=1)
+    
+    # UX-REFACTOR: Checkbox SEMPRE VISÍVEL no canto inferior direito
+    chk_var = tk.BooleanVar(value=is_selected)
+    chk = tk.Checkbutton(
+        info,
+        variable=chk_var,
+        bg=BG_CARD,
+        activebackground=BG_CARD,
+        cursor="hand2",
+        command=lambda: cb["on_toggle_select"](project_path),
+    )
+    chk.place(relx=1.0, rely=1.0, x=-4, y=-4, anchor="se")
     
     # FIX-CONTEXT-MENU: Bind recursivo NO FINAL, após criar TODOS os widgets
     context_menu_handler = _create_context_menu_handler(project_path, cb)

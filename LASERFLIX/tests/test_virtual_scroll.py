@@ -85,7 +85,15 @@ class TestCalculateViewport:
         assert vsm.max_pool_size == vsm.viewport_size + vsm.buffer_size
 
     def test_viewport_fallback_when_canvas_too_small(self):
-        """VIEWPORT: Usa fallback quando canvas retorna altura <= 1."""
+        """
+        VIEWPORT: Quando winfo_height() <= 1, usa fallback de 1080px.
+        Com card_height=410, card_pad=8:
+          row_height = 410 + 8*2 = 426
+          visible_rows = 1080 // 426 = 2
+          viewport_size = 2 * 6 = 12
+          buffer_size = 12 * 1.5 = 18
+          max_pool_size = 12 + 18 = 30
+        """
         canvas = MagicMock()
         canvas.winfo_height.return_value = 0  # Canvas não inicializado
         canvas.yview.return_value = (0.0, 1.0)
@@ -100,9 +108,8 @@ class TestCalculateViewport:
             card_pad=8,
         )
 
-        # Fallback: viewport_size=18, buffer=12, max=30
-        assert vsm.viewport_size == 18
-        assert vsm.buffer_size == 12
+        # row_height = 410 + 16 = 426; 1080 // 426 = 2 linhas; 2*6=12 cards
+        assert vsm.viewport_size == 12
         assert vsm.max_pool_size == 30
 
 

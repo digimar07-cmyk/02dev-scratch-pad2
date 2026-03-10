@@ -1,0 +1,4 @@
+mypy.ini: Source contains parsing errors: 'mypy.ini'
+	[line 25]: ')\n'
+ui\components\chips_bar.py:1: error: Unexpected character after line continuation character  [syntax]
+Found 1 error in 1 file (errors prevented further checking)

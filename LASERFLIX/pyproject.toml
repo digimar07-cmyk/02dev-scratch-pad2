@@ -1,22 +1,10 @@
 [tool.ruff]
-# Versão alvo
 target-version = "py314"
 line-length = 100
 
 [tool.ruff.lint]
-# Regras habilitadas:
-#   E/W  = pycodestyle (erros e warnings)
-#   F    = pyflakes (imports não usados, variáveis não usadas)
-#   I    = isort (ordenação de imports)
-#   UP   = pyupgrade (modernização de sintaxe)
-#   B    = flake8-bugbear (bugs comuns)
-#   SIM  = flake8-simplify (simplificações)
+# E/W = pycodestyle | F = pyflakes | I = isort | UP = pyupgrade | B = bugbear | SIM = simplify
 select = ["E", "W", "F", "I", "UP", "B", "SIM"]
-
-# Regras ignoradas — decisão consciente:
-#   E501  = linha longa (controlado pelo line-length acima)
-#   B008  = chamadas de função em argumentos default (comum em Tkinter)
-#   SIM108 = ternário forçado (reduz legibilidade em casos complexos)
 ignore = ["E501", "B008", "SIM108"]
 
 [tool.ruff.lint.isort]
@@ -26,17 +14,7 @@ known-first-party = ["config", "core", "ui", "utils", "ai"]
 quote-style = "double"
 indent-style = "space"
 
-[tool.coverage.run]
-source = ["core", "ui/controllers"]
-omit = [
-    "tests/*",
-    "ui/main_window.py",
-    "ui/components/*",
-    "refactor_monitor.py",
-    "backup_manager.py",
-]
-
-[tool.coverage.report]
-fail_under = 60
-show_missing = true
-skip_covered = false
+# Coverage: configurado no pytest.ini (scoped por modulo)
+# Expande a lista [coverage:run].source a cada novo modulo testado
+# Meta atual Sprint 2: 70% nos 3 modulos com testes
+# Meta Sprint 3+: adicionar novos modulos e elevar fail_under gradualmente

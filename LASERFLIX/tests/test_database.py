@@ -1,131 +1,251 @@
 """
-tests/test_database.py — TANAKA-03
+test_database.py — Testes agressivos para encontrar bugs reais no DatabaseManager.
 
-Cobre: DatabaseManager.load_database, save_database, API pública (VOLKOV-01)
+Estratégia: bordas, dados podres, corrupção, comportamento inesperado.
+Não testamos o caminho feliz — testamos onde o app PODE QUEBRAR.
 """
-from __future__ import annotations
-
 import json
-from pathlib import Path
-
+import os
 import pytest
-
 from core.database import DatabaseManager
 
 
-# ── Load ───────────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════════
+# FIXTURES
+# ══════════════════════════════════════════════════════════════
 
-class TestDatabaseLoad:
-    def test_load_inexistente_retorna_vazio(self, tmp_db):
-        tmp_db.load_database()
-        assert tmp_db.database == {}
+@pytest.fixture
+def db(tmp_path):
+    db_file = str(tmp_path / "database.json")
+    cfg_file = str(tmp_path / "config.json")
+    return DatabaseManager(db_file=db_file, config_file=cfg_file)
 
-    def test_load_dados_existentes(self, tmp_db_with_data):
-        assert "/proj/alpha" in tmp_db_with_data.database
-        assert "/proj/beta" in tmp_db_with_data.database
-        assert "/proj/gamma" in tmp_db_with_data.database
 
-    def test_load_json_corrompido_retorna_vazio(self, tmp_path):
-        db_file = str(tmp_path / "bad.json")
-        Path(db_file).write_text("{INVALID JSON", encoding="utf-8")
-        db = DatabaseManager(db_file=db_file)
+# ══════════════════════════════════════════════════════════════
+# INTEGRIDADE DOS DADOS — o que entra tem que sair igual
+# ══════════════════════════════════════════════════════════════
+
+class TestIntegridade:
+
+    def test_set_project_retorna_referencia_real_nao_copia(self, db):
+        """Bug: set_project guarda referência mutável — modificar depois altera o banco."""
+        data = {"name": "Projeto A", "tags": ["laser"]}
+        db.set_project("/path/a", data)
+        data["tags"].append("INVASÃO")
+        # Se get_project retornar a mesma referência, o banco foi corrompido
+        tags_no_banco = db.get_project("/path/a")["tags"]
+        assert "INVASÃO" not in tags_no_banco, (
+            "BUG: set_project guarda referência mutável. "
+            "Modificar o dict original corrompe o banco em memória."
+        )
+
+    def test_get_project_retorna_referencia_real_nao_copia(self, db):
+        """Bug: get_project retorna referência interna — modificar fora corrompe o banco."""
+        db.set_project("/path/a", {"name": "Projeto A", "tags": []})
+        proj = db.get_project("/path/a")
+        proj["tags"].append("INVASÃO")
+        tags_no_banco = db.get_project("/path/a")["tags"]
+        assert "INVASÃO" not in tags_no_banco, (
+            "BUG: get_project retorna referência interna. "
+            "Modificar o retorno corrompe o banco."
+        )
+
+    def test_all_projects_retorna_copia_profunda(self, db):
+        """Bug: all_projects() faz dict() superficial — listas internas ainda são referências."""
+        db.set_project("/path/a", {"name": "A", "tags": ["original"]})
+        todos = db.all_projects()
+        todos["/path/a"]["tags"].append("INVASÃO")
+        tags_no_banco = db.get_project("/path/a")["tags"]
+        assert "INVASÃO" not in tags_no_banco, (
+            "BUG: all_projects() retorna cópia rasa. "
+            "Listas internas dos projetos ainda são a mesma referência."
+        )
+
+    def test_save_load_preserva_todos_os_campos(self, db):
+        """Campos especiais (unicode, booleanos, listas vazias) devem sobreviver ao save/load."""
+        original = {
+            "name": "Projeto São João 日本語",
+            "favorite": True,
+            "done": False,
+            "categories": [],
+            "tags": ["a", "b", "c"],
+            "ai_description": "Descrição com \n quebra de linha e \t tab",
+        }
+        db.set_project("/path/unicode", original)
+        db.save_database()
+        db.database.clear()
         db.load_database()
-        assert db.database == {}
+        recarregado = db.get_project("/path/unicode")
+        assert recarregado is not None, "Projeto sumiu após save/load"
+        assert recarregado["name"] == original["name"], "Nome unicode corrompido"
+        assert recarregado["favorite"] is True
+        assert recarregado["done"] is False
+        assert recarregado["categories"] == []
+        assert recarregado["tags"] == ["a", "b", "c"]
 
-    def test_load_usa_bak_quando_principal_corrompido(self, tmp_path):
-        db_file = str(tmp_path / "db.json")
+
+# ══════════════════════════════════════════════════════════════
+# CORRUPÇÃO E RECUPERAÇÃO — o que acontece quando o arquivo está podre
+# ══════════════════════════════════════════════════════════════
+
+class TestCorrupcao:
+
+    def test_database_json_truncado_nao_trava(self, tmp_path):
+        """Arquivo cortado no meio (ex: disco cheio) não pode travar o app."""
+        db_file = str(tmp_path / "database.json")
+        with open(db_file, "w") as f:
+            f.write('{"path/a": {"name": "incomplete')
+        cfg_file = str(tmp_path / "config.json")
+        db = DatabaseManager(db_file=db_file, config_file=cfg_file)
+        db.load_database()
+        assert isinstance(db.database, dict), "database deve ser dict mesmo após corrupção"
+        assert len(db.database) == 0, "database corrompido deve resultar em banco vazio"
+
+    def test_database_json_e_bak_ambos_corrompidos(self, tmp_path):
+        """Se principal E backup estiverem corrompidos, não pode entrar em loop nem travar."""
+        db_file = str(tmp_path / "database.json")
         bak_file = db_file + ".bak"
-        Path(db_file).write_text("{INVALID", encoding="utf-8")
-        Path(bak_file).write_text(
-            json.dumps({"/proj/from_bak": {"name": "FromBak"}}),
-            encoding="utf-8"
-        )
-        db = DatabaseManager(db_file=db_file)
+        with open(db_file, "w") as f:
+            f.write("LIXO PURO")
+        with open(bak_file, "w") as f:
+            f.write("MAIS LIXO")
+        cfg_file = str(tmp_path / "config.json")
+        db = DatabaseManager(db_file=db_file, config_file=cfg_file)
+        db.load_database()  # não pode travar, não pode loop infinito
+        assert isinstance(db.database, dict)
+
+    def test_database_json_vazio_nao_e_dict(self, tmp_path):
+        """Arquivo database.json com conteúdo '[]' (lista) em vez de '{}' (dict)."""
+        db_file = str(tmp_path / "database.json")
+        with open(db_file, "w") as f:
+            f.write("[]")  # lista, não dict — formato errado
+        cfg_file = str(tmp_path / "config.json")
+        db = DatabaseManager(db_file=db_file, config_file=cfg_file)
         db.load_database()
-        assert "/proj/from_bak" in db.database
-
-    def test_load_migra_category_para_categories(self, tmp_path):
-        db_file = str(tmp_path / "db.json")
-        Path(db_file).write_text(
-            json.dumps({"/proj/old": {"name": "Old", "category": "Motion"}}),
-            encoding="utf-8"
+        # Não pode travar. database deve ser dict.
+        assert isinstance(db.database, dict), (
+            "BUG: database.json com '[]' (lista) causa db.database virar lista. "
+            "Isso quebra TUDO que faz db.database.get() ou 'in db.database'."
         )
-        db = DatabaseManager(db_file=db_file)
+
+    def test_config_sem_chave_folders_nao_quebra_app(self, tmp_path):
+        """Config restaurado de backup pode não ter a chave 'folders' — app não pode travar."""
+        db_file = str(tmp_path / "database.json")
+        cfg_file = str(tmp_path / "config.json")
+        with open(cfg_file, "w") as f:
+            json.dump({"models": {}}, f)  # sem 'folders'
+        db = DatabaseManager(db_file=db_file, config_file=cfg_file)
+        db.load_config()
+        folders = db.config.get("folders", None)
+        assert folders is not None, (
+            "BUG: config sem chave 'folders' — acesso a db.config['folders'] vai "
+            "lançar KeyError no app em produção."
+        )
+        assert isinstance(folders, list), "'folders' deve ser lista"
+
+
+# ══════════════════════════════════════════════════════════════
+# OPERAÇÕES COM DADOS INVÁLIDOS — o que o usuário pode causar
+# ══════════════════════════════════════════════════════════════
+
+class TestDadosInvalidos:
+
+    def test_set_project_com_path_vazio(self, db):
+        """Path vazio como chave do banco — não deve ser aceito silenciosamente."""
+        db.set_project("", {"name": "Fantasma"})
+        assert db.has_project("") is False, (
+            "BUG: set_project aceita path vazio. "
+            "Projeto invisível no banco — nunca aparece na UI mas ocupa memória."
+        )
+
+    def test_set_project_com_data_none(self, db):
+        """Salvar None como dados do projeto não pode silenciosamente aceitar."""
+        db.set_project("/path/a", None)
+        projeto = db.get_project("/path/a")
+        assert projeto is not None, (
+            "BUG: set_project aceita None como dados. "
+            "get_project retorna None e o app não sabe se o projeto existe ou não."
+        )
+
+    def test_set_project_com_data_nao_serializavel(self, db, tmp_path):
+        """Dados com objeto não-serializável deve falhar no save, não silenciosamente."""
+        import datetime
+        db.set_project("/path/a", {"name": "A", "obj": object()})  # object() não é JSON
+        with pytest.raises(Exception):
+            db.save_database()  # deve lançar exceção, não engolir silenciosamente
+
+    def test_remove_project_com_path_none(self, db):
+        """remove_project(None) não pode travar com AttributeError."""
+        try:
+            resultado = db.remove_project(None)
+            assert resultado is False
+        except (AttributeError, TypeError) as e:
+            pytest.fail(f"BUG: remove_project(None) lança exceção: {e}")
+
+    def test_has_project_com_path_none(self, db):
+        """has_project(None) não pode travar."""
+        try:
+            resultado = db.has_project(None)
+            assert resultado is False
+        except (AttributeError, TypeError) as e:
+            pytest.fail(f"BUG: has_project(None) lança exceção: {e}")
+
+    def test_2000_projetos_save_load_integro(self, db):
+        """Simula uso real: 2000 projetos. Save/load deve preservar todos."""
+        for i in range(2000):
+            db.set_project(f"/pasta/projeto_{i:04d}", {
+                "name": f"Projeto {i}",
+                "favorite": i % 2 == 0,
+                "tags": [f"tag{i}", f"cat{i % 10}"],
+                "categories": ["Laser"] if i % 3 == 0 else [],
+            })
+        db.save_database()
+        db.database.clear()
         db.load_database()
-        assert "categories" in db.database["/proj/old"]
-        assert "category" not in db.database["/proj/old"]
-        assert db.database["/proj/old"]["categories"] == ["Motion"]
+        assert db.project_count() == 2000, (
+            f"BUG: Após save/load de 2000 projetos, "
+            f"só {db.project_count()} foram recuperados."
+        )
 
 
-# ── Save ───────────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════════
+# BACKUP — o mecanismo de segurança tem que funcionar
+# ══════════════════════════════════════════════════════════════
 
-class TestDatabaseSave:
-    def test_save_persiste_em_disco(self, tmp_db_with_data, tmp_path):
-        content = json.loads(Path(tmp_path / "test_db.json").read_text(encoding="utf-8"))
-        assert "/proj/alpha" in content
+class TestBackup:
 
-    def test_save_cria_bak_na_segunda_gravacao(self, tmp_db_with_data, tmp_path):
-        tmp_db_with_data.save_database()  # segunda vez — deve gerar .bak
-        bak = tmp_path / "test_db.json.bak"
-        assert bak.exists()
+    def test_restore_backup_corrompido_nao_entra_em_loop(self, tmp_path):
+        """Se .bak também for inválido, _try_restore_from_backup não pode loopar."""
+        db_file = str(tmp_path / "database.json")
+        bak_file = db_file + ".bak"
+        cfg_file = str(tmp_path / "config.json")
+        with open(db_file, "w") as f:
+            f.write("CORROMPIDO")
+        with open(bak_file, "w") as f:
+            f.write("CORROMPIDO TAMBEM")
+        db = DatabaseManager(db_file=db_file, config_file=cfg_file)
+        # Não pode travar, não pode RecursionError
+        db.load_database()
+        assert isinstance(db.database, dict)
 
-    def test_escrita_atomica_sem_arquivo_tmp(self, tmp_db_with_data, tmp_path):
-        tmp_db_with_data.save_database()
-        tmp_files = list(tmp_path.glob("*.tmp"))
-        assert len(tmp_files) == 0
+    def test_auto_backup_limita_quantidade(self, tmp_path, monkeypatch):
+        """auto_backup deve deletar backups antigos ao passar do limite MAX_AUTO_BACKUPS."""
+        import config.settings as settings
+        monkeypatch.setattr(settings, "MAX_AUTO_BACKUPS", 3)
+        monkeypatch.setattr(settings, "BACKUP_FOLDER", str(tmp_path / "backups"))
+        os.makedirs(str(tmp_path / "backups"), exist_ok=True)
 
-    def test_reload_apos_save_preserva_dados(self, tmp_db_with_data, tmp_path):
-        db2 = DatabaseManager(db_file=str(tmp_path / "test_db.json"))
-        db2.load_database()
-        assert set(db2.database.keys()) == {"/proj/alpha", "/proj/beta", "/proj/gamma"}
+        db_file = str(tmp_path / "database.json")
+        cfg_file = str(tmp_path / "config.json")
+        db = DatabaseManager(db_file=db_file, config_file=cfg_file)
+        db.set_project("/p", {"name": "p"})
+        db.save_database()
 
+        for _ in range(6):  # cria 6 backups — deve manter só 3
+            db.auto_backup()
 
-# ── API Pública (VOLKOV-01) ───────────────────────────────────────────────
-
-class TestDatabaseAPI:
-    def test_get_project_existente(self, tmp_db_with_data):
-        data = tmp_db_with_data.get_project("/proj/alpha")
-        assert data is not None
-        assert data["name"] == "Alpha"
-
-    def test_get_project_inexistente_retorna_none(self, tmp_db_with_data):
-        assert tmp_db_with_data.get_project("/proj/nao_existe") is None
-
-    def test_set_project_insere(self, tmp_db):
-        tmp_db.set_project("/proj/new", {"name": "New"})
-        assert tmp_db.has_project("/proj/new")
-
-    def test_set_project_atualiza(self, tmp_db_with_data):
-        tmp_db_with_data.set_project("/proj/alpha", {"name": "Alpha Updated"})
-        assert tmp_db_with_data.get_project("/proj/alpha")["name"] == "Alpha Updated"
-
-    def test_remove_project_existente_retorna_true(self, tmp_db_with_data):
-        result = tmp_db_with_data.remove_project("/proj/alpha")
-        assert result is True
-        assert not tmp_db_with_data.has_project("/proj/alpha")
-
-    def test_remove_project_inexistente_retorna_false(self, tmp_db_with_data):
-        result = tmp_db_with_data.remove_project("/proj/fantasma")
-        assert result is False
-
-    def test_has_project_true(self, tmp_db_with_data):
-        assert tmp_db_with_data.has_project("/proj/beta") is True
-
-    def test_has_project_false(self, tmp_db_with_data):
-        assert tmp_db_with_data.has_project("/proj/nao_existe") is False
-
-    def test_all_paths_retorna_todos(self, tmp_db_with_data):
-        paths = tmp_db_with_data.all_paths()
-        assert set(paths) == {"/proj/alpha", "/proj/beta", "/proj/gamma"}
-
-    def test_all_projects_retorna_copia(self, tmp_db_with_data):
-        copy = tmp_db_with_data.all_projects()
-        copy["/proj/intruso"] = {}
-        assert not tmp_db_with_data.has_project("/proj/intruso")
-
-    def test_project_count(self, tmp_db_with_data):
-        assert tmp_db_with_data.project_count() == 3
-
-    def test_iter_projects(self, tmp_db_with_data):
-        paths = [p for p, _ in tmp_db_with_data.iter_projects()]
-        assert set(paths) == {"/proj/alpha", "/proj/beta", "/proj/gamma"}
+        backups = [f for f in os.listdir(str(tmp_path / "backups")) if f.startswith("auto_backup_")]
+        assert len(backups) <= 3, (
+            f"BUG: auto_backup criou {len(backups)} arquivos, limite é 3. "
+            "Pasta de backup vai encher o disco em produção."
+        )

@@ -12,7 +12,6 @@ if not exist "QA\reports" mkdir "QA\reports"
 if not exist "QA\tmp_pytest" mkdir "QA\tmp_pytest"
 
 REM Define o basetemp com caminho ABSOLUTO para evitar PermissionError
-REM com usuários do Windows que têm caracteres especiais/acentuados no nome
 set PYTEST_BASETEMP=%~dp0tmp_pytest
 
 set REPORT=QA\reports\06_pytest_REPORT.txt
@@ -32,13 +31,22 @@ if errorlevel 1 (
     python -m pip install pytest pytest-cov -q
 )
 
-echo [1/1] Rodando todos os testes em tests/ ...
+echo [1/2] Rodando testes...
 echo --- RESULTADO DOS TESTES --- >> "%REPORT%"
-python -m pytest tests/ -v --tb=short --no-header --basetemp="%PYTEST_BASETEMP%" 2>&1 >> "%REPORT%"
+REM --tb=short limita traceback | -p no:logging evita spam de logs nos testes
+python -m pytest tests/ -v --tb=short --no-header --basetemp="%PYTEST_BASETEMP%" -p no:logging --no-header 2>&1 >> "%REPORT%"
 
 echo. >> "%REPORT%"
-echo --- COBERTURA DE CODIGO --- >> "%REPORT%"
-python -m pytest tests/ --cov=core --cov=ui --cov=utils --cov=config --cov-report=term-missing --no-header -q --basetemp="%PYTEST_BASETEMP%" 2>&1 >> "%REPORT%"
+echo --- COBERTURA DE CODIGO (modulos com testes) --- >> "%REPORT%"
+python -m pytest tests/ ^^
+    --cov=core/database ^^
+    --cov=core/collections_manager ^^
+    --cov=core/project_scanner ^^
+    --cov=ui/controllers/selection_controller ^^
+    --cov-report=term-missing ^^
+    --no-header -q ^^
+    --basetemp="%PYTEST_BASETEMP%" ^^
+    -p no:logging 2>&1 >> "%REPORT%"
 
 echo. >> "%REPORT%"
 echo ================================================================ >> "%REPORT%"
@@ -48,7 +56,7 @@ echo ================================================================ >> "%REPOR
 echo.
 echo ================================================================
 echo   CONCLUIDO! Relatorio salvo em: %REPORT%
-echo   PASSED = verde, FAILED = problema encontrado!
+echo   PASSED = verde, FAILED = BUG ENCONTRADO!
 echo ================================================================
 echo.
 pause

@@ -1,0 +1,244 @@
+2026-03-09 22:44:08,780 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,784 | INFO | Laserflix | ✨ Coleção criada: Logos
+2026-03-09 22:44:08,789 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,793 | INFO | Laserflix | ✨ Coleção criada: Natal
+2026-03-09 22:44:08,798 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,802 | INFO | Laserflix | ✨ Coleção criada: Logos
+2026-03-09 22:44:08,802 | WARNING | Laserflix | ⚠️ Coleção 'Logos' já existe
+2026-03-09 22:44:08,807 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,809 | WARNING | Laserflix | ⚠️ Nome de coleção vazio
+2026-03-09 22:44:08,814 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,817 | INFO | Laserflix | ✨ Coleção criada: Via Alias
+2026-03-09 22:44:08,823 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,827 | INFO | Laserflix | ✨ Coleção criada: Old
+2026-03-09 22:44:08,829 | INFO | Laserflix | ✏️ Coleção renomeada: Old → New
+2026-03-09 22:44:08,834 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,838 | INFO | Laserflix | ✨ Coleção criada: Old
+2026-03-09 22:44:08,839 | INFO | Laserflix | ➕ Projeto adicionado a 'Old': x
+2026-03-09 22:44:08,852 | INFO | Laserflix | ✏️ Coleção renomeada: Old → New
+2026-03-09 22:44:08,857 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,861 | INFO | Laserflix | ✨ Coleção criada: Para Deletar
+2026-03-09 22:44:08,863 | INFO | Laserflix | 🗑️ Coleção removida: Para Deletar
+2026-03-09 22:44:08,867 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,869 | WARNING | Laserflix | ⚠️ Coleção 'Fantasma' não existe
+2026-03-09 22:44:08,874 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,877 | INFO | Laserflix | ✨ Coleção criada: Favoritos
+2026-03-09 22:44:08,879 | INFO | Laserflix | ➕ Projeto adicionado a 'Favoritos': x
+2026-03-09 22:44:08,884 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,888 | INFO | Laserflix | ✨ Coleção criada: Favoritos
+2026-03-09 22:44:08,889 | INFO | Laserflix | ➕ Projeto adicionado a 'Favoritos': x
+2026-03-09 22:44:08,894 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,898 | INFO | Laserflix | ✨ Coleção criada: Favoritos
+2026-03-09 22:44:08,900 | INFO | Laserflix | ➕ Projeto adicionado a 'Favoritos': x
+2026-03-09 22:44:08,901 | INFO | Laserflix | ➖ Projeto removido de 'Favoritos': x
+2026-03-09 22:44:08,906 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,909 | INFO | Laserflix | ✨ Coleção criada: A
+2026-03-09 22:44:08,911 | INFO | Laserflix | ✨ Coleção criada: B
+2026-03-09 22:44:08,913 | INFO | Laserflix | ➕ Projeto adicionado a 'A': x
+2026-03-09 22:44:08,915 | INFO | Laserflix | ➕ Projeto adicionado a 'B': x
+2026-03-09 22:44:08,919 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,923 | INFO | Laserflix | ✨ Coleção criada: Test
+2026-03-09 22:44:08,925 | INFO | Laserflix | ➕ Projeto adicionado a 'Test': x
+2026-03-09 22:44:08,929 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,933 | INFO | Laserflix | ✨ Coleção criada: Test
+2026-03-09 22:44:08,935 | INFO | Laserflix | ➕ Projeto adicionado a 'Test': ghost
+2026-03-09 22:44:08,937 | INFO | Laserflix | ➕ Projeto adicionado a 'Test': real
+2026-03-09 22:44:08,939 | INFO | Laserflix | 🧹 1 referências órfãs removidas das coleções
+2026-03-09 22:44:08,944 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,947 | INFO | Laserflix | ✨ Coleção criada: Test
+2026-03-09 22:44:08,949 | INFO | Laserflix | ➕ Projeto adicionado a 'Test': real
+2026-03-09 22:44:08,954 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,957 | INFO | Laserflix | ✨ Coleção criada: A
+2026-03-09 22:44:08,959 | INFO | Laserflix | ✨ Coleção criada: B
+2026-03-09 22:44:08,961 | INFO | Laserflix | ➕ Projeto adicionado a 'A': x
+2026-03-09 22:44:08,962 | INFO | Laserflix | ➕ Projeto adicionado a 'B': x
+2026-03-09 22:44:08,964 | INFO | Laserflix | ➕ Projeto adicionado a 'B': y
+2026-03-09 22:44:08,969 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:08,973 | INFO | Laserflix | ✨ Coleção criada: Persistida
+2026-03-09 22:44:08,974 | INFO | Laserflix | ➕ Projeto adicionado a 'Persistida': z
+2026-03-09 22:44:08,976 | INFO | Laserflix | ✅ Collections carregado: 1 coleções
+2026-03-09 22:44:08,981 | INFO | Laserflix | ⚠️ Database não encontrado, iniciando vazio
+2026-03-09 22:44:08,994 | ERROR | Laserflix | Database corrompido (JSON inválido): Expecting property name enclosed in double quotes: line 1 column 2 (char 1). Tentando restaurar backup.
+Traceback (most recent call last):
+  File "G:\GitHub\02dev-scratch-pad2\LASERFLIX\core\database.py", line 137, in load_database
+    self.database = json.load(f)
+                    ~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-03-09 22:44:09,004 | WARNING | Laserflix | Arquivo .bak não encontrado para G:\GitHub\02dev-scratch-pad2\LASERFLIX\QA\tmp_pytest\test_load_json_corrompido_reto0\bad.json. Impossível restaurar.
+2026-03-09 22:44:09,011 | ERROR | Laserflix | Database corrompido (JSON inválido): Expecting property name enclosed in double quotes: line 1 column 2 (char 1). Tentando restaurar backup.
+Traceback (most recent call last):
+  File "G:\GitHub\02dev-scratch-pad2\LASERFLIX\core\database.py", line 137, in load_database
+    self.database = json.load(f)
+                    ~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-03-09 22:44:09,018 | INFO | Laserflix | ✅ Arquivo restaurado de G:\GitHub\02dev-scratch-pad2\LASERFLIX\QA\tmp_pytest\test_load_usa_bak_quando_princ0\db.json.bak
+2026-03-09 22:44:09,019 | INFO | Laserflix | ✅ Database carregado: 1 projetos
+2026-03-09 22:44:09,026 | INFO | Laserflix | ✅ Database carregado: 1 projetos
+2026-03-09 22:44:09,063 | INFO | Laserflix | ✅ Database carregado: 3 projetos
+2026-03-09 22:44:09,149 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,158 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,168 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,178 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,187 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,197 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,206 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,216 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,226 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,236 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,251 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,260 | INFO | Laserflix | ✅ Database carregado: 2 projetos
+2026-03-09 22:44:09,268 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,283 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,297 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,312 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:09,322 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,122 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,128 | INFO | Laserflix | ✨ Coleção criada: Logos
+2026-03-09 22:44:11,135 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,139 | INFO | Laserflix | ✨ Coleção criada: Natal
+2026-03-09 22:44:11,143 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,147 | INFO | Laserflix | ✨ Coleção criada: Logos
+2026-03-09 22:44:11,147 | WARNING | Laserflix | ⚠️ Coleção 'Logos' já existe
+2026-03-09 22:44:11,152 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,154 | WARNING | Laserflix | ⚠️ Nome de coleção vazio
+2026-03-09 22:44:11,158 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,162 | INFO | Laserflix | ✨ Coleção criada: Via Alias
+2026-03-09 22:44:11,166 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,170 | INFO | Laserflix | ✨ Coleção criada: Old
+2026-03-09 22:44:11,172 | INFO | Laserflix | ✏️ Coleção renomeada: Old → New
+2026-03-09 22:44:11,176 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,180 | INFO | Laserflix | ✨ Coleção criada: Old
+2026-03-09 22:44:11,182 | INFO | Laserflix | ➕ Projeto adicionado a 'Old': x
+2026-03-09 22:44:11,184 | INFO | Laserflix | ✏️ Coleção renomeada: Old → New
+2026-03-09 22:44:11,188 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,192 | INFO | Laserflix | ✨ Coleção criada: Para Deletar
+2026-03-09 22:44:11,194 | INFO | Laserflix | 🗑️ Coleção removida: Para Deletar
+2026-03-09 22:44:11,198 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,200 | WARNING | Laserflix | ⚠️ Coleção 'Fantasma' não existe
+2026-03-09 22:44:11,205 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,208 | INFO | Laserflix | ✨ Coleção criada: Favoritos
+2026-03-09 22:44:11,210 | INFO | Laserflix | ➕ Projeto adicionado a 'Favoritos': x
+2026-03-09 22:44:11,215 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,219 | INFO | Laserflix | ✨ Coleção criada: Favoritos
+2026-03-09 22:44:11,221 | INFO | Laserflix | ➕ Projeto adicionado a 'Favoritos': x
+2026-03-09 22:44:11,225 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,229 | INFO | Laserflix | ✨ Coleção criada: Favoritos
+2026-03-09 22:44:11,231 | INFO | Laserflix | ➕ Projeto adicionado a 'Favoritos': x
+2026-03-09 22:44:11,233 | INFO | Laserflix | ➖ Projeto removido de 'Favoritos': x
+2026-03-09 22:44:11,237 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,241 | INFO | Laserflix | ✨ Coleção criada: A
+2026-03-09 22:44:11,243 | INFO | Laserflix | ✨ Coleção criada: B
+2026-03-09 22:44:11,245 | INFO | Laserflix | ➕ Projeto adicionado a 'A': x
+2026-03-09 22:44:11,247 | INFO | Laserflix | ➕ Projeto adicionado a 'B': x
+2026-03-09 22:44:11,252 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,256 | INFO | Laserflix | ✨ Coleção criada: Test
+2026-03-09 22:44:11,258 | INFO | Laserflix | ➕ Projeto adicionado a 'Test': x
+2026-03-09 22:44:11,263 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,266 | INFO | Laserflix | ✨ Coleção criada: Test
+2026-03-09 22:44:11,268 | INFO | Laserflix | ➕ Projeto adicionado a 'Test': ghost
+2026-03-09 22:44:11,270 | INFO | Laserflix | ➕ Projeto adicionado a 'Test': real
+2026-03-09 22:44:11,272 | INFO | Laserflix | 🧹 1 referências órfãs removidas das coleções
+2026-03-09 22:44:11,276 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,280 | INFO | Laserflix | ✨ Coleção criada: Test
+2026-03-09 22:44:11,282 | INFO | Laserflix | ➕ Projeto adicionado a 'Test': real
+2026-03-09 22:44:11,286 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,290 | INFO | Laserflix | ✨ Coleção criada: A
+2026-03-09 22:44:11,291 | INFO | Laserflix | ✨ Coleção criada: B
+2026-03-09 22:44:11,293 | INFO | Laserflix | ➕ Projeto adicionado a 'A': x
+2026-03-09 22:44:11,295 | INFO | Laserflix | ➕ Projeto adicionado a 'B': x
+2026-03-09 22:44:11,296 | INFO | Laserflix | ➕ Projeto adicionado a 'B': y
+2026-03-09 22:44:11,301 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,305 | INFO | Laserflix | ✨ Coleção criada: Persistida
+2026-03-09 22:44:11,306 | INFO | Laserflix | ➕ Projeto adicionado a 'Persistida': z
+2026-03-09 22:44:11,308 | INFO | Laserflix | ✅ Collections carregado: 1 coleções
+2026-03-09 22:44:11,314 | INFO | Laserflix | ⚠️ Database não encontrado, iniciando vazio
+2026-03-09 22:44:11,327 | ERROR | Laserflix | Database corrompido (JSON inválido): Expecting property name enclosed in double quotes: line 1 column 2 (char 1). Tentando restaurar backup.
+Traceback (most recent call last):
+  File "G:\GitHub\02dev-scratch-pad2\LASERFLIX\core\database.py", line 137, in load_database
+    self.database = json.load(f)
+                    ~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-03-09 22:44:11,345 | WARNING | Laserflix | Arquivo .bak não encontrado para G:\GitHub\02dev-scratch-pad2\LASERFLIX\QA\tmp_pytest\test_load_json_corrompido_reto0\bad.json. Impossível restaurar.
+2026-03-09 22:44:11,352 | ERROR | Laserflix | Database corrompido (JSON inválido): Expecting property name enclosed in double quotes: line 1 column 2 (char 1). Tentando restaurar backup.
+Traceback (most recent call last):
+  File "G:\GitHub\02dev-scratch-pad2\LASERFLIX\core\database.py", line 137, in load_database
+    self.database = json.load(f)
+                    ~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-03-09 22:44:11,360 | INFO | Laserflix | ✅ Arquivo restaurado de G:\GitHub\02dev-scratch-pad2\LASERFLIX\QA\tmp_pytest\test_load_usa_bak_quando_princ0\db.json.bak
+2026-03-09 22:44:11,361 | INFO | Laserflix | ✅ Database carregado: 1 projetos
+2026-03-09 22:44:11,368 | INFO | Laserflix | ✅ Database carregado: 1 projetos
+2026-03-09 22:44:11,405 | INFO | Laserflix | ✅ Database carregado: 3 projetos
+2026-03-09 22:44:11,496 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,505 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,515 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,525 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,535 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,546 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,557 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,567 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,576 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,586 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,604 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,614 | INFO | Laserflix | ✅ Database carregado: 2 projetos
+2026-03-09 22:44:11,622 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,638 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,653 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,668 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio
+2026-03-09 22:44:11,678 | INFO | Laserflix | ℹ️ Collections file não existe, criando vazio

@@ -1,0 +1,28 @@
+{
+  "/proj/alpha": {
+    "name": "Alpha",
+    "categories": [
+      "Motion"
+    ],
+    "tags": [],
+    "favorite": false
+  },
+  "/proj/beta": {
+    "name": "Beta",
+    "categories": [
+      "Print"
+    ],
+    "tags": [
+      "logo"
+    ],
+    "favorite": false
+  },
+  "/proj/gamma": {
+    "name": "Gamma",
+    "categories": [
+      "Motion"
+    ],
+    "tags": [],
+    "favorite": true
+  }
+}

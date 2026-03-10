@@ -1,0 +1,14 @@
+{
+  "/path/unicode": {
+    "name": "Projeto São João 日本語",
+    "favorite": true,
+    "done": false,
+    "categories": [],
+    "tags": [
+      "a",
+      "b",
+      "c"
+    ],
+    "ai_description": "Descrição com \n quebra de linha e \t tab"
+  }
+}

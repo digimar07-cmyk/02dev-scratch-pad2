@@ -4,9 +4,16 @@ REM ║  06 - PYTEST  |  Roda todos os testes unitários                 ║
 REM ║  Gera: QA/reports/06_pytest_REPORT.txt                          ║
 REM ╚══════════════════════════════════════════════════════════════════╝
 
+REM Vai para a raiz do projeto LASERFLIX (pasta pai do QA)
 cd /d "%~dp0\.."
 
+REM Cria as pastas necessárias
 if not exist "QA\reports" mkdir "QA\reports"
+if not exist "QA\tmp_pytest" mkdir "QA\tmp_pytest"
+
+REM Define o basetemp com caminho ABSOLUTO para evitar PermissionError
+REM com usuários do Windows que têm caracteres especiais/acentuados no nome
+set PYTEST_BASETEMP=%~dp0tmp_pytest
 
 set REPORT=QA\reports\06_pytest_REPORT.txt
 set TS=%date:~6,4%-%date:~3,2%-%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%
@@ -27,11 +34,11 @@ if errorlevel 1 (
 
 echo [1/1] Rodando todos os testes em tests/ ...
 echo --- RESULTADO DOS TESTES --- >> "%REPORT%"
-python -m pytest tests/ -v --tb=short --no-header 2>&1 >> "%REPORT%"
+python -m pytest tests/ -v --tb=short --no-header --basetemp="%PYTEST_BASETEMP%" 2>&1 >> "%REPORT%"
 
 echo. >> "%REPORT%"
 echo --- COBERTURA DE CODIGO --- >> "%REPORT%"
-python -m pytest tests/ --cov=core --cov=ui --cov=utils --cov=config --cov-report=term-missing --no-header -q 2>&1 >> "%REPORT%"
+python -m pytest tests/ --cov=core --cov=ui --cov=utils --cov=config --cov-report=term-missing --no-header -q --basetemp="%PYTEST_BASETEMP%" 2>&1 >> "%REPORT%"
 
 echo. >> "%REPORT%"
 echo ================================================================ >> "%REPORT%"

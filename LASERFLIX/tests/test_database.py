@@ -32,7 +32,6 @@ class TestIntegridade:
         data = {"name": "Projeto A", "tags": ["laser"]}
         db.set_project("/path/a", data)
         data["tags"].append("INVASÃO")
-        # Se get_project retornar a mesma referência, o banco foi corrompido
         tags_no_banco = db.get_project("/path/a")["tags"]
         assert "INVASÃO" not in tags_no_banco, (
             "BUG: set_project guarda referência mutável. "
@@ -111,7 +110,7 @@ class TestCorrupcao:
             f.write("MAIS LIXO")
         cfg_file = str(tmp_path / "config.json")
         db = DatabaseManager(db_file=db_file, config_file=cfg_file)
-        db.load_database()  # não pode travar, não pode loop infinito
+        db.load_database()
         assert isinstance(db.database, dict)
 
     def test_database_json_vazio_nao_e_dict(self, tmp_path):
@@ -122,7 +121,6 @@ class TestCorrupcao:
         cfg_file = str(tmp_path / "config.json")
         db = DatabaseManager(db_file=db_file, config_file=cfg_file)
         db.load_database()
-        # Não pode travar. database deve ser dict.
         assert isinstance(db.database, dict), (
             "BUG: database.json com '[]' (lista) causa db.database virar lista. "
             "Isso quebra TUDO que faz db.database.get() ou 'in db.database'."
@@ -159,17 +157,25 @@ class TestDadosInvalidos:
         )
 
     def test_set_project_com_data_none(self, db):
-        """Salvar None como dados do projeto não pode silenciosamente aceitar."""
+        """
+        set_project(path, None) não pode ser aceito silenciosamente.
+        O bug real: has_project retorna True mas get_project retorna None —
+        o app não consegue distinguir 'projeto não existe' de 'projeto corrompido'.
+        """
         db.set_project("/path/a", None)
-        projeto = db.get_project("/path/a")
-        assert projeto is not None, (
+        # O projeto foi gravado com None como valor
+        existe = db.has_project("/path/a")
+        valor = db.get_project("/path/a")
+        # BUG confirmado se: existe=True mas valor=None
+        # Código correto rejeitaria None em set_project (existe=False, valor=None)
+        assert not (existe is True and valor is None), (
             "BUG: set_project aceita None como dados. "
-            "get_project retorna None e o app não sabe se o projeto existe ou não."
+            "has_project('/path/a') retorna True mas get_project retorna None. "
+            "O app não consegue distinguir projeto ausente de projeto corrompido."
         )
 
     def test_set_project_com_data_nao_serializavel(self, db, tmp_path):
         """Dados com objeto não-serializável deve falhar no save, não silenciosamente."""
-        import datetime
         db.set_project("/path/a", {"name": "A", "obj": object()})  # object() não é JSON
         with pytest.raises(Exception):
             db.save_database()  # deve lançar exceção, não engolir silenciosamente
@@ -224,16 +230,22 @@ class TestBackup:
         with open(bak_file, "w") as f:
             f.write("CORROMPIDO TAMBEM")
         db = DatabaseManager(db_file=db_file, config_file=cfg_file)
-        # Não pode travar, não pode RecursionError
         db.load_database()
         assert isinstance(db.database, dict)
 
     def test_auto_backup_limita_quantidade(self, tmp_path, monkeypatch):
-        """auto_backup deve deletar backups antigos ao passar do limite MAX_AUTO_BACKUPS."""
-        import config.settings as settings
-        monkeypatch.setattr(settings, "MAX_AUTO_BACKUPS", 3)
-        monkeypatch.setattr(settings, "BACKUP_FOLDER", str(tmp_path / "backups"))
-        os.makedirs(str(tmp_path / "backups"), exist_ok=True)
+        """
+        auto_backup deve deletar backups antigos ao passar do limite MAX_AUTO_BACKUPS.
+
+        IMPORTANTE: database.py importa MAX_AUTO_BACKUPS e BACKUP_FOLDER com
+        'from config.settings import ...', então o monkeypatch precisa atuar
+        diretamente no módulo core.database, não em config.settings.
+        """
+        import core.database as db_module
+        backup_dir = str(tmp_path / "backups")
+        os.makedirs(backup_dir, exist_ok=True)
+        monkeypatch.setattr(db_module, "MAX_AUTO_BACKUPS", 3)
+        monkeypatch.setattr(db_module, "BACKUP_FOLDER", backup_dir)
 
         db_file = str(tmp_path / "database.json")
         cfg_file = str(tmp_path / "config.json")
@@ -244,7 +256,7 @@ class TestBackup:
         for _ in range(6):  # cria 6 backups — deve manter só 3
             db.auto_backup()
 
-        backups = [f for f in os.listdir(str(tmp_path / "backups")) if f.startswith("auto_backup_")]
+        backups = [f for f in os.listdir(backup_dir) if f.startswith("auto_backup_")]
         assert len(backups) <= 3, (
             f"BUG: auto_backup criou {len(backups)} arquivos, limite é 3. "
             "Pasta de backup vai encher o disco em produção."

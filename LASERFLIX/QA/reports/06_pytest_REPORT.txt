@@ -5069,4 +5069,4 @@ ERROR tests/test_selection_controller.py::TestRemoveSelected::test_remove_chama_
 ERROR tests/test_selection_controller.py::TestRemoveSelected::test_remove_chama_callback_refresh - PermissionError: [WinError 5] Acesso negado: 'C:\\Users\\Ale e Mai\\AppData\\Local\\Temp\\pytest-of-Família Santiago'
 ERROR tests/test_selection_controller.py::TestRemoveSelected::test_remove_selecao_vazia_nao_remove_nada - PermissionError: [WinError 5] Acesso negado: 'C:\\Users\\Ale e Mai\\AppData\\Local\\Temp\\pytest-of-Família Santiago'
 ERROR tests/test_selection_controller.py::TestRemoveSelected::test_cancel_confirmacao_nao_remove - PermissionError: [WinError 5] Acesso negado: 'C:\\Users\\Ale e Mai\\AppData\\Local\\Temp\\pytest-of-Família Santiago'
-============================= 55 errors in 27.69s =============================
+======================= 1 warning, 55 errors in 26.91s ========================

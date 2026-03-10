@@ -1,0 +1,10 @@
+# Ferramentas de qualidade e testes
+pytest>=8.0
+pytest-cov>=5.0
+pytest-mock>=3.12
+pytest-timeout>=2.2
+mypy>=1.9
+ruff>=0.4
+pylint>=3.0
+radon>=6.0
+vulture>=2.11

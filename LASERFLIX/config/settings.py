@@ -1,64 +1,55 @@
 """
-Configurações centralizadas do Laserflix v4.0.1.2
+Configurações centralizadas do Laserflix v4.0.1.3
 """
+from __future__ import annotations
 import os
+
+# Diretório raiz do projeto (pasta onde este arquivo está, um nível acima de config/)
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ============================================================================
 # VERSÃO
 # ============================================================================
-VERSION = "4.0.1.2"
+VERSION = "4.0.1.3"
 
 # ============================================================================
-# ARQUIVOS E DIRETÓRIOS
+# ARQUIVOS E DIRETÓRIOS — paths absolutos, independentes do cwd
 # ============================================================================
-CONFIG_FILE = "laserflix_config.json"
-DB_FILE = "laserflix_database.json"
-BACKUP_FOLDER = "laserflix_backups"
-LOG_FILE = "laserflix.log"
+CONFIG_FILE   = os.path.join(_ROOT, "laserflix_config.json")
+DB_FILE       = os.path.join(_ROOT, "laserflix_database.json")
+BACKUP_FOLDER = os.path.join(_ROOT, "laserflix_backups")
+LOG_FILE      = os.path.join(_ROOT, "laserflix.log")
 
 # ============================================================================
 # CONFIGURAÇÃO OLLAMA
 # ============================================================================
-OLLAMA_BASE_URL = "http://localhost:11434"
-OLLAMA_RETRIES = 3
-OLLAMA_HEALTH_TIMEOUT = 4
-OLLAMA_HEALTH_CACHE_TTL = 5.0  # segundos
+OLLAMA_BASE_URL      = "http://localhost:11434"
+OLLAMA_RETRIES       = 3
+OLLAMA_HEALTH_TIMEOUT    = 4
+OLLAMA_HEALTH_CACHE_TTL  = 5.0  # segundos
 
 # ============================================================================
 # MODELOS - MIGRAÇÃO PARA QWEN3.5:4B (v4.0.0.2)
 # ============================================================================
 # ANTES (v3.x): 7 modelos, 24.3 GB
 # DEPOIS (v4.0.0.2): 2 modelos, 3.7 GB (economia de 84.7%)
-#
-# qwen3.5:4b é multimodal (texto + visão), substituindo:
-#   - qwen2.5:7b (texto qualidade)
-#   - qwen2.5:3b (texto rápido)
-#   - qwen2.5-coder (análise de código)
-#   - llama3.1 (chat)
-#   - llama3.2-vision (visão)
-#   - moondream (visão antiga)
-# ============================================================================
 OLLAMA_MODELS = {
-    "text_quality": "qwen3.5:4b",                    # análise individual, descrições
-    "text_fast":    "qwen3.5:4b",                    # lotes grandes (>50 projetos)
-    "vision":       "qwen3.5:4b",                    # análise de imagem de capa
-    "embed":        "nomic-embed-text:latest",       # embeddings (reservado)
+    "text_quality": "qwen3.5:4b",             # análise individual, descrições
+    "text_fast":    "qwen3.5:4b",             # lotes grandes (>50 projetos)
+    "vision":       "qwen3.5:4b",             # análise de imagem de capa
+    "embed":        "nomic-embed-text:latest", # embeddings (reservado)
 }
 
-# Limiar: acima deste número de projetos, usa modelo rápido no lote
-# NOTA: Com qwen3.5:4b, text_fast e text_quality são o mesmo modelo,
-#       mas mantemos a lógica para futura granularidade
 FAST_MODEL_THRESHOLD = 50
 
 # ============================================================================
 # TIMEOUTS - AJUSTADOS PARA QWEN3.5:4B
 # ============================================================================
-# Timeouts por tipo de modelo (connect_timeout, read_timeout)
 TIMEOUTS = {
-    "text_quality": (5, 120),  # análise individual (mesmo timeout)
-    "text_fast":    (5, 75),   # lotes (mesmo modelo, mais rápido)
-    "vision":       (5, 60),   # visão multimodal (ajustado de 60s)
-    "embed":        (5, 15),   # embeddings (sem mudança)
+    "text_quality": (5, 120),
+    "text_fast":    (5, 75),
+    "vision":       (5, 60),
+    "embed":        (5, 15),
 }
 
 # ============================================================================
@@ -73,7 +64,7 @@ THUMBNAIL_SIZE = (220, 200)
 IMAGE_QUALITY_THRESHOLDS = {
     "max_brightness": 210,
     "min_saturation": 25,
-    "max_white_pct": 50,
+    "max_white_pct":  50,
 }
 
 # ============================================================================
@@ -85,5 +76,5 @@ MAX_AUTO_BACKUPS = 10
 # ============================================================================
 # LOGGING
 # ============================================================================
-LOG_MAX_BYTES = 5 * 1024 * 1024  # 5MB
+LOG_MAX_BYTES    = 5 * 1024 * 1024  # 5 MB
 LOG_BACKUP_COUNT = 3

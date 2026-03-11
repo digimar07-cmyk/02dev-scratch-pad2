@@ -1,4 +1,0 @@
-core\protocols.py:46: unused variable 'project_count' (100% confidence)
-core\thumbnail_preloader.py:26: unused import 'as_completed' (90% confidence)
-ui\components\chips_bar.py:10: unused import 'ACCENT_BLUE' (90% confidence)
-ui\project_modal.py:353: unused variable 'ev' (100% confidence)

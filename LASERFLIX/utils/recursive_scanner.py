@@ -1,27 +1,17 @@
 """
 recursive_scanner.py — Escaneamento recursivo inteligente de produtos.
-
-FUNCIONALIDADES:
-  1. Modo PURO: Detecta apenas pastas com folder.jpg (controle total)
-  2. Modo HÍBRIDO: folder.jpg + fallback inteligente (mais flexível)
-  3. Geração de ID único baseado em hash do caminho relativo
-  4. Detecção de subpastas técnicas (cdr, svg, jpg, imagens, vetores)
-  5. Validação de arquivos de projeto válidos
 """
-
 import os
 import hashlib
-from typing import List, Dict, Set
+from typing import List, Dict
 from utils.logging_setup import LOGGER
 
 
-# Extensões válidas de arquivos de projeto
 VALID_EXTENSIONS = {
     '.svg', '.pdf', '.dxf', '.ai', '.cdr', '.eps',
     '.jpg', '.jpeg', '.png', '.gif', '.bmp'
 }
 
-# Subpastas técnicas que NÃO são produtos
 TECHNICAL_SUBFOLDERS = {
     'cdr', 'svg', 'jpg', 'jpeg', 'png', 'pdf', 'dxf',
     'imagens', 'images', 'vetores', 'vectors',
@@ -30,18 +20,12 @@ TECHNICAL_SUBFOLDERS = {
 
 
 class RecursiveScanner:
-    """
-    Escaneador recursivo de produtos com detecção inteligente.
-
-    Suporta dois modos:
-    - PURO: Apenas pastas com folder.jpg (rígido, controle total)
-    - HÍBRIDO: folder.jpg + fallback inteligente (flexível, pega mais)
-    """
+    """Escaneador recursivo de produtos com detecção inteligente."""
 
     def __init__(self):
         self.logger = LOGGER
-        self.found_products = []
-        self.skipped_folders = []
+        self.found_products: List[Dict] = []
+        self.skipped_folders: List[str] = []
         self.stats = {
             'total_scanned': 0,
             'products_found': 0,
@@ -110,7 +94,6 @@ class RecursiveScanner:
             except PermissionError:
                 self.logger.warning("Sem permissão: %s", current_path)
                 return
-
             files = []
             subdirs = []
             for item in items:
@@ -119,18 +102,14 @@ class RecursiveScanner:
                     files.append(item)
                 elif os.path.isdir(item_path):
                     subdirs.append(item)
-
             self.stats['total_scanned'] += 1
-
             folder_name = os.path.basename(current_path).lower()
             if self._is_technical_subfolder(folder_name):
                 self.stats['technical_skipped'] += 1
                 return
-
             is_product = False
             detection_method = None
             has_folder_jpg = 'folder.jpg' in [f.lower() for f in files]
-
             if has_folder_jpg:
                 is_product = True
                 detection_method = 'folder_jpg'
@@ -140,7 +119,6 @@ class RecursiveScanner:
                     is_product = True
                     detection_method = 'fallback'
                     self.stats['via_fallback'] += 1
-
             if is_product:
                 self.found_products.append({
                     'path': current_path,
@@ -151,10 +129,8 @@ class RecursiveScanner:
                 })
                 self.stats['products_found'] += 1
                 return
-
             for subdir in subdirs:
                 self._scan_recursive(os.path.join(current_path, subdir), base_path, mode)
-
         except Exception as e:
             self.logger.error("Erro ao escanear %s: %s", current_path, e)
 

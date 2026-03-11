@@ -8,7 +8,7 @@ if not exist "QA\reports" mkdir "QA\reports"
 
 echo.
 echo [RUFF] Executando analise de lint...
-python -m ruff check ai/ config/ core/ utils/ ui/ main.py --output-format=text > QA\reports\ruff_report.txt 2>&1
+python -m ruff check ai/ config/ core/ utils/ ui/ main.py --output-format=full > QA\reports\ruff_report.txt 2>&1
 set RUFF_EXIT=%ERRORLEVEL%
 echo Ruff exit code: %RUFF_EXIT%
 type QA\reports\ruff_report.txt

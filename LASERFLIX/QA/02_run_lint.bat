@@ -8,14 +8,14 @@ if not exist "QA\reports" mkdir "QA\reports"
 
 echo.
 echo [RUFF] Executando analise de lint...
-ruff check ai/ config/ core/ utils/ ui/ main.py backup_manager.py version_manager.py refactor_monitor.py --output-format=text > QA\reports\ruff_report.txt 2>&1
+python -m ruff check ai/ config/ core/ utils/ ui/ main.py --output-format=text > QA\reports\ruff_report.txt 2>&1
 set RUFF_EXIT=%ERRORLEVEL%
 echo Ruff exit code: %RUFF_EXIT%
 type QA\reports\ruff_report.txt
 
 echo.
 echo [PYLINT] Executando analise semantica...
-pylint ai/ config/ core/ utils/ ui/ main.py backup_manager.py version_manager.py refactor_monitor.py ^
+python -m pylint ai/ config/ core/ utils/ ui/ main.py ^
   --rcfile=QA\pylintrc ^
   --output-format=text ^
   --reports=yes ^

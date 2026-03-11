@@ -6,7 +6,7 @@ cd /d "%~dp0.."
 
 if not exist "QA\reports" mkdir "QA\reports"
 
-basedpyright ai/ config/ core/ utils/ ui/ main.py > QA\reports\types_report.txt 2>&1
+python -m basedpyright ai/ config/ core/ utils/ ui/ main.py > QA\reports\types_report.txt 2>&1
 set TYPES_EXIT=%ERRORLEVEL%
 
 echo Type check exit code: %TYPES_EXIT%

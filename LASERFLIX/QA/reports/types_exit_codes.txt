@@ -1,1 +1,1 @@
-types_exit=9009 
+types_exit=1 

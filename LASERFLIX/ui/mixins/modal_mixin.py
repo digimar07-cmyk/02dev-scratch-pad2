@@ -6,7 +6,6 @@ from functools import partial
 
 from ui.edit_modal import EditModal
 from ui.project_modal import ProjectModal
-from utils.platform_utils import open_folder
 
 
 class ModalMixin:

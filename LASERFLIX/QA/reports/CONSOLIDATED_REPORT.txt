@@ -1,6 +1,6 @@
 ======================================================================
   LASERFLIX QA — RELATÓRIO CONSOLIDADO
-  Gerado em: 2026-03-10 22:04:27
+  Gerado em: 2026-03-10 22:46:55
 ======================================================================
 
 ## EXIT CODES POR CATEGORIA
@@ -12,14 +12,14 @@
   vulture_exit                             => 9009  [FALHOU]
   dup_exit                                 => 9009  [FALHOU]
   unit_exit                                => 1  [FALHOU]
-  integration_exit                         => 1  [FALHOU]
+  integration_exit                         => 0  [OK]
   smoke_exit                               => 1  [FALHOU]
 
 ## RESULTADO DOS TESTES
 ----------------------------------------
   TESTS UNIT: 2/29 FALHOU
-  TESTS INTEGRATION: 2/11 FALHOU
-  TESTS SMOKE: 10/108 FALHOU
+  TESTS INTEGRATION: 11 testes OK
+  TESTS SMOKE: 4/108 FALHOU
 
 ## CONTEÚTO DOS RELATÓRIOS
 ======================================================================

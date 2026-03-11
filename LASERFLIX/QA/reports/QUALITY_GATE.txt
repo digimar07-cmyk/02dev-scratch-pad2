@@ -1,6 +1,6 @@
 ======================================================================
   LASERFLIX QA — QUALITY GATE
-  Executado em: 2026-03-10 22:04:28
+  Executado em: 2026-03-10 22:46:57
   RESULTADO: *** REPROVADO ***
 ======================================================================
 
@@ -10,8 +10,7 @@
 [FALHA] LINT (ruff): exit code 9009
 [FALHA] TYPE CHECK (basedpyright): exit code 9009
 [FALHA CRÍTICA] TESTES UNITÁRIOS: 2 teste(s) falharam.
-[FALHA CRÍTICA] TESTES DE INTEGRAÇÃO: 2 teste(s) falharam.
-[FALHA CRÍTICA] SMOKE + ESTRUTURAIS: 10 teste(s) falharam.
+[FALHA CRÍTICA] SMOKE + ESTRUTURAIS: 4 teste(s) falharam.
 
 ## AVISOS (nao reprovam, mas requerem revisao)
 ----------------------------------------

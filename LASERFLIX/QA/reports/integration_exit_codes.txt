@@ -1,1 +1,1 @@
-integration_exit=1 
+integration_exit=0 

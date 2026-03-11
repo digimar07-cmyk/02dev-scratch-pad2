@@ -868,74 +868,66 @@ g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\filter_cache.py
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "OrderedDict[Unknown, Unknown]" (reportUnknownArgumentType)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:28:20 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:28:26 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:28:43 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:28:43 - warning: Import "Optional" is not accessed (reportUnusedImport)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:54:14 - warning: Type annotation for attribute `thumb_preloader` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:55:14 - warning: Type annotation for attribute `prefetch_pages` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:58:14 - warning: Type annotation for attribute `current_page` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:59:9 - warning: Type of "preloaded_pages" is partially unknown
-    Type of "preloaded_pages" is "set[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:59:14 - warning: Type annotation for attribute `preloaded_pages` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:60:14 - warning: Type annotation for attribute `active_preload_thread` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:61:14 - warning: Type annotation for attribute `cancel_flag` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:63:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:72:9 - warning: Type of parameter "get_page_items_fn" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:5:20 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:5:26 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:14:14 - warning: Type annotation for attribute `thumb_preloader` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:15:14 - warning: Type annotation for attribute `prefetch_pages` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:16:14 - warning: Type annotation for attribute `current_page` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:17:31 - error: Expected type arguments for generic class "set" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:18:14 - warning: Type annotation for attribute `active_preload_thread` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:19:14 - warning: Type annotation for attribute `cancel_flag` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:20:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:27:9 - warning: Type of parameter "get_page_items_fn" is partially unknown
     Parameter type is "(int) -> List[Tuple[str, dict[Unknown, Unknown]]]" (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:72:44 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:72:49 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:72:60 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:92:13 - warning: Type of "preloaded_pages" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:27:44 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:27:49 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:27:60 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:31:13 - warning: Type of "preloaded_pages" is partially unknown
     Type of "preloaded_pages" is "set[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:92:13 - warning: Type of "discard" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:31:13 - warning: Type of "discard" is partially unknown
     Type of "discard" is "(element: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:98:62 - warning: Type of "preloaded_pages" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:36:48 - warning: Type of "preloaded_pages" is partially unknown
     Type of "preloaded_pages" is "set[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:99:17 - warning: Type of "append" is partially unknown
-    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:110:20 - warning: Type of "_preload_pages_background" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:43:20 - warning: Type of "_preload_pages_background" is partially unknown
     Type of "_preload_pages_background" is "(pages: List[int], get_page_items_fn: (int) -> List[Tuple[str, dict[Unknown, Unknown]]]) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:110:20 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:43:20 - warning: Argument type is partially unknown
     Argument corresponds to parameter "target" in function "__init__"
     Argument type is "(pages: List[int], get_page_items_fn: (int) -> List[Tuple[str, dict[Unknown, Unknown]]]) -> None" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:111:18 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:44:18 - warning: Argument type is partially unknown
     Argument corresponds to parameter "args" in function "__init__"
-    Argument type is "tuple[list[Unknown], (int) -> List[Tuple[str, dict[Unknown, Unknown]]]]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:118:13 - warning: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:124:16 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:125:9 - warning: Type of parameter "get_page_items_fn" is partially unknown
+    Argument type is "tuple[list[int], (int) -> List[Tuple[str, dict[Unknown, Unknown]]]]" (reportUnknownArgumentType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:53:16 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:54:9 - warning: Type of parameter "get_page_items_fn" is partially unknown
     Parameter type is "(int) -> List[Tuple[str, dict[Unknown, Unknown]]]" (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:125:44 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:125:49 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:125:60 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:141:17 - warning: Type of "items" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:54:44 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:54:49 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:54:60 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:61:17 - warning: Type of "items" is partially unknown
     Type of "items" is "List[Tuple[str, dict[Unknown, Unknown]]]" (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:142:49 - warning: Type of "_" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:62:49 - warning: Type of "_" is partially unknown
     Type of "_" is "dict[Unknown, Unknown]" (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:148:17 - warning: Type of "preload_batch" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:65:17 - warning: Type of "preload_batch" is partially unknown
     Type of "preload_batch" is "(project_paths: List[str], callback: ((str, PhotoImage) -> None) | None = None) -> dict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:148:17 - warning: Result of call expression is of type "dict[Unknown, Unknown]" and is not used; assign to variable "_" if this is intentional (reportUnusedCallResult)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:154:17 - warning: Type of "preloaded_pages" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:65:17 - warning: Result of call expression is of type "dict[Unknown, Unknown]" and is not used; assign to variable "_" if this is intentional (reportUnusedCallResult)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:66:17 - warning: Type of "preloaded_pages" is partially unknown
     Type of "preloaded_pages" is "set[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:154:17 - warning: Type of "add" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:66:17 - warning: Type of "add" is partially unknown
     Type of "add" is "(element: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:157:21 - warning: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:178:9 - warning: Type of "preloaded_pages" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:79:9 - warning: Type of "preloaded_pages" is partially unknown
     Type of "preloaded_pages" is "set[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:201:9 - warning: Type of "preloaded_pages" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:88:9 - warning: Type of "preloaded_pages" is partially unknown
     Type of "preloaded_pages" is "set[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:204:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:204:28 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:208:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:210:39 - warning: Type of "preloaded_pages" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:91:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:91:28 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:92:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:94:39 - warning: Type of "preloaded_pages" is partially unknown
     Type of "preloaded_pages" is "set[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:210:39 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:94:39 - warning: Argument type is partially unknown
     Argument corresponds to parameter "iterable" in function "sorted"
     Argument type is "set[Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:211:36 - warning: Type of "preloaded_pages" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:95:36 - warning: Type of "preloaded_pages" is partially unknown
     Type of "preloaded_pages" is "set[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:211:36 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\predictive_preloader.py:95:36 - warning: Argument type is partially unknown
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "set[Unknown]" (reportUnknownArgumentType)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\performance\viewport_manager.py
@@ -1421,211 +1413,204 @@ g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_cache.py
   g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_cache.py:262:27 - warning: Type of "load_queue" is partially unknown
     Type of "load_queue" is "Queue[Unknown]" (reportUnknownMemberType)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:24:8 - warning: Import "queue" is not accessed (reportUnusedImport)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:26:52 - warning: Import "as_completed" is not accessed (reportUnusedImport)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:28:20 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:28:36 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:28:46 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:65:25 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:73:14 - warning: Type annotation for attribute `max_workers` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:74:14 - warning: Type annotation for attribute `cache_limit` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:75:14 - warning: Type annotation for attribute `thumbnail_size` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:78:14 - warning: Type annotation for attribute `executor` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:84:9 - warning: Type of "cache" is partially unknown
-    Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:84:14 - warning: Type annotation for attribute `cache` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:85:14 - warning: Type annotation for attribute `cache_lock` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:87:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:89:13 - warning: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:93:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:95:24 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:96:19 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:97:10 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:119:20 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:136:13 - warning: Type of "append" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:8:20 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:8:36 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:8:46 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:23:25 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:25:14 - warning: Type annotation for attribute `max_workers` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:26:14 - warning: Type annotation for attribute `cache_limit` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:27:14 - warning: Type annotation for attribute `thumbnail_size` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:28:14 - warning: Type annotation for attribute `executor` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:29:21 - error: Expected type arguments for generic class "OrderedDict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:30:14 - warning: Type annotation for attribute `cache_lock` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:31:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:34:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:36:24 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:37:19 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:38:10 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:40:20 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:51:13 - warning: Type of "append" is partially unknown
     Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:139:13 - warning: Type of "path" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:139:19 - warning: Type of "future" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:141:17 - warning: Type of "photo" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:141:25 - warning: Type of "result" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:144:40 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:52:13 - warning: Type of "path" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:52:19 - warning: Type of "future" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:54:17 - warning: Type of "photo" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:54:25 - warning: Type of "result" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:57:40 - warning: Argument type is unknown
     Argument corresponds to parameter "project_path" in function "_add_to_cache" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:144:46 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:57:46 - warning: Argument type is unknown
     Argument corresponds to parameter "photo" in function "_add_to_cache" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:148:34 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:59:34 - warning: Argument type is unknown
     Argument corresponds to parameter "__p0" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:148:40 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:59:40 - warning: Argument type is unknown
     Argument corresponds to parameter "__p1" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:153:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:158:19 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:159:10 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:185:9 - warning: Result of call expression is of type "Future[None]" and is not used; assign to variable "_" if this is intentional (reportUnusedCallResult)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:188:53 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:222:54 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:249:53 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:268:13 - warning: Type of "cached" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:62:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:67:19 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:68:10 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:82:9 - warning: Result of call expression is of type "Future[None]" and is not used; assign to variable "_" if this is intentional (reportUnusedCallResult)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:85:53 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:97:54 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:109:53 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:114:13 - warning: Type of "cached" is partially unknown
     Type of "cached" is "Unknown | None" (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:268:22 - warning: Type of "cache" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:114:22 - warning: Type of "cache" is partially unknown
     Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:268:22 - warning: Type of "get" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:114:22 - warning: Type of "get" is partially unknown
     Type of "get" is "Overload[(key: Unknown, default: None = None, /) -> (Unknown | None), (key: Unknown, default: Unknown, /) -> Unknown, (key: Unknown, default: _T@get, /) -> (Unknown | _T@get)]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:271:17 - warning: Type of "cache" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:116:17 - warning: Type of "cache" is partially unknown
     Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:271:17 - warning: Type of "move_to_end" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:116:17 - warning: Type of "move_to_end" is partially unknown
     Type of "move_to_end" is "(key: Unknown, last: bool = True) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:272:24 - warning: Return type is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:296:13 - warning: Type of "cache" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:117:24 - warning: Return type is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:125:13 - warning: Type of "cache" is partially unknown
     Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:297:13 - warning: Type of "cache" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:126:13 - warning: Type of "cache" is partially unknown
     Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:297:13 - warning: Type of "move_to_end" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:126:13 - warning: Type of "move_to_end" is partially unknown
     Type of "move_to_end" is "(key: Unknown, last: bool = True) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:300:23 - warning: Type of "cache" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:127:23 - warning: Type of "cache" is partially unknown
     Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:300:23 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:127:23 - warning: Argument type is partially unknown
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "OrderedDict[Unknown, Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:301:17 - warning: Type of "oldest_key" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:301:29 - warning: Type of "_" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:301:33 - warning: Type of "cache" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:128:17 - warning: Type of "oldest_key" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:128:29 - warning: Type of "_" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:128:33 - warning: Type of "cache" is partially unknown
     Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:309:13 - warning: Type of "cache" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:133:13 - warning: Type of "cache" is partially unknown
     Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:319:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:319:28 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:324:30 - warning: Type of "cache" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:140:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:140:28 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:142:30 - warning: Type of "cache" is partially unknown
     Type of "cache" is "OrderedDict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:324:30 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:142:30 - warning: Argument type is partially unknown
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "OrderedDict[Unknown, Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:326:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\thumbnail_preloader.py:143:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:28:25 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:28:41 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:28:48 - warning: This type is deprecated as of Python 3.10; use "| None" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:28:48 - warning: Import "Optional" is not accessed (reportUnusedImport)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:54:9 - warning: Type of parameter "canvas" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:54:17 - warning: Type `Any` is not allowed (reportExplicitAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:55:9 - warning: Type of parameter "scrollable_frame" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:55:27 - warning: Type `Any` is not allowed (reportExplicitAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:56:9 - warning: Type of parameter "data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:9:25 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:9:41 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:18:9 - warning: Type of parameter "canvas" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:18:17 - warning: Type `Any` is not allowed (reportExplicitAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:19:9 - warning: Type of parameter "scrollable_frame" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:19:27 - warning: Type `Any` is not allowed (reportExplicitAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:20:9 - warning: Type of parameter "data" is partially unknown
     Parameter type is "List[Unknown]" (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:56:15 - error: Expected type arguments for generic class "List" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:56:15 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:57:9 - warning: Type of parameter "card_renderer" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:20:15 - error: Expected type arguments for generic class "List" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:20:15 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:21:9 - warning: Type of parameter "card_renderer" is partially unknown
     Parameter type is "(...) -> Unknown" (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:57:24 - error: Expected type arguments for generic class "Callable" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:75:9 - warning: Type of "canvas" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:75:14 - warning: Type annotation for attribute `canvas` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:76:9 - warning: Type of "scrollable_frame" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:76:14 - warning: Type annotation for attribute `scrollable_frame` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:77:9 - warning: Type of "data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:21:24 - error: Expected type arguments for generic class "Callable" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:28:9 - warning: Type of "canvas" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:28:14 - warning: Type annotation for attribute `canvas` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:29:9 - warning: Type of "scrollable_frame" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:29:14 - warning: Type annotation for attribute `scrollable_frame` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:30:9 - warning: Type of "data" is partially unknown
     Type of "data" is "List[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:77:14 - warning: Type annotation for attribute `data` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:78:9 - warning: Type of "card_renderer" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:30:14 - warning: Type annotation for attribute `data` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:31:9 - warning: Type of "card_renderer" is partially unknown
     Type of "card_renderer" is "(...) -> Unknown" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:78:14 - warning: Type annotation for attribute `card_renderer` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:80:14 - warning: Type annotation for attribute `cols` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:81:14 - warning: Type annotation for attribute `card_width` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:82:14 - warning: Type annotation for attribute `card_height` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:83:14 - warning: Type annotation for attribute `card_pad` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:84:14 - warning: Type annotation for attribute `buffer_multiplier` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:87:27 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:87:32 - warning: Type `Any` is not allowed (reportExplicitAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:88:30 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:91:29 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:93:14 - warning: Type annotation for attribute `_scroll_update_pending` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:95:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:101:9 - warning: Type of "canvas" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:101:9 - warning: Type of "bind" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:101:41 - warning: Type of "_on_canvas_resize" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:31:14 - warning: Type annotation for attribute `card_renderer` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:32:14 - warning: Type annotation for attribute `cols` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:33:14 - warning: Type annotation for attribute `card_width` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:34:14 - warning: Type annotation for attribute `card_height` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:35:14 - warning: Type annotation for attribute `card_pad` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:36:14 - warning: Type annotation for attribute `buffer_multiplier` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:37:27 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:37:32 - warning: Type `Any` is not allowed (reportExplicitAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:38:30 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:39:29 - warning: This type is deprecated as of Python 3.9; use "tuple" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:41:14 - warning: Type annotation for attribute `_scroll_update_pending` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:42:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:44:9 - warning: Type of "canvas" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:44:9 - warning: Type of "bind" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:44:41 - warning: Type of "_on_canvas_resize" is partially unknown
     Type of "_on_canvas_resize" is "(event: Unknown | None = None) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:115:13 - warning: Type of "viewport_height" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:115:31 - warning: Type of "canvas" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:115:31 - warning: Type of "winfo_height" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:129:18 - warning: Type annotation for attribute `viewport_size` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:130:18 - warning: Type annotation for attribute `buffer_size` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:131:18 - warning: Type annotation for attribute `max_pool_size` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:134:17 - warning: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:143:33 - warning: Type of parameter "event" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:48:13 - warning: Type of "viewport_height" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:48:31 - warning: Type of "canvas" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:48:31 - warning: Type of "winfo_height" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:55:18 - warning: Type annotation for attribute `viewport_size` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:56:18 - warning: Type annotation for attribute `buffer_size` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:57:18 - warning: Type annotation for attribute `max_pool_size` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:59:17 - warning: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:68:33 - warning: Type of parameter "event" is partially unknown
     Parameter type is "Unknown | None" (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:143:33 - warning: Type annotation is missing for parameter "event" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:143:33 - warning: "event" is not accessed (reportUnusedParameter)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:163:16 - warning: Type of "data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:68:33 - warning: Type annotation is missing for parameter "event" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:68:33 - warning: "event" is not accessed (reportUnusedParameter)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:75:16 - warning: Type of "data" is partially unknown
     Type of "data" is "List[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:170:13 - warning: Type of "scroll_pos" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:170:26 - warning: Type of "canvas" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:170:26 - warning: Type of "yview" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:171:31 - warning: Type of "data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:79:13 - warning: Type of "scroll_pos" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:79:26 - warning: Type of "canvas" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:79:26 - warning: Type of "yview" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:80:31 - warning: Type of "data" is partially unknown
     Type of "data" is "List[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:171:31 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:80:31 - warning: Argument type is partially unknown
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "List[Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:178:13 - warning: Type of "scroll_pixels" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:181:44 - warning: Argument type is Any
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:84:13 - warning: Type of "scroll_pixels" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:85:44 - warning: Argument type is Any
     Argument corresponds to parameter "x" in function "__new__" (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:215:13 - warning: Type of "idx" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:215:18 - warning: Type of "widget" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:215:28 - warning: Type of "active_widgets" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:101:13 - warning: Type of "idx" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:101:18 - warning: Type of "widget" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:101:28 - warning: Type of "active_widgets" is partially unknown
     Type of "active_widgets" is "dict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:217:17 - warning: Type of "grid_forget" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:219:17 - warning: Type of "append" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:103:17 - warning: Type of "grid_forget" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:105:17 - warning: Type of "append" is partially unknown
     Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:219:34 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:105:34 - warning: Argument type is unknown
     Argument corresponds to parameter "object" in function "append" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:221:13 - warning: Type of "idx" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:222:17 - warning: Type of "active_widgets" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:106:13 - warning: Type of "idx" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:107:17 - warning: Type of "active_widgets" is partially unknown
     Type of "active_widgets" is "dict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:233:27 - warning: Type of "data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:111:27 - warning: Type of "data" is partially unknown
     Type of "data" is "List[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:233:27 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:111:27 - warning: Argument type is partially unknown
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "List[Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:236:23 - warning: Type of "active_widgets" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:113:23 - warning: Type of "active_widgets" is partially unknown
     Type of "active_widgets" is "dict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:242:13 - warning: Type of "project_path" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:242:27 - warning: Type of "project_data" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:242:42 - warning: Type of "data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:117:13 - warning: Type of "project_path" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:117:27 - warning: Type of "project_data" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:117:42 - warning: Type of "data" is partially unknown
     Type of "data" is "List[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:244:13 - warning: Type of "widget" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:244:22 - warning: Type of "card_renderer" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:118:13 - warning: Type of "widget" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:118:22 - warning: Type of "card_renderer" is partially unknown
     Type of "card_renderer" is "(...) -> Unknown" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:245:17 - warning: Type of "scrollable_frame" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:245:17 - warning: Argument type is Any
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:118:41 - warning: Type of "scrollable_frame" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:118:41 - warning: Argument type is Any
     Argument corresponds to parameter "args" (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:246:17 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:118:64 - warning: Argument type is unknown
     Argument corresponds to parameter "args" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:247:17 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:118:78 - warning: Argument type is unknown
     Argument corresponds to parameter "args" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:252:13 - warning: Type of "active_widgets" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:119:13 - warning: Type of "active_widgets" is partially unknown
     Type of "active_widgets" is "dict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:254:28 - warning: Type of parameter "new_data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:121:28 - warning: Type of parameter "new_data" is partially unknown
     Parameter type is "List[Unknown]" (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:254:38 - error: Expected type arguments for generic class "List" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:254:38 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:262:9 - warning: Type of "data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:121:38 - error: Expected type arguments for generic class "List" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:121:38 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:123:9 - warning: Type of "data" is partially unknown
     Type of "data" is "List[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:265:9 - warning: Type of "canvas" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:265:9 - warning: Type of "yview_moveto" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:269:13 - warning: Type of "widget" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:269:23 - warning: Type of "active_widgets" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:126:9 - warning: Type of "canvas" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:126:9 - warning: Type of "yview_moveto" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:129:13 - warning: Type of "widget" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:129:23 - warning: Type of "active_widgets" is partially unknown
     Type of "active_widgets" is "dict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:270:13 - warning: Type of "destroy" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:272:13 - warning: Type of "widget" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:273:13 - warning: Type of "destroy" is Any (reportAny)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:275:9 - warning: Type of "active_widgets" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:130:13 - warning: Type of "destroy" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:131:13 - warning: Type of "widget" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:132:13 - warning: Type of "destroy" is Any (reportAny)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:133:9 - warning: Type of "active_widgets" is partially unknown
     Type of "active_widgets" is "dict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:279:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:279:28 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:281:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:282:32 - warning: Type of "data" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:137:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:137:28 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:138:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:139:32 - warning: Type of "data" is partially unknown
     Type of "data" is "List[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:282:32 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:139:32 - warning: Argument type is partially unknown
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "List[Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:283:35 - warning: Type of "active_widgets" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:140:35 - warning: Type of "active_widgets" is partially unknown
     Type of "active_widgets" is "dict[Unknown, Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:283:35 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\core\virtual_scroll_manager.py:140:35 - warning: Argument type is partially unknown
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "dict[Unknown, Unknown]" (reportUnknownArgumentType)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\main.py
@@ -4235,155 +4220,152 @@ g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\filter_mixin.py
   g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\filter_mixin.py:52:9 - warning: Type of "_apply_filter" is partially unknown
     Type of "_apply_filter" is "(filter_type: str, value: Unknown, btn: Unknown | None = None, show_count: bool = False) -> None" (reportUnknownMemberType)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:9:34 - warning: Type of "open_folder" is partially unknown
-    Type of "open_folder" is "(folder_path: Unknown) -> None" (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:9:34 - warning: Import "open_folder" is not accessed (reportUnusedImport)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:16:12 - warning: Type of "selection_ctrl" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:16:12 - warning: Type of "selection_mode" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:16:17 - error: Cannot access attribute "selection_ctrl" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:15:12 - warning: Type of "selection_ctrl" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:15:12 - warning: Type of "selection_mode" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:15:17 - error: Cannot access attribute "selection_ctrl" for class "ModalMixin*"
     Attribute "selection_ctrl" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:17:13 - warning: Type of "selection_ctrl" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:17:13 - warning: Type of "toggle_project" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:17:18 - error: Cannot access attribute "selection_ctrl" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:16:13 - warning: Type of "selection_ctrl" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:16:13 - warning: Type of "toggle_project" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:16:18 - error: Cannot access attribute "selection_ctrl" for class "ModalMixin*"
     Attribute "selection_ctrl" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:20:18 - warning: Type of "root" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:20:18 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:19:18 - warning: Type of "root" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:19:18 - warning: Argument type is unknown
     Argument corresponds to parameter "root" in function "__init__" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:20:23 - error: Cannot access attribute "root" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:19:23 - error: Cannot access attribute "root" for class "ModalMixin*"
     Attribute "root" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:22:22 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:22:22 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:21:22 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:21:22 - warning: Argument type is unknown
     Argument corresponds to parameter "database" in function "__init__" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:22:27 - error: Cannot access attribute "database" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:21:27 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:23:16 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:22:16 - warning: Argument type is partially unknown
     Argument corresponds to parameter "cb" in function "__init__"
     Argument type is "dict[str, (() -> list[Unknown]) | ((project_path: str) -> None) | ((path: Unknown, key: Unknown, value: Unknown) -> None) | ((path: Unknown, desc_lbl: Unknown, gen_btn: Unknown, modal: Unknown) -> None) | Unknown | partial[Unknown] | ((p: Unknown) -> Unknown)]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:24:42 - warning: Return type of lambda, "list[Unknown]", is partially unknown (reportUnknownLambdaType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:25:27 - warning: Type of "p" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:25:32 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:25:37 - error: Cannot access attribute "database" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:23:42 - warning: Return type of lambda, "list[Unknown]", is partially unknown (reportUnknownLambdaType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:24:27 - warning: Type of "p" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:24:32 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:24:37 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:25:63 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:24:63 - warning: Argument type is unknown
     Argument corresponds to parameter "s" in function "isdir" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:28:30 - warning: Type of "_modal_toggle" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:27:30 - warning: Type of "_modal_toggle" is partially unknown
     Type of "_modal_toggle" is "(path: Unknown, key: Unknown, value: Unknown) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:29:37 - warning: Type of "_modal_generate_desc" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:28:37 - warning: Type of "_modal_generate_desc" is partially unknown
     Type of "_modal_generate_desc" is "(path: Unknown, desc_lbl: Unknown, gen_btn: Unknown, modal: Unknown) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:31:33 - warning: Type of "analyze_single_project" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:31:38 - error: Cannot access attribute "analyze_single_project" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:30:33 - warning: Type of "analyze_single_project" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:30:38 - error: Cannot access attribute "analyze_single_project" for class "ModalMixin*"
     Attribute "analyze_single_project" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:32:39 - warning: Type of "_add_filter_chip" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:32:44 - error: Cannot access attribute "_add_filter_chip" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:31:39 - warning: Type of "_add_filter_chip" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:31:44 - error: Cannot access attribute "_add_filter_chip" for class "ModalMixin*"
     Attribute "_add_filter_chip" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:33:30 - warning: Type of "remove_project" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:33:35 - error: Cannot access attribute "remove_project" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:32:30 - warning: Type of "remove_project" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:32:35 - error: Cannot access attribute "remove_project" for class "ModalMixin*"
     Attribute "remove_project" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:35:28 - warning: Type of parameter "p" is unknown (reportUnknownLambdaType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:35:31 - warning: Type of "collections_manager" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:35:31 - warning: Type of "get_project_collections" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:35:31 - warning: Return type of lambda is unknown (reportUnknownLambdaType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:35:36 - error: Cannot access attribute "collections_manager" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:34:28 - warning: Type of parameter "p" is unknown (reportUnknownLambdaType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:34:31 - warning: Type of "collections_manager" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:34:31 - warning: Type of "get_project_collections" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:34:31 - warning: Return type of lambda is unknown (reportUnknownLambdaType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:34:36 - error: Cannot access attribute "collections_manager" for class "ModalMixin*"
     Attribute "collections_manager" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:38:19 - warning: Type of "thumbnail_preloader" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:38:19 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:37:19 - warning: Type of "thumbnail_preloader" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:37:19 - warning: Argument type is unknown
     Argument corresponds to parameter "cache" in function "__init__" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:38:24 - error: Cannot access attribute "thumbnail_preloader" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:37:24 - error: Cannot access attribute "thumbnail_preloader" for class "ModalMixin*"
     Attribute "thumbnail_preloader" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:39:21 - warning: Type of "scanner" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:39:21 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:38:21 - warning: Type of "scanner" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:38:21 - warning: Argument type is unknown
     Argument corresponds to parameter "scanner" in function "__init__" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:39:26 - error: Cannot access attribute "scanner" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:38:26 - error: Cannot access attribute "scanner" for class "ModalMixin*"
     Attribute "scanner" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:42:29 - warning: Type of parameter "path" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:42:29 - warning: Type annotation is missing for parameter "path" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:42:35 - warning: Type of parameter "key" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:42:35 - warning: Type annotation is missing for parameter "key" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:42:40 - warning: Type of parameter "value" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:42:40 - warning: Type annotation is missing for parameter "value" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:43:20 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:43:25 - error: Cannot access attribute "database" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:41:29 - warning: Type of parameter "path" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:41:29 - warning: Type annotation is missing for parameter "path" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:41:35 - warning: Type of parameter "key" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:41:35 - warning: Type annotation is missing for parameter "key" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:41:40 - warning: Type of parameter "value" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:41:40 - warning: Type annotation is missing for parameter "value" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:42:20 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:42:25 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:44:13 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:44:18 - error: Cannot access attribute "database" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:43:13 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:43:18 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:45:13 - warning: Type of "db_manager" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:45:13 - warning: Type of "save_database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:45:18 - error: Cannot access attribute "db_manager" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:44:13 - warning: Type of "db_manager" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:44:13 - warning: Type of "save_database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:44:18 - error: Cannot access attribute "db_manager" for class "ModalMixin*"
     Attribute "db_manager" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:46:13 - warning: Type of "_invalidate_cache" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:46:18 - error: Cannot access attribute "_invalidate_cache" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:45:13 - warning: Type of "_invalidate_cache" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:45:18 - error: Cannot access attribute "_invalidate_cache" for class "ModalMixin*"
     Attribute "_invalidate_cache" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:47:13 - warning: Type of "display_projects" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:47:18 - error: Cannot access attribute "display_projects" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:46:13 - warning: Type of "display_projects" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:46:18 - error: Cannot access attribute "display_projects" for class "ModalMixin*"
     Attribute "display_projects" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:36 - warning: Type of parameter "path" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:36 - warning: Type annotation is missing for parameter "path" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:42 - warning: Type of parameter "desc_lbl" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:42 - warning: Type annotation is missing for parameter "desc_lbl" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:52 - warning: Type of parameter "gen_btn" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:52 - warning: Type annotation is missing for parameter "gen_btn" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:61 - warning: Type of parameter "modal" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:61 - warning: Type annotation is missing for parameter "modal" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:50:9 - warning: Type of "modal_gen" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:50:9 - warning: Type of "generate_description" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:50:14 - error: Cannot access attribute "modal_gen" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:48:36 - warning: Type of parameter "path" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:48:36 - warning: Type annotation is missing for parameter "path" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:48:42 - warning: Type of parameter "desc_lbl" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:48:42 - warning: Type annotation is missing for parameter "desc_lbl" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:48:52 - warning: Type of parameter "gen_btn" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:48:52 - warning: Type annotation is missing for parameter "gen_btn" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:48:61 - warning: Type of parameter "modal" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:48:61 - warning: Type annotation is missing for parameter "modal" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:9 - warning: Type of "modal_gen" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:9 - warning: Type of "generate_description" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:49:14 - error: Cannot access attribute "modal_gen" for class "ModalMixin*"
     Attribute "modal_gen" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:55:9 - warning: Result of call expression is of type "EditModal" and is not used; assign to variable "_" if this is intentional (reportUnusedCallResult)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:56:13 - warning: Type of "root" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:56:13 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:54:9 - warning: Result of call expression is of type "EditModal" and is not used; assign to variable "_" if this is intentional (reportUnusedCallResult)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:55:13 - warning: Type of "root" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:55:13 - warning: Argument type is unknown
     Argument corresponds to parameter "root" in function "__init__" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:56:18 - error: Cannot access attribute "root" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:55:18 - error: Cannot access attribute "root" for class "ModalMixin*"
     Attribute "root" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:57:13 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:57:13 - warning: Type of "get" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:57:13 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:56:13 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:56:13 - warning: Type of "get" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:56:13 - warning: Argument type is unknown
     Argument corresponds to parameter "data" in function "__init__" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:57:18 - error: Cannot access attribute "database" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:56:18 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:58:13 - warning: Type of "_on_edit_save" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:57:13 - warning: Type of "_on_edit_save" is partially unknown
     Type of "_on_edit_save" is "(path: Unknown, new_cats: Unknown, new_tags: Unknown) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:61:29 - warning: Type of parameter "path" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:61:29 - warning: Type annotation is missing for parameter "path" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:61:35 - warning: Type of parameter "new_cats" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:61:35 - warning: Type annotation is missing for parameter "new_cats" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:61:45 - warning: Type of parameter "new_tags" is unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:61:45 - warning: Type annotation is missing for parameter "new_tags" (reportMissingParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:62:20 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:62:25 - error: Cannot access attribute "database" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:60:29 - warning: Type of parameter "path" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:60:29 - warning: Type annotation is missing for parameter "path" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:60:35 - warning: Type of parameter "new_cats" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:60:35 - warning: Type annotation is missing for parameter "new_cats" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:60:45 - warning: Type of parameter "new_tags" is unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:60:45 - warning: Type annotation is missing for parameter "new_tags" (reportMissingParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:61:20 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:61:25 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:64:17 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:64:22 - error: Cannot access attribute "database" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:63:17 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:63:22 - error: Cannot access attribute "database" for class "ModalMixin*"
+    Attribute "database" is unknown (reportAttributeAccessIssue)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:64:13 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:64:18 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
   g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:65:13 - warning: Type of "database" is unknown (reportUnknownMemberType)
   g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:65:18 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:66:13 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:66:18 - error: Cannot access attribute "database" for class "ModalMixin*"
-    Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:67:13 - warning: Type of "db_manager" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:67:13 - warning: Type of "save_database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:67:18 - error: Cannot access attribute "db_manager" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:66:13 - warning: Type of "db_manager" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:66:13 - warning: Type of "save_database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:66:18 - error: Cannot access attribute "db_manager" for class "ModalMixin*"
     Attribute "db_manager" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:13 - warning: Type of "_invalidate_cache" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:18 - error: Cannot access attribute "_invalidate_cache" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:67:13 - warning: Type of "_invalidate_cache" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:67:18 - error: Cannot access attribute "_invalidate_cache" for class "ModalMixin*"
     Attribute "_invalidate_cache" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:13 - warning: Type of "sidebar" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:13 - warning: Type of "refresh" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:18 - error: Cannot access attribute "sidebar" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:13 - warning: Type of "sidebar" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:13 - warning: Type of "refresh" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:18 - error: Cannot access attribute "sidebar" for class "ModalMixin*"
     Attribute "sidebar" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:34 - warning: Type of "database" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:39 - error: Cannot access attribute "database" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:34 - warning: Type of "database" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:39 - error: Cannot access attribute "database" for class "ModalMixin*"
     Attribute "database" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:49 - warning: Type of "collections_manager" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:54 - error: Cannot access attribute "collections_manager" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:49 - warning: Type of "collections_manager" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:68:54 - error: Cannot access attribute "collections_manager" for class "ModalMixin*"
     Attribute "collections_manager" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:70:13 - warning: Type of "display_projects" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:70:18 - error: Cannot access attribute "display_projects" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:13 - warning: Type of "display_projects" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:69:18 - error: Cannot access attribute "display_projects" for class "ModalMixin*"
     Attribute "display_projects" is unknown (reportAttributeAccessIssue)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:71:13 - warning: Type of "status_bar" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:71:13 - warning: Type of "config" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:71:18 - error: Cannot access attribute "status_bar" for class "ModalMixin*"
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:70:13 - warning: Type of "status_bar" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:70:13 - warning: Type of "config" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\modal_mixin.py:70:18 - error: Cannot access attribute "status_bar" for class "ModalMixin*"
     Attribute "status_bar" is unknown (reportAttributeAccessIssue)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\selection_mixin.py
   g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\mixins\selection_mixin.py:12:13 - warning: Type of "selection_bar" is unknown (reportUnknownMemberType)
@@ -7019,51 +7001,28 @@ g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\virtual_scroll.py
     Type of "row_widgets" is "dict[Unknown, Unknown]" (reportUnknownMemberType)
   g:\GitHub\02dev-scratch-pad2\LASERFLIX\ui\virtual_scroll.py:249:9 - warning: Result of call expression is of type "str" and is not used; assign to variable "_" if this is intentional (reportUnusedCallResult)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:41:20 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:41:26 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:41:32 - warning: This type is deprecated as of Python 3.9; use "set" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:41:32 - warning: Import "Set" is not accessed (reportUnusedImport)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:59:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:106:31 - warning: Type of parameter "database" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:7:20 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:7:26 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:15:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:23:31 - warning: Type of parameter "database" is partially unknown
     Parameter type is "Dict[str, dict[Unknown, Unknown]]" (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:106:41 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:106:51 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:106:61 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:106:71 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:134:9 - warning: Type of "groups" is partially unknown
-    Type of "groups" is "defaultdict[Unknown, list[Unknown]]" (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:139:13 - warning: Type of "append" is partially unknown
-    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:142:9 - warning: Type of "duplicates" is partially unknown
-    Type of "duplicates" is "dict[Unknown, list[Unknown]]" (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:144:17 - warning: Type of "norm_name" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:144:28 - warning: Type of "paths" is partially unknown
-    Type of "paths" is "list[Unknown]" (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:145:20 - warning: Argument type is partially unknown
-    Argument corresponds to parameter "obj" in function "len"
-    Argument type is "list[Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:149:13 - warning: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:149:47 - warning: Argument type is partially unknown
-    Argument corresponds to parameter "obj" in function "len"
-    Argument type is "dict[Unknown, list[Unknown]]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:150:24 - warning: Argument type is partially unknown
-    Argument corresponds to parameter "obj" in function "len"
-    Argument type is "list[Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:150:35 - warning: Type of "paths" is partially unknown
-    Type of "paths" is "list[Unknown]" (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:153:16 - warning: Return type, "dict[Unknown, list[Unknown]]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:192:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:192:37 - warning: Type of parameter "database" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:23:41 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:23:51 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:23:61 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:23:71 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:24:17 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:24:27 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:35:13 - warning: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:45:9 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:45:37 - warning: Type of parameter "database" is partially unknown
     Parameter type is "Dict[str, dict[Unknown, Unknown]]" (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:192:47 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:192:57 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:192:67 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:203:22 - warning: Type of "find_duplicates" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:45:47 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:45:57 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:45:67 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:46:22 - warning: Type of "find_duplicates" is partially unknown
     Type of "find_duplicates" is "(database: Dict[str, dict[Unknown, Unknown]]) -> Dict[str, List[str]]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:210:13 - warning: Type of "append" is partially unknown
-    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:216:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:217:35 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:56:16 - warning: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\duplicate_detector.py:57:35 - warning: Argument type is partially unknown
     Argument corresponds to parameter "obj" in function "len"
     Argument type is "Dict[str, dict[Unknown, Unknown]]" (reportUnknownArgumentType)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\name_translator.py
@@ -7115,48 +7074,48 @@ g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\platform_utils.py
     Argument type is "list[Unknown | str]" (reportUnknownArgumentType)
   g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\platform_utils.py:47:9 - warning: Result of call expression is of type "str" and is not used; assign to variable "_" if this is intentional (reportUnusedCallResult)
 g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:14:20 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:14:26 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:14:32 - warning: This type is deprecated as of Python 3.9; use "set" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:14:32 - warning: Import "Set" is not accessed (reportUnusedImport)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:42:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:43:14 - warning: Type annotation for attribute `found_products` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:44:14 - warning: Type annotation for attribute `skipped_folders` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:45:14 - warning: Type annotation for attribute `stats` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:53:9 - warning: Return type, "List[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:53:52 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:53:57 - error: Expected type arguments for generic class "Dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:53:57 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:59:20 - warning: Return type, "list[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:6:20 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:6:26 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:26:14 - warning: Type annotation for attribute `logger` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:27:30 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:27:35 - error: Expected type arguments for generic class "Dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:27:35 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:28:31 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:29:14 - warning: Type annotation for attribute `stats` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:37:9 - warning: Return type, "List[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:37:52 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:37:57 - error: Expected type arguments for generic class "Dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:37:57 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:43:20 - warning: Return type, "list[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:49:16 - warning: Type of "found_products" is partially unknown
+    Type of "found_products" is "List[Dict[Unknown, Unknown]]" (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:49:16 - warning: Return type, "List[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:51:9 - warning: Return type, "List[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:51:54 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:51:59 - error: Expected type arguments for generic class "Dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:51:59 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:57:20 - warning: Return type, "list[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownVariableType)
   g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:65:16 - warning: Type of "found_products" is partially unknown
-    Type of "found_products" is "list[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:65:16 - warning: Return type, "list[Unknown]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:67:9 - warning: Return type, "List[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:67:54 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:67:59 - error: Expected type arguments for generic class "Dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:67:59 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:73:20 - warning: Return type, "list[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:81:16 - warning: Type of "found_products" is partially unknown
-    Type of "found_products" is "list[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:81:16 - warning: Return type, "list[Unknown]", is partially unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:92:9 - warning: Return type, "Dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:92:28 - error: Expected type arguments for generic class "Dict" (reportMissingTypeArgument)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:92:28 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:119:21 - warning: Type of "append" is partially unknown
+    Type of "found_products" is "List[Dict[Unknown, Unknown]]" (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:65:16 - warning: Return type, "List[Dict[Unknown, Unknown]]", is partially unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:76:9 - warning: Return type, "Dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:76:28 - error: Expected type arguments for generic class "Dict" (reportMissingTypeArgument)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:76:28 - warning: This type is deprecated as of Python 3.9; use "dict" instead (reportDeprecated)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:102:21 - warning: Type of "append" is partially unknown
     Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:121:21 - warning: Type of "append" is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:104:21 - warning: Type of "append" is partially unknown
     Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:132:47 - warning: Type of "lower" is unknown (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:132:61 - warning: Type of "f" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:139:44 - warning: Argument type is partially unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:112:47 - warning: Type of "lower" is unknown (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:112:61 - warning: Type of "f" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:118:44 - warning: Argument type is partially unknown
     Argument corresponds to parameter "files" in function "_has_project_files"
     Argument type is "list[Unknown]" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:145:17 - warning: Type of "found_products" is partially unknown
-    Type of "found_products" is "list[Unknown]" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:145:17 - warning: Type of "append" is partially unknown
-    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:155:17 - warning: Type of "subdir" is unknown (reportUnknownVariableType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:156:65 - warning: Argument type is unknown
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:123:17 - warning: Type of "found_products" is partially unknown
+    Type of "found_products" is "List[Dict[Unknown, Unknown]]" (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:123:17 - warning: Type of "append" is partially unknown
+    Type of "append" is "(object: Dict[Unknown, Unknown], /) -> None" (reportUnknownMemberType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:132:17 - warning: Type of "subdir" is unknown (reportUnknownVariableType)
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:133:65 - warning: Argument type is unknown
     Argument corresponds to parameter "paths" in function "join" (reportUnknownArgumentType)
-  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:164:41 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
-452 errors, 4077 warnings, 0 notes
+  g:\GitHub\02dev-scratch-pad2\LASERFLIX\utils\recursive_scanner.py:140:41 - warning: This type is deprecated as of Python 3.9; use "list" instead (reportDeprecated)
+455 errors, 4049 warnings, 0 notes

@@ -33,3 +33,8 @@
 2026-03-10 23:53:15,955 | INFO | Laserflix | ✅ Collections carregado: 0 coleções
 2026-03-10 23:53:15,955 | INFO | Laserflix | 📷 Thumbnail Preloader iniciado: 4 threads, cache 300 images
 2026-03-10 23:53:17,410 | INFO | Laserflix | ✨ Laserflix v4.0.1.3 iniciado (PERFORMANCE ENABLED)
+2026-03-11 00:05:35,807 | INFO | Laserflix | ⚠️ Config não encontrado, usando padrão vazio
+2026-03-11 00:05:35,808 | INFO | Laserflix | ⚠️ Database não encontrado, iniciando vazio
+2026-03-11 00:05:35,808 | INFO | Laserflix | ✅ Collections carregado: 0 coleções
+2026-03-11 00:05:35,809 | INFO | Laserflix | 📷 Thumbnail Preloader iniciado: 4 threads, cache 300 images
+2026-03-11 00:05:37,167 | INFO | Laserflix | ✨ Laserflix v4.0.1.3 iniciado (PERFORMANCE ENABLED)

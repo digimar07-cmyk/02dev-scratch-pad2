@@ -65,52 +65,6 @@ E701 Multiple statements on one line (colon)
 81 |             tech_str = ", ".join(tech_context) if tech_context else "formatos variados"
    |
 
-F401 [*] `typing.Optional` imported but unused
-  --> core\performance\predictive_preloader.py:28:43
-   |
-27 | import threading
-28 | from typing import List, Tuple, Callable, Optional
-   |                                           ^^^^^^^^
-29 | from core.thumbnail_preloader import ThumbnailPreloader
-30 | from utils.logging_setup import LOGGER
-   |
-help: Remove unused import: `typing.Optional`
-
-F401 [*] `queue` imported but unused
-  --> core\thumbnail_preloader.py:24:8
-   |
-22 | """
-23 | import os
-24 | import queue
-   |        ^^^^^
-25 | import threading
-26 | from concurrent.futures import ThreadPoolExecutor, as_completed
-   |
-help: Remove unused import: `queue`
-
-F401 [*] `concurrent.futures.as_completed` imported but unused
-  --> core\thumbnail_preloader.py:26:52
-   |
-24 | import queue
-25 | import threading
-26 | from concurrent.futures import ThreadPoolExecutor, as_completed
-   |                                                    ^^^^^^^^^^^^
-27 | from collections import OrderedDict
-28 | from typing import List, Callable, Optional, Tuple
-   |
-help: Remove unused import: `concurrent.futures.as_completed`
-
-F401 [*] `typing.Optional` imported but unused
-  --> core\virtual_scroll_manager.py:28:48
-   |
-26 |   Type hints usam Any para manter compatibilidade sem import de UI.
-27 | """
-28 | from typing import Any, List, Callable, Tuple, Optional
-   |                                                ^^^^^^^^
-29 | from utils.logging_setup import LOGGER
-   |
-help: Remove unused import: `typing.Optional`
-
 F841 Local variable `app` is assigned to but never used
   --> main.py:18:9
    |
@@ -388,16 +342,6 @@ F401 [*] `tkinter` imported but unused
 11 | from ui.dialogs.collection_dialog import CollectionDialog
    |
 help: Remove unused import: `tkinter`
-
-F401 [*] `utils.platform_utils.open_folder` imported but unused
- --> ui\mixins\modal_mixin.py:9:34
-  |
-7 | from ui.edit_modal import EditModal
-8 | from ui.project_modal import ProjectModal
-9 | from utils.platform_utils import open_folder
-  |                                  ^^^^^^^^^^^
-  |
-help: Remove unused import: `utils.platform_utils.open_folder`
 
 F401 [*] `tkinter.ttk` imported but unused
   --> ui\model_settings_dialog.py:15:21
@@ -698,17 +642,6 @@ F401 [*] `typing.Any` imported but unused
    |
 help: Remove unused import: `typing.Any`
 
-F401 [*] `typing.Set` imported but unused
-  --> utils\duplicate_detector.py:41:32
-   |
-39 | import re
-40 | from collections import defaultdict
-41 | from typing import Dict, List, Set
-   |                                ^^^
-42 | from utils.logging_setup import LOGGER
-   |
-help: Remove unused import: `typing.Set`
-
 F601 Dictionary key literal `"rainbow"` repeated
    --> utils\name_translator.py:219:5
     |
@@ -744,16 +677,5 @@ F601 Dictionary key literal `"simple"` repeated
     |
 help: Remove repeated key literal `"simple"`
 
-F401 [*] `typing.Set` imported but unused
-  --> utils\recursive_scanner.py:14:32
-   |
-12 | import os
-13 | import hashlib
-14 | from typing import List, Dict, Set
-   |                                ^^^
-15 | from utils.logging_setup import LOGGER
-   |
-help: Remove unused import: `typing.Set`
-
-Found 69 errors.
-[*] 28 fixable with the `--fix` option (8 hidden fixes can be enabled with the `--unsafe-fixes` option).
+Found 62 errors.
+[*] 21 fixable with the `--fix` option (8 hidden fixes can be enabled with the `--unsafe-fixes` option).

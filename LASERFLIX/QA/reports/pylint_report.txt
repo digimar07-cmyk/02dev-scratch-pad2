@@ -211,47 +211,21 @@ core\thumbnail_cache.py:182:15: W0718: Catching too general exception Exception 
 core\thumbnail_cache.py:226:27: W0718: Catching too general exception Exception (broad-exception-caught)
 core\thumbnail_cache.py:249:15: W0718: Catching too general exception Exception (broad-exception-caught)
 ************* Module core.thumbnail_preloader
-core\thumbnail_preloader.py:76:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:82:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:86:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:120:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:123:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:133:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:137:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:145:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:149:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:152:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:176:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:184:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:208:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:212:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:215:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:217:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:237:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:246:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:266:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:273:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:293:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:298:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:325:0: C0303: Trailing whitespace (trailing-whitespace)
-core\thumbnail_preloader.py:88:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\thumbnail_preloader.py:150:19: W0718: Catching too general exception Exception (broad-exception-caught)
-core\thumbnail_preloader.py:151:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\thumbnail_preloader.py:218:15: W0718: Catching too general exception Exception (broad-exception-caught)
-core\thumbnail_preloader.py:219:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\thumbnail_preloader.py:244:15: W0718: Catching too general exception Exception (broad-exception-caught)
-core\thumbnail_preloader.py:302:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\thumbnail_preloader.py:24:0: W0611: Unused import queue (unused-import)
-core\thumbnail_preloader.py:26:0: W0611: Unused as_completed imported from concurrent.futures (unused-import)
+core\thumbnail_preloader.py:32:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+core\thumbnail_preloader.py:60:19: W0718: Catching too general exception Exception (broad-exception-caught)
+core\thumbnail_preloader.py:61:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+core\thumbnail_preloader.py:93:15: W0718: Catching too general exception Exception (broad-exception-caught)
+core\thumbnail_preloader.py:94:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+core\thumbnail_preloader.py:105:15: W0718: Catching too general exception Exception (broad-exception-caught)
+core\thumbnail_preloader.py:129:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 ************* Module core.virtual_scroll_manager
-core\virtual_scroll_manager.py:32:0: R0902: Too many instance attributes (18/12) (too-many-instance-attributes)
-core\virtual_scroll_manager.py:52:4: R0913: Too many arguments (10/8) (too-many-arguments)
-core\virtual_scroll_manager.py:52:4: R0917: Too many positional arguments (10/5) (too-many-positional-arguments)
-core\virtual_scroll_manager.py:137:15: W0718: Catching too general exception Exception (broad-exception-caught)
-core\virtual_scroll_manager.py:133:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\virtual_scroll_manager.py:138:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\virtual_scroll_manager.py:143:32: W0613: Unused argument 'event' (unused-argument)
-core\virtual_scroll_manager.py:28:0: W0611: Unused Optional imported from typing (unused-import)
+core\virtual_scroll_manager.py:13:0: R0902: Too many instance attributes (18/12) (too-many-instance-attributes)
+core\virtual_scroll_manager.py:16:4: R0913: Too many arguments (10/8) (too-many-arguments)
+core\virtual_scroll_manager.py:16:4: R0917: Too many positional arguments (10/5) (too-many-positional-arguments)
+core\virtual_scroll_manager.py:62:15: W0718: Catching too general exception Exception (broad-exception-caught)
+core\virtual_scroll_manager.py:58:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+core\virtual_scroll_manager.py:63:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+core\virtual_scroll_manager.py:68:32: W0613: Unused argument 'event' (unused-argument)
 ************* Module core.performance.filter_cache
 core\performance\filter_cache.py:45:0: C0303: Trailing whitespace (trailing-whitespace)
 core\performance\filter_cache.py:58:0: C0303: Trailing whitespace (trailing-whitespace)
@@ -283,65 +257,18 @@ core\performance\filter_cache.py:130:12: W1203: Use lazy % formatting in logging
 core\performance\filter_cache.py:155:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 core\performance\filter_cache.py:167:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 ************* Module core.performance.predictive_preloader
-core\performance\predictive_preloader.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:56:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:62:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:67:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:93:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:100:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:103:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:106:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:116:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:121:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:138:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:143:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:146:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:152:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:155:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:160:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:163:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:172:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:180:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:195:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:203:0: C0303: Trailing whitespace (trailing-whitespace)
-core\performance\predictive_preloader.py:64:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\performance\predictive_preloader.py:117:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\performance\predictive_preloader.py:161:19: W0718: Catching too general exception Exception (broad-exception-caught)
-core\performance\predictive_preloader.py:156:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\performance\predictive_preloader.py:162:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-core\performance\predictive_preloader.py:28:0: W0611: Unused Optional imported from typing (unused-import)
+core\performance\predictive_preloader.py:21:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+core\performance\predictive_preloader.py:49:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+core\performance\predictive_preloader.py:68:19: W0718: Catching too general exception Exception (broad-exception-caught)
+core\performance\predictive_preloader.py:67:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+core\performance\predictive_preloader.py:69:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 ************* Module core.performance.viewport_manager
 core\performance\viewport_manager.py:77:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 core\performance\viewport_manager.py:139:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 core\performance\viewport_manager.py:174:34: W0613: Unused argument 'event' (unused-argument)
 core\performance\viewport_manager.py:179:8: W0201: Attribute '_pending_render' defined outside __init__ (attribute-defined-outside-init)
 ************* Module utils.duplicate_detector
-utils\duplicate_detector.py:90:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:93:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:96:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:99:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:103:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:135:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:140:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:147:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:152:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:186:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:189:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:204:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:206:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:215:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:233:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:235:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:240:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:245:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:250:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:252:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:259:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:266:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:273:0: C0303: Trailing whitespace (trailing-whitespace)
-utils\duplicate_detector.py:148:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-utils\duplicate_detector.py:229:4: W0105: String statement has no effect (pointless-string-statement)
-utils\duplicate_detector.py:41:0: W0611: Unused Set imported from typing (unused-import)
+utils\duplicate_detector.py:34:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 ************* Module utils.logging_setup
 utils\logging_setup.py:15:0: C0303: Trailing whitespace (trailing-whitespace)
 utils\logging_setup.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
@@ -388,9 +315,8 @@ utils\platform_utils.py:46:11: W0718: Catching too general exception Exception (
 utils\platform_utils.py:43:12: W1510: 'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
 utils\platform_utils.py:45:12: W1510: 'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
 ************* Module utils.recursive_scanner
-utils\recursive_scanner.py:88:15: W0718: Catching too general exception Exception (broad-exception-caught)
-utils\recursive_scanner.py:158:15: W0718: Catching too general exception Exception (broad-exception-caught)
-utils\recursive_scanner.py:14:0: W0611: Unused Set imported from typing (unused-import)
+utils\recursive_scanner.py:72:15: W0718: Catching too general exception Exception (broad-exception-caught)
+utils\recursive_scanner.py:134:15: W0718: Catching too general exception Exception (broad-exception-caught)
 ************* Module utils.text_utils
 utils\text_utils.py:52:0: C0303: Trailing whitespace (trailing-whitespace)
 utils\text_utils.py:56:0: C0303: Trailing whitespace (trailing-whitespace)
@@ -960,8 +886,7 @@ ui\mixins\collection_mixin.py:6:0: R0903: Too few public methods (1/2) (too-few-
 ************* Module ui.mixins.filter_mixin
 ui\mixins\filter_mixin.py:6:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module ui.mixins.modal_mixin
-ui\mixins\modal_mixin.py:35:20: W0108: Lambda may not be necessary (unnecessary-lambda)
-ui\mixins\modal_mixin.py:9:0: W0611: Unused open_folder imported from utils.platform_utils (unused-import)
+ui\mixins\modal_mixin.py:34:20: W0108: Lambda may not be necessary (unnecessary-lambda)
 ************* Module ui.mixins.selection_mixin
 ui\mixins\selection_mixin.py:7:0: R0903: Too few public methods (0/2) (too-few-public-methods)
 ************* Module main
@@ -1006,7 +931,7 @@ main.py:1:0: R0801: Similar lines in 2 files
                   relief="flat", cursor="hand2", padx=10
                   ).pack(side="left", padx=(6, 0))
 
-        # Modo (duplicate-code)
+        # ---- botões ---- (duplicate-code)
 main.py:1:0: R0801: Similar lines in 2 files
 ==ui.components.status_bar:[56:69]
 ==ui.managers.progress_ui_manager:[12:23]
@@ -1014,18 +939,20 @@ main.py:1:0: R0801: Similar lines in 2 files
         self.stop_btn.pack(side="right", padx=10)
         self.progress_bar["value"] = 0
 
-    def hide(self):
+    def hide_progress(self):
+        """Oculta barra de progresso + botão parar."""
         self.progress_bar.pack_forget()
         self.stop_btn.pack_forget()
 
-    def update(self, current: int, total: int, message: str = ""):
+    def update_progress(self, current: int, total: int, message: str = ""):
+        """Atualiza barra de progresso."""
         pct = (current / total) * 100 if total else 0
         self.progress_bar["value"] = pct (duplicate-code)
 
 
 Report
 ======
-4871 statements analysed.
+4841 statements analysed.
 
 Statistics by type
 ------------------
@@ -1037,7 +964,7 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |class    |60     |60         |=          |85.00       |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |418    |418        |=          |85.41       |0.00     |
+|method   |418    |418        |=          |80.86       |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |function |47     |47         |=          |93.62       |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
@@ -1089,13 +1016,13 @@ External dependencies
       \-duplicate_detector (ui.recursive_import_integration)
       \-logging_setup (ai.analysis_manager,ai.fallbacks,ai.image_analyzer,ai.ollama_client,ai.text_generator,core.collections_manager,core.database,core.performance.filter_cache,core.performance.predictive_preloader,core.performance.viewport_manager,core.project_scanner,core.thumbnail_cache,core.thumbnail_preloader,core.virtual_scroll_manager,main,ui.collections_dialog,ui.controllers.analysis_controller,ui.controllers.optimized_display_controller,ui.duplicate_resolution_dialog,ui.import_mode_dialog,ui.import_preview_dialog,ui.main_window,ui.managers.modal_generator,ui.model_settings_dialog,ui.prepare_folders_dialog,ui.recursive_import_integration)
       \-name_translator (ui.controllers.optimized_display_controller)
-      \-platform_utils (ui.mixins.modal_mixin,ui.project_modal)
+      \-platform_utils (ui.project_modal)
       \-recursive_scanner (ui.recursive_import_integration)
       \-text_utils (ai.fallbacks)
 
 
 
-12740 lines have been analyzed
+12060 lines have been analyzed
 
 Raw metrics
 -----------
@@ -1103,13 +1030,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |6741   |52.91 |6741     |=          |
+|code      |6684   |55.42 |6684     |=          |
 +----------+-------+------+---------+-----------+
-|docstring |3413   |26.79 |3413     |=          |
+|docstring |2959   |24.54 |2959     |=          |
 +----------+-------+------+---------+-----------+
-|comment   |858    |6.73  |858      |=          |
+|comment   |792    |6.57  |792      |=          |
 +----------+-------+------+---------+-----------+
-|empty     |1728   |13.56 |1728     |=          |
+|empty     |1625   |13.47 |1625     |=          |
 +----------+-------+------+---------+-----------+
 
 
@@ -1133,11 +1060,11 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |663    |663      |663        |
+|convention |596    |596      |596        |
 +-----------+-------+---------+-----------+
 |refactor   |72     |72       |72         |
 +-----------+-------+---------+-----------+
-|warning    |157    |157      |157        |
+|warning    |149    |149      |149        |
 +-----------+-------+---------+-----------+
 |error      |22     |22       |22         |
 +-----------+-------+---------+-----------+
@@ -1150,105 +1077,105 @@ Messages by category
 +--------------------------------------------+------+--------+---------+-----------+
 |module                                      |error |warning |refactor |convention |
 +============================================+======+========+=========+===========+
-|ui.main_window                              |50.00 |1.91    |1.39     |0.30       |
+|ui.main_window                              |50.00 |2.01    |1.39     |0.34       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.managers.modal_manager                   |36.36 |0.64    |0.00     |0.00       |
+|ui.managers.modal_manager                   |36.36 |0.67    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.components.chips_bar                     |9.09  |0.64    |1.39     |0.15       |
+|ui.components.chips_bar                     |9.09  |0.67    |1.39     |0.17       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.database_controller                    |4.55  |1.91    |0.00     |0.00       |
+|core.database_controller                    |4.55  |2.01    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.recursive_import_integration             |0.00  |8.92    |8.33     |3.77       |
+|ui.recursive_import_integration             |0.00  |9.40    |8.33     |4.19       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.project_modal                            |0.00  |6.37    |18.06    |6.18       |
+|ui.project_modal                            |0.00  |6.71    |18.06    |6.88       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.thumbnail_cache                        |0.00  |5.73    |2.78     |1.06       |
+|core.thumbnail_cache                        |0.00  |6.04    |2.78     |1.17       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.thumbnail_preloader                    |0.00  |5.73    |0.00     |3.47       |
+|core.performance.filter_cache               |0.00  |4.70    |1.39     |3.52       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.performance.filter_cache               |0.00  |4.46    |1.39     |3.17       |
+|ui.bootstrap.callbacks_setup                |0.00  |4.70    |1.39     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.bootstrap.callbacks_setup                |0.00  |4.46    |1.39     |0.00       |
+|core.thumbnail_preloader                    |0.00  |4.70    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.performance.predictive_preloader       |0.00  |3.82    |0.00     |3.17       |
+|utils.platform_utils                        |0.00  |4.03    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|utils.platform_utils                        |0.00  |3.82    |0.00     |0.00       |
+|ai.text_generator                           |0.00  |3.36    |2.78     |1.85       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.virtual_scroll_manager                 |0.00  |3.18    |4.17     |0.00       |
+|ui.managers.dialog_manager                  |0.00  |3.36    |0.00     |3.36       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ai.text_generator                           |0.00  |3.18    |2.78     |1.66       |
+|ui.collections_dialog                       |0.00  |3.36    |0.00     |0.34       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.managers.dialog_manager                  |0.00  |3.18    |0.00     |3.02       |
+|core.performance.predictive_preloader       |0.00  |3.36    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.collections_dialog                       |0.00  |3.18    |0.00     |0.30       |
+|core.virtual_scroll_manager                 |0.00  |2.68    |4.17     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.performance.viewport_manager           |0.00  |2.55    |0.00     |0.00       |
+|core.performance.viewport_manager           |0.00  |2.68    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ai.fallbacks                                |0.00  |1.91    |2.78     |3.92       |
+|ai.fallbacks                                |0.00  |2.01    |2.78     |4.36       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.project_scanner                        |0.00  |1.91    |1.39     |4.98       |
+|core.project_scanner                        |0.00  |2.01    |1.39     |5.54       |
 +--------------------------------------------+------+--------+---------+-----------+
-|utils.name_translator                       |0.00  |1.91    |0.00     |3.92       |
+|utils.name_translator                       |0.00  |2.01    |0.00     |4.36       |
 +--------------------------------------------+------+--------+---------+-----------+
-|utils.duplicate_detector                    |0.00  |1.91    |0.00     |3.47       |
+|ui.header                                   |0.00  |2.01    |0.00     |2.68       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.header                                   |0.00  |1.91    |0.00     |2.41       |
+|ui.sidebar                                  |0.00  |2.01    |0.00     |0.84       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.sidebar                                  |0.00  |1.91    |0.00     |0.75       |
+|ui.model_settings_dialog                    |0.00  |2.01    |0.00     |0.17       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.model_settings_dialog                    |0.00  |1.91    |0.00     |0.15       |
+|core.database                               |0.00  |2.01    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|utils.recursive_scanner                     |0.00  |1.91    |0.00     |0.00       |
+|ai.ollama_client                            |0.00  |2.01    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.database                               |0.00  |1.91    |0.00     |0.00       |
+|main                                        |0.00  |1.34    |5.56     |0.34       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ai.ollama_client                            |0.00  |1.91    |0.00     |0.00       |
+|ui.project_card                             |0.00  |1.34    |4.17     |5.20       |
 +--------------------------------------------+------+--------+---------+-----------+
-|main                                        |0.00  |1.27    |5.56     |0.30       |
+|ai.analysis_manager                         |0.00  |1.34    |2.78     |9.06       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.project_card                             |0.00  |1.27    |4.17     |4.68       |
+|ui.prepare_folders_dialog                   |0.00  |1.34    |2.78     |0.84       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ai.analysis_manager                         |0.00  |1.27    |2.78     |8.14       |
+|ui.controllers.analysis_controller          |0.00  |1.34    |0.00     |7.89       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.prepare_folders_dialog                   |0.00  |1.27    |2.78     |0.75       |
+|utils.recursive_scanner                     |0.00  |1.34    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.controllers.analysis_controller          |0.00  |1.27    |0.00     |7.09       |
+|ui.components.pagination_controls           |0.00  |1.34    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.mixins.modal_mixin                       |0.00  |1.27    |0.00     |0.00       |
+|core.collections_manager                    |0.00  |1.34    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.components.pagination_controls           |0.00  |1.27    |0.00     |0.00       |
+|ui.controllers.optimized_display_controller |0.00  |0.67    |8.33     |1.51       |
 +--------------------------------------------+------+--------+---------+-----------+
-|core.collections_manager                    |0.00  |1.27    |0.00     |0.00       |
+|ui.managers.modal_generator                 |0.00  |0.67    |2.78     |1.85       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.controllers.optimized_display_controller |0.00  |0.64    |8.33     |1.36       |
+|ui.virtual_scroll                           |0.00  |0.67    |1.39     |8.22       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.managers.modal_generator                 |0.00  |0.64    |2.78     |1.66       |
+|ai.image_analyzer                           |0.00  |0.67    |1.39     |2.68       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.virtual_scroll                           |0.00  |0.64    |1.39     |7.39       |
+|ui.import_mode_dialog                       |0.00  |0.67    |1.39     |1.34       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ai.image_analyzer                           |0.00  |0.64    |1.39     |2.41       |
+|ui.import_preview_dialog                    |0.00  |0.67    |1.39     |1.17       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.import_mode_dialog                       |0.00  |0.64    |1.39     |1.21       |
+|ui.bootstrap.managers_setup                 |0.00  |0.67    |1.39     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.import_preview_dialog                    |0.00  |0.64    |1.39     |1.06       |
+|ui.controllers.selection_controller         |0.00  |0.67    |0.00     |4.03       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.bootstrap.managers_setup                 |0.00  |0.64    |1.39     |0.00       |
+|ui.controllers.collection_controller        |0.00  |0.67    |0.00     |2.18       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.controllers.selection_controller         |0.00  |0.64    |0.00     |3.62       |
+|utils.duplicate_detector                    |0.00  |0.67    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.controllers.collection_controller        |0.00  |0.64    |0.00     |1.96       |
+|ui.mixins.modal_mixin                       |0.00  |0.67    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|config.ui_constants                         |0.00  |0.64    |0.00     |0.00       |
+|config.ui_constants                         |0.00  |0.67    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ai.keyword_maps                             |0.00  |0.64    |0.00     |0.00       |
+|ai.keyword_maps                             |0.00  |0.67    |0.00     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
 |core.protocols                              |0.00  |0.00    |6.94     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.duplicate_resolution_dialog              |0.00  |0.00    |2.78     |1.51       |
+|ui.duplicate_resolution_dialog              |0.00  |0.00    |2.78     |1.68       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.managers.orphan_manager                  |0.00  |0.00    |2.78     |1.36       |
+|ui.managers.orphan_manager                  |0.00  |0.00    |2.78     |1.51       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.managers.toggle_manager                  |0.00  |0.00    |1.39     |2.11       |
+|ui.managers.toggle_manager                  |0.00  |0.00    |1.39     |2.35       |
 +--------------------------------------------+------+--------+---------+-----------+
 |ui.mixins.selection_mixin                   |0.00  |0.00    |1.39     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
@@ -1260,17 +1187,17 @@ Messages by category
 +--------------------------------------------+------+--------+---------+-----------+
 |ui.bootstrap.core_setup                     |0.00  |0.00    |1.39     |0.00       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.components.selection_bar                 |0.00  |0.00    |0.00     |3.17       |
+|ui.components.selection_bar                 |0.00  |0.00    |0.00     |3.52       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.components.status_bar                    |0.00  |0.00    |0.00     |1.21       |
+|ui.components.status_bar                    |0.00  |0.00    |0.00     |1.34       |
 +--------------------------------------------+------+--------+---------+-----------+
-|utils.logging_setup                         |0.00  |0.00    |0.00     |1.06       |
+|utils.logging_setup                         |0.00  |0.00    |0.00     |1.17       |
 +--------------------------------------------+------+--------+---------+-----------+
-|utils.text_utils                            |0.00  |0.00    |0.00     |0.90       |
+|utils.text_utils                            |0.00  |0.00    |0.00     |1.01       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.managers.collection_dialog_manager       |0.00  |0.00    |0.00     |0.75       |
+|ui.managers.collection_dialog_manager       |0.00  |0.00    |0.00     |0.84       |
 +--------------------------------------------+------+--------+---------+-----------+
-|ui.managers.progress_ui_manager             |0.00  |0.00    |0.00     |0.45       |
+|ui.managers.progress_ui_manager             |0.00  |0.00    |0.00     |0.50       |
 +--------------------------------------------+------+--------+---------+-----------+
 
 
@@ -1281,7 +1208,7 @@ Messages
 +-------------------------------+------------+
 |message id                     |occurrences |
 +===============================+============+
-|trailing-whitespace            |570         |
+|trailing-whitespace            |503         |
 +-------------------------------+------------+
 |broad-exception-caught         |57          |
 +-------------------------------+------------+
@@ -1291,7 +1218,7 @@ Messages
 +-------------------------------+------------+
 |logging-fstring-interpolation  |29          |
 +-------------------------------+------------+
-|unused-import                  |26          |
+|unused-import                  |19          |
 +-------------------------------+------------+
 |too-few-public-methods         |16          |
 +-------------------------------+------------+
@@ -1343,8 +1270,6 @@ Messages
 +-------------------------------+------------+
 |super-with-arguments           |1           |
 +-------------------------------+------------+
-|pointless-string-statement     |1           |
-+-------------------------------+------------+
 |not-callable                   |1           |
 +-------------------------------+------------+
 |missing-final-newline          |1           |
@@ -1362,5 +1287,5 @@ Messages
 
 
 ------------------------------------------------------------------
-Your code has been rated at 7.94/10 (previous run: 7.94/10, +0.00)
+Your code has been rated at 8.09/10 (previous run: 8.09/10, +0.00)
 

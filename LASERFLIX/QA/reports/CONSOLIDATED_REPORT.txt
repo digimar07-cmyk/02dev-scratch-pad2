@@ -1,6 +1,6 @@
 ======================================================================
   LASERFLIX QA — RELATÓRIO CONSOLIDADO
-  Gerado em: 2026-03-10 23:05:44
+  Gerado em: 2026-03-10 23:09:42
 ======================================================================
 
 ## EXIT CODES POR CATEGORIA
@@ -19,7 +19,7 @@
 ----------------------------------------
   TESTS UNIT: 29 testes OK
   TESTS INTEGRATION: 11 testes OK
-  TESTS SMOKE: 4/108 FALHOU
+  TESTS SMOKE: 2/108 FALHOU
 
 ## CONTEÚTO DOS RELATÓRIOS
 ======================================================================

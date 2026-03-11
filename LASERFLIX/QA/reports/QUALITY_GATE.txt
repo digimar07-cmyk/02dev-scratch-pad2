@@ -1,0 +1,21 @@
+======================================================================
+  LASERFLIX QA — QUALITY GATE
+  Executado em: 2026-03-10 22:04:28
+  RESULTADO: *** REPROVADO ***
+======================================================================
+
+## FALHAS CRÍTICAS
+----------------------------------------
+[FALHA] LINT (ruff): exit code 2
+[FALHA] LINT (ruff): exit code 9009
+[FALHA] TYPE CHECK (basedpyright): exit code 9009
+[FALHA CRÍTICA] TESTES UNITÁRIOS: 2 teste(s) falharam.
+[FALHA CRÍTICA] TESTES DE INTEGRAÇÃO: 2 teste(s) falharam.
+[FALHA CRÍTICA] SMOKE + ESTRUTURAIS: 10 teste(s) falharam.
+
+## AVISOS (nao reprovam, mas requerem revisao)
+----------------------------------------
+[CODIGO MORTO] Vulture identificou 2 item(ns) potencialmente nao usados. Revisar.
+
+Thresholds aplicados: {'ruff_errors_max': 0, 'type_errors_max': 0, 'unit_test_failures_max': 0, 'integration_test_failures_max': 0, 'smoke_test_failures_max': 0, 'max_complexity_cc': 10, 'max_duplicate_blocks': 20, 'vulture_critical_min_confidence': 80}
+AVISO: Qualquer alteracao de thresholds apos execucao = MAQUIAGEM.

@@ -1,0 +1,73 @@
+======================================================================
+  LASERFLIX QA — RELATÓRIO CONSOLIDADO
+  Gerado em: 2026-03-10 22:04:27
+======================================================================
+
+## EXIT CODES POR CATEGORIA
+----------------------------------------
+  ruff_exit                                => 2  [FALHOU]
+  pylint_exit                              => 9009  [FALHOU]
+  types_exit                               => 9009  [FALHOU]
+  cc_exit                                  => 9009  [FALHOU]
+  vulture_exit                             => 9009  [FALHOU]
+  dup_exit                                 => 9009  [FALHOU]
+  unit_exit                                => 1  [FALHOU]
+  integration_exit                         => 1  [FALHOU]
+  smoke_exit                               => 1  [FALHOU]
+
+## RESULTADO DOS TESTES
+----------------------------------------
+  TESTS UNIT: 2/29 FALHOU
+  TESTS INTEGRATION: 2/11 FALHOU
+  TESTS SMOKE: 10/108 FALHOU
+
+## CONTEÚTO DOS RELATÓRIOS
+======================================================================
+
+### LINT - RUFF
+----------------------------------------
+error: invalid value 'text' for '--output-format <OUTPUT_FORMAT>'
+  [possible values: concise, full, json, json-lines, junit, grouped, github, gitlab, pylint, rdjson, azure, sarif]
+
+For more information, try '--help'.
+
+
+### LINT - PYLINT
+----------------------------------------
+'pylint' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+
+
+### TYPE CHECK - BASEDPYRIGHT
+----------------------------------------
+'basedpyright' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+
+
+### COMPLEXITY - CC
+----------------------------------------
+'radon' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+
+
+### COMPLEXITY - MI
+----------------------------------------
+'radon' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+
+
+### DEAD CODE - VULTURE
+----------------------------------------
+'vulture' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+
+
+### DUPLICATION - PYLINT
+----------------------------------------
+'pylint' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+
+
+======================================================================
+  FIM DO RELATÓRIO CONSOLIDADO
+======================================================================

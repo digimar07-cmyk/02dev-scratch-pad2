@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="11" time="1.595" timestamp="2026-03-10T22:04:07.259578-03:00" hostname="Desktop-Santiago-01"><testcase classname="tests.integration.test_ai_analysis_manager" name="test_analysis_manager_importable" time="0.039" /><testcase classname="tests.integration.test_ai_analysis_manager" name="test_analysis_manager_has_public_class" time="0.001" /><testcase classname="tests.integration.test_ai_analysis_manager" name="test_analysis_manager_does_not_import_ui" time="0.017" /><testcase classname="tests.integration.test_core_layer_isolation" name="test_core_database_works_without_ui" time="0.308" /><testcase classname="tests.integration.test_core_layer_isolation" name="test_core_collections_manager_works_without_ui" time="0.259" /><testcase classname="tests.integration.test_core_layer_isolation" name="test_utils_independent" time="0.344" /><testcase classname="tests.integration.test_core_layer_isolation" name="test_config_no_side_effects_on_import" time="0.088" /><testcase classname="tests.integration.test_database_controller_boundary" name="test_database_controller_has_no_tkinter" time="0.005"><failure message="assert 'from tkinter' not in '&quot;&quot;&quot;\ncore/d..._changed()\n'&#10;  &#10;  'from tkinter' is contained here:&#10;    &quot;&quot;&quot;&#10;    core/database_controller.py — Controla operações de alto nível do database.&#10;    &#10;    FASE 7F.2: Centraliza operações de database&#10;    Redução estimada: -30 linhas no main_window.py...&#10;  &#10;  ...Full output truncated (119 lines hidden), use '-vv' to show">tests\integration\test_database_controller_boundary.py:20: in test_database_controller_has_no_tkinter
+    assert "from tkinter" not in content
+E   assert 'from tkinter' not in '"""\ncore/d..._changed()\n'
+E     
+E     'from tkinter' is contained here:
+E       """
+E       core/database_controller.py — Controla operações de alto nível do database.
+E       
+E       FASE 7F.2: Centraliza operações de database
+E       Redução estimada: -30 linhas no main_window.py...
+E     
+E     ...Full output truncated (119 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.integration.test_database_controller_boundary" name="test_database_controller_public_interface" time="0.066" /><testcase classname="tests.integration.test_database_controller_boundary" name="test_core_database_has_public_class" time="0.002" /><testcase classname="tests.integration.test_virtual_scroll_core_boundary" name="test_virtual_scroll_manager_architecture" time="0.007"><failure message="AssertionError: core/virtual_scroll_manager.py VIOLA FRONTEIRA ARQUITETURAL:&#10;  Importa tkinter: ['tkinter']&#10;  VirtualScroll com dependencia de UI pertence a ui/, nao a core/.&#10;assert not [&quot;Importa tkinter: ['tkinter']&quot;]">tests\integration\test_virtual_scroll_core_boundary.py:38: in test_virtual_scroll_manager_architecture
+    assert not violations, (
+E   AssertionError: core/virtual_scroll_manager.py VIOLA FRONTEIRA ARQUITETURAL:
+E     Importa tkinter: ['tkinter']
+E     VirtualScroll com dependencia de UI pertence a ui/, nao a core/.
+E   assert not ["Importa tkinter: ['tkinter']"]</failure></testcase></testsuite></testsuites>

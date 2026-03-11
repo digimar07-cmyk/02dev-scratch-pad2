@@ -1,0 +1,20 @@
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+
+[tool.ruff.lint]
+# E/W = pycodestyle | F = pyflakes | I = isort | UP = pyupgrade | B = bugbear | SIM = simplify
+select = ["E", "W", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501", "B008", "SIM108"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["config", "core", "ui", "utils", "ai"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# Coverage: configurado no pytest.ini (scoped por modulo)
+# Expande a lista [coverage:run].source a cada novo modulo testado
+# Meta atual Sprint 2: 70% nos 3 modulos com testes
+# Meta Sprint 3+: adicionar novos modulos e elevar fail_under gradualmente

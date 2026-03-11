@@ -6,13 +6,12 @@ Teto: 350 linhas.
 F-08: Seção de Coleções adicionada no modal
 """
 import os
-import threading
 import tkinter as tk
 from tkinter import ttk, messagebox
 
 from config.ui_constants import (
     ACCENT_RED, ACCENT_GREEN, ACCENT_GOLD,
-    FG_PRIMARY, FG_SECONDARY, FG_TERTIARY,
+    FG_PRIMARY,
     ORIGIN_COLORS,
     SCROLL_SPEED,
 )
@@ -58,8 +57,10 @@ class ProjectModal:
     def open(self) -> None:
         data      = self._database.get(self._path, {})
         all_paths = self._cb["get_all_paths"]()
-        try:    nav_idx = all_paths.index(self._path)
-        except: nav_idx = 0
+        try:
+            nav_idx = all_paths.index(self._path)
+        except Exception:
+            nav_idx = 0
         nav_tot = len(all_paths)
 
         modal = tk.Toplevel(self._root)
@@ -91,18 +92,15 @@ class ProjectModal:
         lc  = tk.Canvas(left_outer, bg=self._BG, highlightthickness=0)
         lsb = ttk.Scrollbar(left_outer, orient="vertical", command=lc.yview)
         lp  = tk.Frame(lc, bg=self._BG)
-        
-        # FIX F-08: Função helper para scroll
+
         def _on_mousewheel(event, canvas=lc):
             canvas.yview_scroll(int(-1*(event.delta/SCROLL_SPEED)), "units")
-        
+
         lp.bind("<Configure>", lambda e: lc.configure(scrollregion=lc.bbox("all")))
         lc_win = lc.create_window((0, 0), window=lp, anchor="nw")
         lc.configure(yscrollcommand=lsb.set)
         lc.pack(side="left", fill="both", expand=True)
         lsb.pack(side="right", fill="y")
-        
-        # FIX F-08: Bind mousewheel no canvas E no frame interno
         lc.bind("<MouseWheel>", _on_mousewheel)
         lp.bind("<MouseWheel>", _on_mousewheel)
 
@@ -110,7 +108,8 @@ class ProjectModal:
 
         def _on_left_resize(e):
             w = e.width - 18
-            if w < 60: return
+            if w < 60:
+                return
             lc.itemconfig(lc_win, width=w)
             lbl = _desc_lbl_ref[0]
             if lbl:
@@ -126,13 +125,18 @@ class ProjectModal:
 
     def _build_left_panel(self, lp, data, nav_idx, nav_tot, all_paths,
                           _nav, _desc_lbl_ref, modal):
-        P  = self._PAD
-        BG = self._BG; BC = self._BG_CARD; SEP = self._SEP
-        FP = self._FG_PRI; FS = self._FG_SEC; FT = self._FG_TER
+        P   = self._PAD
+        BG  = self._BG
+        BC  = self._BG_CARD
+        SEP = self._SEP
+        FP  = self._FG_PRI
+        FS  = self._FG_SEC
+        FT  = self._FG_TER
 
         def _section(text):
             tk.Label(lp, text=text.upper(), font=self._F_SEC,
                      bg=BG, fg=FT, anchor="w").pack(fill="x", padx=P, pady=(20, 6))
+
         def _sep():
             tk.Frame(lp, bg=SEP, height=1).pack(fill="x", padx=P, pady=(4, 0))
 
@@ -148,7 +152,8 @@ class ProjectModal:
                  ).pack(fill="x", padx=P, pady=(0, 4))
 
         # Marcadores
-        _sep(); _section("Marcadores")
+        _sep()
+        _section("Marcadores")
         act = tk.Frame(lp, bg=BG)
         act.pack(anchor="w", padx=P, pady=(0, 4))
         for emoji, label, key, afg in [
@@ -160,7 +165,8 @@ class ProjectModal:
             self._make_toggle(act, emoji, label, key, afg, data, modal)
 
         # Descrição IA
-        _sep(); _section("Descrição IA")
+        _sep()
+        _section("Descrição IA")
         desc_text = (data.get("ai_description") or "").strip()
         desc_box  = tk.Frame(lp, bg=BC)
         desc_box.pack(fill="x", padx=P, pady=(0, 8))
@@ -182,7 +188,8 @@ class ProjectModal:
         gen_btn.pack(anchor="w", padx=P, pady=(0, 4))
 
         # Categorias
-        _sep(); _section("Categorias")
+        _sep()
+        _section("Categorias")
         cats_row = tk.Frame(lp, bg=BG)
         cats_row.pack(anchor="w", padx=P, fill="x", pady=(0, 4))
         cats = data.get("categories", []) or []
@@ -196,7 +203,8 @@ class ProjectModal:
                      font=self._F_SMALL, bg=BG, fg=FT).pack(anchor="w")
 
         # Tags
-        _sep(); _section("Tags")
+        _sep()
+        _section("Tags")
         tw = tk.Frame(lp, bg=BG)
         tw.pack(anchor="w", padx=P, fill="x", pady=(0, 4))
         for tag in (data.get("tags", []) or ["Nenhuma tag"]):
@@ -208,15 +216,13 @@ class ProjectModal:
             t.bind("<Button-1>",
                    lambda e, tg=tag: (modal.destroy(), self._cb["on_set_tag"](tg)))
 
-        # F-08: Coleções (NOVA SEÇÃO - ANTES de Arquivos)
-        _sep(); _section("Coleções")
+        # F-08: Coleções
+        _sep()
+        _section("Coleções")
         collections_row = tk.Frame(lp, bg=BG)
         collections_row.pack(anchor="w", padx=P, fill="x", pady=(0, 4))
-        
-        # Obtém coleções do projeto via callback
         get_collections_cb = self._cb.get("get_project_collections")
         project_collections = get_collections_cb(self._path) if get_collections_cb else []
-        
         if project_collections:
             for col_name in project_collections:
                 tk.Label(collections_row, text=f"📁 {col_name}", font=self._F_SMALL,
@@ -227,7 +233,8 @@ class ProjectModal:
                      font=self._F_SMALL, bg=BG, fg=FT).pack(anchor="w")
 
         # Arquivos
-        _sep(); _section("Arquivos")
+        _sep()
+        _section("Arquivos")
         struct = (data.get("structure")
                   or self._scanner.analyze_project_structure(self._path))
         fmt_row = tk.Frame(lp, bg=BG)
@@ -249,7 +256,8 @@ class ProjectModal:
                  ).pack(anchor="w", padx=P, pady=(4, 4))
 
         # Localização
-        _sep(); _section("Localização")
+        _sep()
+        _section("Localização")
         par_f = os.path.basename(os.path.dirname(self._path))
         prj_n = os.path.basename(self._path)
         lr = tk.Frame(lp, bg=BG)
@@ -258,7 +266,8 @@ class ProjectModal:
                  font=self._F_SMALL, bg=BG, fg=FS).pack(side="left")
 
         def _copy_path():
-            modal.clipboard_clear(); modal.clipboard_append(self._path)
+            modal.clipboard_clear()
+            modal.clipboard_append(self._path)
             cp_btn.config(text="✅ Copiado!")
             modal.after(1500, lambda: cp_btn.config(text="📋 Copiar"))
         cp_btn = tk.Button(lr, text="📋 Copiar", command=_copy_path,
@@ -295,8 +304,6 @@ class ProjectModal:
                   command=lambda: (modal.destroy(),
                                    self._cb["on_reanalize"](self._path)),
                   **BTN_G).pack(side="left", padx=(0, 6))
-
-        # F-02: botão Remover individual
         tk.Button(action_bar, text="🗑️  Remover",
                   command=lambda: self._confirm_remove(modal),
                   **BTN_DEL).pack(side="left", padx=(0, 6))
@@ -313,8 +320,7 @@ class ProjectModal:
         tk.Button(action_bar, text="◄", command=lambda: _nav(-1),
                   state="normal" if nav_idx > 0 else "disabled",
                   **BTN_NAV).pack(side="right", padx=(0, 4))
-        
-        # UX: Espaço vazio no final para facilitar clique nos últimos botões
+
         tk.Frame(lp, bg=BG, height=150).pack()
 
     def _confirm_remove(self, modal) -> None:
@@ -335,8 +341,10 @@ class ProjectModal:
         self._cb["on_remove"](self._path)
 
     def _make_toggle(self, parent, emoji, label, key, active_fg, data, modal):
-        BG = self._BG; BC = self._BG_CARD; BH = self._BG_HOVER
-        FS = self._FG_SEC; FT = self._FG_TER
+        BC  = self._BG_CARD
+        BH  = self._BG_HOVER
+        FS  = self._FG_SEC
+        FT  = self._FG_TER
         is_on = data.get(key, False)
         f = tk.Frame(parent, bg=BC, cursor="hand2")
         f.pack(side="left", padx=(0, 6), pady=4)
@@ -353,8 +361,10 @@ class ProjectModal:
         def _toggle(ev=None):
             nv = not self._database.get(self._path, {}).get(key, False)
             if self._path in self._database:
-                if key == "good" and nv: self._database[self._path]["bad"]  = False
-                if key == "bad"  and nv: self._database[self._path]["good"] = False
+                if key == "good" and nv:
+                    self._database[self._path]["bad"]  = False
+                if key == "bad" and nv:
+                    self._database[self._path]["good"] = False
                 self._cb["on_toggle"](self._path, key, nv)
                 il.config(fg=active_fg if nv else FT)
                 tl.config(fg=FS if nv else FT)
@@ -365,13 +375,8 @@ class ProjectModal:
             w.bind("<Leave>",    lambda e, ws=all_w: [x.config(bg=BC) for x in ws])
 
     def _build_right_panel(self, main, modal):
-        """
-        ← HOT-09b: FIX imagem modal - usa método público find_first_image()
-        """
         right_outer = tk.Frame(main, bg="#0A0A0A")
         right_outer.grid(row=0, column=2, sticky="nsew")
-        
-        # ← HOT-09b: Agora usa método público (era _find_first_image privado)
         cover_path = self._cache.find_first_image(self._path)
 
         if not cover_path:

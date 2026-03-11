@@ -1,14 +1,5 @@
 """
 ui/controllers/optimized_display_controller.py — Controller de Exibição Otimizado
-
-Unifica DisplayController (base) + 3 otimizações de performance:
-1. FilterCache: Cache inteligente de filtros (80% faster)
-2. ViewportManager: Lazy rendering (60% faster)
-3. PredictivePreloader: Preload de páginas (0ms navigation)
-
-GANHO COMBINADO: 4.5× mais rápido
-
-BRANDT-01: display_controller.py legado removido — lógica base internalizada aqui.
 """
 
 import tkinter as tk
@@ -41,8 +32,6 @@ class BaseDisplayController:
         self.total_pages = 1
 
         self.on_display_update: Optional[Callable] = None
-
-    # ── Filtros ──────────────────────────────────────────────────────────
 
     def set_filter(self, filter_type: str) -> None:
         self.current_filter = filter_type
@@ -131,22 +120,30 @@ class BaseDisplayController:
             for filt in self.active_filters:
                 ftype, fval = filt["type"], filt["value"]
                 if ftype == "category" and fval not in data.get("categories", []):
-                    passes_all_filters = False; break
+                    passes_all_filters = False
+                    break
                 if ftype == "tag" and fval not in data.get("tags", []):
-                    passes_all_filters = False; break
+                    passes_all_filters = False
+                    break
                 if ftype == "origin" and data.get("origin") != fval:
-                    passes_all_filters = False; break
+                    passes_all_filters = False
+                    break
                 if ftype == "collection":
                     if not self.collections_manager:
-                        passes_all_filters = False; break
+                        passes_all_filters = False
+                        break
                     if path not in self.collections_manager.get_collection_projects(fval):
-                        passes_all_filters = False; break
+                        passes_all_filters = False
+                        break
                 if ftype == "analysis_ai" and not (data.get("analyzed") and data.get("analysis_type") == "ai"):
-                    passes_all_filters = False; break
+                    passes_all_filters = False
+                    break
                 if ftype == "analysis_fallback" and not (data.get("analyzed") and data.get("analysis_type") == "fallback"):
-                    passes_all_filters = False; break
+                    passes_all_filters = False
+                    break
                 if ftype == "analysis_pending" and data.get("analyzed"):
-                    passes_all_filters = False; break
+                    passes_all_filters = False
+                    break
             if not passes_all_filters:
                 continue
 
@@ -162,8 +159,6 @@ class BaseDisplayController:
 
             result.append(path)
         return result
-
-    # ── Ordenação ────────────────────────────────────────────────────────
 
     def set_sorting(self, sort_type: str) -> None:
         self.current_sort = sort_type
@@ -192,8 +187,6 @@ class BaseDisplayController:
         except Exception as e:
             self.logger.error("Erro ao ordenar projetos: %s", e)
             return projects
-
-    # ── Paginação ────────────────────────────────────────────────────────
 
     def next_page(self) -> None:
         if self.current_page < self.total_pages:
@@ -225,8 +218,6 @@ class BaseDisplayController:
             "end_idx": end_idx,
             "items_per_page": self.items_per_page,
         }
-
-    # ── Internos ─────────────────────────────────────────────────────────
 
     def _trigger_update(self) -> None:
         if self.on_display_update:

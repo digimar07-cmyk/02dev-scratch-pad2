@@ -5,12 +5,12 @@ FASE 7F.2: Centraliza operações de database
 Redução estimada: -30 linhas no main_window.py
 
 NOTA ARQUITETURAL:
-  core/ não pode usar tkinter (fronteira ui/core).
-  Dialogs (filedialog, messagebox) são responsabilidade da UI.
+  core/ não pode depender de frameworks de UI (fronteira ui/core).
+  Dialogs (file open/save, messageboxes) são responsabilidade da UI.
   Este controller usa callbacks para notificar a UI sobre
   sucesso/erro, mantendo a lógica de negócio pura em core/.
 
-  CALLBACKS ESPERADOS:
+  CALLBACKS ESPERADOS (injetados pela camada ui/ após instanciar):
     on_request_save_path(title, default_ext, filetypes) -> str | None
     on_request_open_path(title, filetypes) -> str | None
     on_show_info(title, message)

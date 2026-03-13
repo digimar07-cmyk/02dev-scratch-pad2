@@ -18,7 +18,7 @@ class TestRemoveAccents:
 
     def test_remove_cedilha(self):
         """Cedilha deve ser removida."""
-        assert remove_accents("Canção") == "Cancao"
+        assert remove_accents("Cançao") == "Cancao"
 
     def test_string_sem_acento_inalterada(self):
         """String sem acento nao deve ser alterada."""
@@ -68,6 +68,11 @@ class TestNormalizeProjectName:
         result = normalize_project_name("produto-12345")
         assert "12345" not in result
 
+    def test_preserva_ano_4_digitos(self):
+        """Anos (4 digitos) NAO devem ser removidos — so IDs com 5+ digitos sao."""
+        result = normalize_project_name("natal-2024")
+        assert "2024" in result
+
     def test_remove_acento(self):
         """Acentos devem ser removidos na normalizacao."""
         result = normalize_project_name("Árvore de Natal")
@@ -84,7 +89,6 @@ class TestNormalizeProjectName:
         assert normalize_project_name("") == ""
 
     def test_exemplo_do_docstring(self):
-        """Exemplo exato do docstring deve funcionar: Natal_2024_Arvore-12345.zip → natal arvore."""
-        # Remove acento do original para compatibilidade com docstring
+        """Exemplo exato do docstring: anos (4 digitos) sao preservados, IDs (5+) removidos."""
         result = normalize_project_name("Natal_2024_Arvore-12345.zip")
-        assert result == "natal arvore"
+        assert result == "natal 2024 arvore"

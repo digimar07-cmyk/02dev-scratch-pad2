@@ -3,6 +3,7 @@ Gerenciamento de banco de dados JSON
 """
 from __future__ import annotations
 
+import copy
 import json
 import os
 import shutil
@@ -22,7 +23,7 @@ class DatabaseManager:
       remove_project(path)      → bool
       has_project(path)         → bool
       all_paths()               → list[str]
-      all_projects()            → dict (cópia)
+      all_projects()            → dict (cópia profunda)
       project_count()           → int
       iter_projects()           → Iterator[(str, dict)]
     """
@@ -68,8 +69,11 @@ class DatabaseManager:
         return list(self.database.keys())
 
     def all_projects(self) -> dict[str, dict[str, Any]]:
-        """Retorna cópia do dicionário completo. Nunca a referência interna."""
-        return dict(self.database)
+        """
+        Retorna cópia PROFUNDA do dicionário completo.
+        Nunca a referência interna — modificar o retorno não afeta o banco.
+        """
+        return copy.deepcopy(self.database)
 
     def project_count(self) -> int:
         """Retorna total de projetos."""

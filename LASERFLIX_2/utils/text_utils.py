@@ -9,13 +9,13 @@ import unicodedata
 def remove_accents(text: str) -> str:
     """
     Remove acentuação de texto usando unicodedata.
-    
+
     Args:
         text: Texto com possíveis acentos
-        
+
     Returns:
         Texto sem acentos (NFD decomposition)
-        
+
     Example:
         >>> remove_accents("José")
         'Jose'
@@ -29,41 +29,44 @@ def remove_accents(text: str) -> str:
 def normalize_project_name(text: str) -> str:
     """
     Normaliza nome de projeto para matching consistente.
-    
+
     Operações aplicadas:
     - Converte para lowercase
     - Remove extensões de arquivo (.zip, .svg, .pdf, etc)
     - Remove acentuação
     - Substitui separadores (-, _) por espaços
-    - Remove códigos numéricos longos (IDs de produto)
+    - Remove códigos numéricos LONGOS (5+ dígitos — IDs de produto)
     - Normaliza espaços múltiplos
-    
+
+    NOTA: Números curtos (1–4 dígitos) como anos (2024) NÃO são removidos.
+    Apenas sequências de 5+ dígitos (ex: SKUs, IDs) são eliminadas.
+
     Args:
         text: Nome bruto do projeto
-        
+
     Returns:
         Nome normalizado para matching
-        
+
     Example:
-        >>> normalize_project_name("Natal_2024_Árvore-12345.zip")
-        'natal arvore'
+        >>> normalize_project_name("Natal_2024_Arvore-12345.zip")
+        'natal 2024 arvore'
     """
     t = text.lower()
-    
+
     # Remove extensões comuns
     for ext in [".zip", ".rar", ".svg", ".pdf", ".dxf", ".cdr", ".ai", ".eps"]:
         t = t.replace(ext, "")
-    
+
     # Remove acentos
     t = remove_accents(t)
-    
+
     # Substitui separadores por espaço
     t = re.sub(r"[\-_]", " ", t)
-    
+
     # Remove códigos numéricos longos (5+ dígitos)
     t = re.sub(r"\d{5,}", "", t)
-    
+
     # Normaliza espaços múltiplos
     t = re.sub(r"\s+", " ", t).strip()
-    
+
     return t

@@ -5,17 +5,41 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Backups
+# Backups e temporarios
 *.backup*
 *.bak
 *.orig
+*.tmp
 
-# Pytest
+# Database (nunca commitar dados reais)
+database.json
+database.db
+*.db
+config.json
+laserflix_backups/
+
+# Pytest e coverage
 .coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+pytest_cache/
+
+# Logs
 *.log
+logs/
+
+# Relatorios QA (gerados automaticamente)
 QA/reports/*.xml
 QA/reports/*.txt
+QA/reports/*.html
 
 # IDEs
 .vscode/
 .idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

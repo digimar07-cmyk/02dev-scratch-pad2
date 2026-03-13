@@ -1,2 +1,0 @@
-ruff_exit=1 
-pylint_exit=30 

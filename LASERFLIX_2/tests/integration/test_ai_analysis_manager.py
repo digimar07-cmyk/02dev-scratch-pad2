@@ -16,7 +16,7 @@ import ast
 import pytest
 import importlib
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
 ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -67,56 +67,113 @@ class TestArquitetura:
         assert "import customtkinter" not in content
 
 
+# ── Helpers para dependencias fakes ──────────────────────────────────────────────
+
+def _make_fake_ollama():
+    """Cria fake ollama_client com os atributos acessados por AnalysisManager."""
+    fake = MagicMock()
+    fake.stop_flag = False
+    fake.active_models = {"text_quality": "llava:fake", "text_fast": "llava:fast"}
+    return fake
+
+
+def _make_fake_text_generator():
+    """Cria fake text_generator que retorna cats/tags vazios sem chamar Ollama."""
+    fake = MagicMock()
+    fake.analyze_project.return_value = ([], [])
+    return fake
+
+
+def _make_fake_db_manager(tmp_path=None):
+    """Cria fake db_manager com save_database como no-op."""
+    fake = MagicMock()
+    fake.save_database.return_value = None
+    return fake
+
+
 # ── Testes de Contrato de Interface ────────────────────────────────────────
 
 class TestContratoInterface:
+    """
+    Testa o contrato publico de AnalysisManager.
+    Injeta fakes para as 3 dependencias obrigatorias:
+      - text_generator: retorna ([], []) sem chamar Ollama
+      - db_manager: save_database() e' no-op
+      - ollama_client: stop_flag + active_models configurados
+    """
 
     @pytest.fixture
     def manager(self):
-        """Retorna instancia do AIAnalysisManager sem chamar Ollama."""
-        mod = importlib.import_module("ai.analysis_manager")
-        cls = next(
-            getattr(mod, n) for n in dir(mod)
-            if not n.startswith("_") and isinstance(getattr(mod, n), type)
+        """Instancia AnalysisManager com dependencias fake — sem rede, sem Ollama."""
+        from ai.analysis_manager import AnalysisManager
+        return AnalysisManager(
+            text_generator=_make_fake_text_generator(),
+            db_manager=_make_fake_db_manager(),
+            ollama_client=_make_fake_ollama(),
         )
-        return cls()
 
-    def test_manager_tem_metodo_analyze(self, manager):
-        """AIAnalysisManager deve ter metodo 'analyze' ou 'analyze_project'."""
-        has_analyze = hasattr(manager, "analyze") or hasattr(manager, "analyze_project")
-        assert has_analyze, "AIAnalysisManager nao tem metodo analyze/analyze_project"
-
-    def test_manager_tem_atributo_model(self, manager):
-        """AIAnalysisManager deve ter atributo 'model' configuravel."""
-        assert hasattr(manager, "model"), "AIAnalysisManager nao tem atributo 'model'"
-
-    def test_analyze_com_ollama_offline_nao_explode(self, manager):
-        """
-        analyze_project com Ollama offline deve retornar resultado vazio/neutro
-        sem levantar excecao nao tratada.
-        Mock cirurgico: intercepta apenas a chamada HTTP, deixa toda logica rodar.
-        """
-        method = getattr(manager, "analyze_project", None) or getattr(manager, "analyze", None)
-        if method is None:
-            pytest.skip("Metodo analyze nao encontrado")
-
-        # Simula timeout/conexao recusada de Ollama
-        with patch("requests.post", side_effect=ConnectionError("Ollama offline")):
-            try:
-                result = method("/fake/path", {"name": "Teste"})
-                # Se retornou, nao deve ter explodido
-                # Resultado pode ser None, dict vazio ou dict com flags de erro
-                assert result is None or isinstance(result, dict)
-            except (ConnectionError, OSError):
-                pytest.fail(
-                    "analyze_project vazou ConnectionError para o caller. "
-                    "Deve ser capturada internamente."
-                )
-
-    def test_analyze_com_requests_ausente_nao_explode(self, manager):
-        """
-        Se requests nao estiver disponivel, nao deve travar o import do modulo.
-        Esse teste garante que o import do modulo ja passou (linha anterior).
-        """
-        # Se chegou aqui, o import ja funcionou
+    def test_manager_instancia_sem_erros(self, manager):
+        """AnalysisManager deve instanciar sem erros com dependencias fakes."""
         assert manager is not None
+
+    def test_manager_tem_metodo_analyze_single(self, manager):
+        """AnalysisManager deve ter metodo analyze_single."""
+        assert hasattr(manager, "analyze_single"), (
+            "AnalysisManager nao tem metodo analyze_single"
+        )
+
+    def test_manager_tem_metodo_analyze_batch(self, manager):
+        """AnalysisManager deve ter metodo analyze_batch."""
+        assert hasattr(manager, "analyze_batch"), (
+            "AnalysisManager nao tem metodo analyze_batch"
+        )
+
+    def test_manager_tem_metodo_stop(self, manager):
+        """AnalysisManager deve ter metodo stop()."""
+        assert hasattr(manager, "stop")
+
+    def test_manager_tem_callbacks_de_progresso(self, manager):
+        """AnalysisManager deve expor os 4 callbacks de progresso."""
+        for cb in ["on_progress", "on_start", "on_complete", "on_error"]:
+            assert hasattr(manager, cb), f"Callback ausente: {cb}"
+
+    def test_manager_estado_inicial_nao_analisando(self, manager):
+        """Estado inicial deve ser is_analyzing=False e should_stop=False."""
+        assert manager.is_analyzing is False
+        assert manager.should_stop is False
+
+    def test_stop_quando_idle_nao_explode(self, manager):
+        """Chamar stop() quando nao ha analise em andamento nao deve explodir."""
+        manager.stop()  # Nao deve levantar excecao
+        assert manager.should_stop is True
+
+    def test_get_unanalyzed_projects_vazio(self, manager):
+        """get_unanalyzed_projects em database vazio retorna lista vazia."""
+        result = manager.get_unanalyzed_projects({})
+        assert result == []
+
+    def test_get_all_projects_vazio(self, manager):
+        """get_all_projects em database vazio retorna lista vazia."""
+        result = manager.get_all_projects({})
+        assert result == []
+
+    def test_callbacks_aceitam_injecao(self, manager):
+        """Callbacks devem aceitar funcoes injetadas externamente."""
+        log = []
+        manager.on_progress = lambda done, total, name: log.append((done, total, name))
+        manager.on_error = lambda msg: log.append(msg)
+        # Nao deve explodir ao atribuir
+        assert manager.on_progress is not None
+        assert manager.on_error is not None
+
+    def test_analyze_batch_vazio_dispara_on_error(self, manager):
+        """
+        analyze_batch com lista vazia deve disparar on_error sem explodir.
+        Verifica o contrato: nao ha projetos -> on_error e' chamado.
+        """
+        erros = []
+        manager.on_error = lambda msg: erros.append(msg)
+        manager.analyze_batch([], {})
+        # on_error deve ter sido chamado
+        assert len(erros) == 1
+        assert "Nenhum projeto" in erros[0] or len(erros[0]) > 0

@@ -108,13 +108,13 @@ def populated_db(tmp_db, sample_project):
 
 
 @pytest.fixture
-def tmp_collections(tmp_path, tmp_db):
+def tmp_collections(tmp_path):
     """
     CollectionsManager isolado em diretorio temporario.
-    Depende de tmp_db para consistencia.
+    Cada teste recebe seu proprio collections vazio.
+    Nao contamina o arquivo real do projeto.
     """
     from core.collections_manager import CollectionsManager
     return CollectionsManager(
-        db_manager=tmp_db,
-        collections_file=str(tmp_path / "test_collections.json")
+        file_path=str(tmp_path / "test_collections.json")
     )

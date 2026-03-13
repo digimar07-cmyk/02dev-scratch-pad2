@@ -6,7 +6,7 @@ Cobre linhas ainda não testadas de core/project_scanner.py:
   83-84   get_origin_from_path() except → retorna "Diversos"
   125     analyze_project_structure() flag has_dxf
   127     analyze_project_structure() flag has_ai
-  135-136 analyze_project_structure() classificação documents[]
+  135-136 analyze_project_structure() classificação images[] e documents[]
 
 Regra: NUNCA alterar testes. Bugs são no app.
 """
@@ -100,6 +100,25 @@ class TestProjectScannerAnalyzeDocuments:
         (pasta / "imagem.svg").write_text("svg")
         result = scanner.analyze_project_structure(str(pasta))
         assert result["documents"] == []
+
+
+class TestProjectScannerAnalyzeImages:
+
+    def test_dado_arquivo_png_quando_analyze_entao_classificado_em_images(self, tmp_path):
+        scanner, _ = make_scanner()
+        pasta = tmp_path / "projeto"
+        pasta.mkdir()
+        (pasta / "foto.png").write_text("png")
+        result = scanner.analyze_project_structure(str(pasta))
+        assert "foto.png" in result["images"]
+
+    def test_dado_arquivo_jpg_quando_analyze_entao_classificado_em_images(self, tmp_path):
+        scanner, _ = make_scanner()
+        pasta = tmp_path / "projeto"
+        pasta.mkdir()
+        (pasta / "foto.jpg").write_text("jpg")
+        result = scanner.analyze_project_structure(str(pasta))
+        assert "foto.jpg" in result["images"]
 
 
 class TestVirtualScrollViewportLine50:

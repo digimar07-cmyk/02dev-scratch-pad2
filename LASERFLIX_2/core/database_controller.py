@@ -70,7 +70,7 @@ class DatabaseController:
             return
 
         try:
-            shutil.copy(self.db_manager.db_path, filename)
+            shutil.copy(self.db_manager.db_file, filename)  # FIX: db_path → db_file
             self._show_info(
                 "✅ Export concluído",
                 f"Database exportado para:\n{filename}",
@@ -88,7 +88,7 @@ class DatabaseController:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             backup_file = os.path.join(backup_dir, f"db_backup_{timestamp}.json")
 
-            shutil.copy(self.db_manager.db_path, backup_file)
+            shutil.copy(self.db_manager.db_file, backup_file)  # FIX: db_path → db_file
 
             self._show_info(
                 "✅ Backup criado",
@@ -112,7 +112,7 @@ class DatabaseController:
         try:
             self.manual_backup()
 
-            shutil.copy(filepath, self.db_manager.db_path)
+            shutil.copy(filepath, self.db_manager.db_file)  # FIX: db_path → db_file
             self.db_manager.load_database()
 
             self._show_info(

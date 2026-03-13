@@ -51,7 +51,7 @@ TRANSLATIONS = {
     "squirrel": "esquilo",
     "mouse": "rato",
     "hamster": "hamster",
-    
+
     # Objetos domésticos
     "mirror": "espelho",
     "clock": "relógio",
@@ -109,7 +109,7 @@ TRANSLATIONS = {
     "wallet": "carteira",
     "purse": "bolsa",
     "backpack": "mochila",
-    
+
     # Decoração
     "decoration": "decoração",
     "ornament": "ornamento",
@@ -139,7 +139,7 @@ TRANSLATIONS = {
     "sunflower": "girassol",
     "cactus": "cacto",
     "succulent": "suculenta",
-    
+
     # Temas
     "christmas": "natal",
     "halloween": "halloween",
@@ -164,7 +164,7 @@ TRANSLATIONS = {
     "school": "escola",
     "teacher": "professor",
     "student": "estudante",
-    
+
     # Formas e estilos
     "round": "redondo",
     "square": "quadrado",
@@ -188,7 +188,7 @@ TRANSLATIONS = {
     "complex": "complexo",
     "detailed": "detalhado",
     "ornate": "ornamentado",
-    
+
     # Tamanhos
     "small": "pequeno",
     "medium": "médio",
@@ -198,7 +198,7 @@ TRANSLATIONS = {
     "big": "grande",
     "huge": "enorme",
     "giant": "gigante",
-    
+
     # Cores
     "red": "vermelho",
     "blue": "azul",
@@ -216,11 +216,10 @@ TRANSLATIONS = {
     "silver": "prateado",
     "bronze": "bronze",
     "colorful": "colorido",
-    "rainbow": "arco-íris",
-    
+
     # Materiais
     "wood": "madeira",
-    "wooden": "madeira",
+    "wooden": "de madeira",  # FIX: era "madeira", colisão com wood no REVERSE_TRANSLATIONS
     "mdf": "mdf",
     "plywood": "compensado",
     "acrylic": "acrílico",
@@ -231,7 +230,7 @@ TRANSLATIONS = {
     "leather": "couro",
     "paper": "papel",
     "cardboard": "papelão",
-    
+
     # Ações
     "cut": "cortado",
     "laser": "laser",
@@ -245,7 +244,7 @@ TRANSLATIONS = {
     "handmade": "artesanal",
     "custom": "personalizado",
     "personalized": "personalizado",
-    
+
     # Funcionalidades
     "storage": "armazenamento",
     "display": "exposição",
@@ -257,7 +256,7 @@ TRANSLATIONS = {
     "portable": "portátil",
     "adjustable": "ajustável",
     "removable": "removível",
-    
+
     # Números
     "one": "um",
     "two": "dois",
@@ -272,7 +271,7 @@ TRANSLATIONS = {
     "first": "primeiro",
     "second": "segundo",
     "third": "terceiro",
-    
+
     # Comuns
     "set": "conjunto",
     "kit": "kit",
@@ -294,7 +293,7 @@ TRANSLATIONS = {
     "maker": "criador",
     "designer": "designer",
     "artist": "artista",
-    
+
     # Etsy/Vendas
     "digital": "digital",
     "download": "download",
@@ -312,7 +311,7 @@ TRANSLATIONS = {
     "bestseller": "mais vendido",
     "popular": "popular",
     "trending": "em alta",
-    
+
     # Adjetivos comuns
     "beautiful": "bonito",
     "pretty": "bonito",
@@ -333,12 +332,10 @@ TRANSLATIONS = {
     "fancy": "chique",
     "fun": "divertido",
     "creative": "criativo",
-    "unique": "único",
     "special": "especial",
     "easy": "fácil",
     "quick": "rápido",
     "fast": "rápido",
-    "simple": "simples",
 }
 
 # Inverter dicionário para busca PT → EN também
@@ -349,30 +346,30 @@ def translate_to_pt(text_en: str) -> str:
     """
     Traduz texto inglês para português usando dicionário estático.
     Processa palavra por palavra, mantém palavras desconhecidas.
-    
+
     Args:
         text_en: Texto em inglês (ex: "Nursery Mirror")
-    
+
     Returns:
         Texto traduzido (ex: "infantil espelho")
     """
     if not text_en:
         return ""
-    
+
     words = text_en.lower().split()
     translated_words = []
-    
+
     for word in words:
         # Remove pontuação
         clean_word = word.strip('.,!?;:"\'-_()')
-        
+
         # Traduz se existir no dicionário
         if clean_word in TRANSLATIONS:
             translated_words.append(TRANSLATIONS[clean_word])
         else:
             # Mantém palavra original se não encontrar tradução
             translated_words.append(clean_word)
-    
+
     return " ".join(translated_words)
 
 
@@ -380,44 +377,44 @@ def translate_to_en(text_pt: str) -> str:
     """
     Traduz texto português para inglês usando dicionário estático.
     Processa palavra por palavra, mantém palavras desconhecidas.
-    
+
     Args:
         text_pt: Texto em português (ex: "espelho infantil")
-    
+
     Returns:
         Texto traduzido (ex: "mirror nursery")
     """
     if not text_pt:
         return ""
-    
+
     words = text_pt.lower().split()
     translated_words = []
-    
+
     for word in words:
         # Remove pontuação
         clean_word = word.strip('.,!?;:"\'-_()')
-        
+
         # Traduz se existir no dicionário reverso
         if clean_word in REVERSE_TRANSLATIONS:
             translated_words.append(REVERSE_TRANSLATIONS[clean_word])
         else:
             # Mantém palavra original se não encontrar tradução
             translated_words.append(clean_word)
-    
+
     return " ".join(translated_words)
 
 
 def search_bilingual(query: str, text_en: str) -> bool:
     """
     Busca bilíngue: verifica se query (EN ou PT) existe no texto EN.
-    
+
     Args:
         query: Termo de busca (ex: "espelho" ou "mirror")
         text_en: Texto em inglês para buscar (ex: "Nursery Mirror")
-    
+
     Returns:
         True se query encontrada (em qualquer idioma)
-    
+
     Exemplos:
         >>> search_bilingual("mirror", "Nursery Mirror")
         True
@@ -428,22 +425,22 @@ def search_bilingual(query: str, text_en: str) -> bool:
     """
     if not query or not text_en:
         return False
-    
+
     query_lower = query.lower()
     text_lower = text_en.lower()
-    
+
     # 1. Busca direta (query em inglês no texto inglês)
     if query_lower in text_lower:
         return True
-    
+
     # 2. Traduz texto EN → PT e busca
     text_pt = translate_to_pt(text_en)
     if query_lower in text_pt.lower():
         return True
-    
+
     # 3. Traduz query PT → EN e busca no texto original
     query_en = translate_to_en(query)
     if query_en.lower() in text_lower:
         return True
-    
+
     return False

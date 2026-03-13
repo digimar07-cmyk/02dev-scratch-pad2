@@ -116,17 +116,17 @@ class ProjectScanner:
                     if ext:
                         structure["file_types"][ext] = structure["file_types"].get(ext, 0) + 1
                     
-                    # Flags de formatos específicos
+                    # FIX: Flags de formatos específicos — blocos independentes (não elif)
                     if ext == ".svg":
                         structure["has_svg"] = True
-                    elif ext == ".pdf":
+                    if ext == ".pdf":
                         structure["has_pdf"] = True
-                    elif ext == ".dxf":
+                    if ext == ".dxf":
                         structure["has_dxf"] = True
-                    elif ext == ".ai":
+                    if ext == ".ai":
                         structure["has_ai"] = True
                     
-                    # Classificação de arquivos
+                    # Classificação de arquivos — bloco independente das flags
                     if ext in FILE_EXTENSIONS["images"] or ext in FILE_EXTENSIONS["vectors"]:
                         structure["images"].append(file)
                     elif ext in FILE_EXTENSIONS["documents"]:
